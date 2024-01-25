@@ -2,6 +2,13 @@
 
 Software Engineering capstone project
 
-Matt Test commit
-Justin Test Commit
-Jeremy Test Commit
+Example Commenting Below:
+
+/*  XYZ Function - will perform xyz task
+ *  Takes abc as input and transforms it into 123
+ */
+int XYZ(string abc)
+{
+  return 123; //Single line comment explaining code if necessary
+}
+
