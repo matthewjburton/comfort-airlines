@@ -1,19 +1,20 @@
 # comfort-airlines
 
-Software Engineering capstone project
+## Software Engineering Capstone Project
 
-Example Commenting Below:
+### Comment Example for Methods  
 
-<em>/*  XYZ Function - will perform xyz task <br />
- &nbsp;&ast; Takes abc as input and transforms it into 123 <br />
-&nbsp;*/ <br /></em>
-int XYZ(string abc)<br />
-{<br />
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 123; //Single line comment explaining code if necessary<br />
+*XYZ Function - will perform xyz task*  
+*Takes `abc` as input and transforms it into `123`*
+
+```cpp
+int XYZ(string abc)
+{
+    return 123; // Single line comment explaining code if necessary
 }
+```
 
-
-## How to use the MariaDB Docker Container
+### How to access the MariaDB Docker container
 
 1. Make sure you have the Docker daemon running. (You can make sure it's running by opening the Docker Desktop app on your local machine)
 2. To open a new shell within the docker, run the following command in the terminal:
