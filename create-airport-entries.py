@@ -26,17 +26,26 @@ engine = create_engine('mariadb://admin:Cloud9@localhost:3306/cloudnine')
 # Create the database tables
 # Base.metadata.create_all(engine)
 
-try:
+# Define a context manager for the session
+def session_scope():
     # Create a session. A session represents a connection to the database for a series of operations
     Session = sessionmaker(bind = engine)
     session = Session()
+    
+    try: # Try to perform the session operations then commit the changes
+        yield session
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        raise e
+    finally: # Close the session once finished
+        session.close()
 
+# Clear the table and insert airport entries into the database
+with session_scope() as session:
     # Clear the table
     session.query(Airport).delete()
-
-    # Commit the transaction to apply the changes
-    session.commit()
-
+    
     # List of airport entries
     airport_entries = [
         (
@@ -354,11 +363,3 @@ try:
             state=entry[7]
         )
         session.add(airport)
-
-    # Commit the transaction
-    session.commit()
-
-finally:
-    # Close the session
-    session.close()
-    
