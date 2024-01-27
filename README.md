@@ -14,7 +14,7 @@ int XYZ(string abc)
 }
 ```
 
-### How to access the MariaDB Docker container
+### How to access the Docker container
 
 1. Make sure you have the Docker daemon running. (You can make sure it's running by opening the Docker Desktop app on your local machine)
 2. To open a new shell within the docker, run the following command in the terminal:
@@ -23,18 +23,14 @@ int XYZ(string abc)
 docker exec -it mariadb sh
 ```
 
-3. Once inside the docker, open the MariaDB contianer using the following command:
+3. To exit the Docker container, use the *exit* keyword
+
+### How to access the Database
+
+1. Execute the following command in the terminal to jump straight into the "cloudnine" database
 
 ```bash
-mariadb -p
+docker exec -it mariadb-container mariadb -u admin -p cloudnine
 ```
 
-4. To gain access, enter the password as defined in the .env file.
-5. To view the current databases run the following command:
-
-```bash
-show databases
-```
-
-6. To exit the MariaDB container, use the *exit* keyword
-7. To exit the docker, also use the *exit* keyword
+2. When prompted, enter the password: Cloud9
