@@ -1,3 +1,10 @@
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS routes;
+DROP TABLE IF EXISTS flights;
+DROP TABLE IF EXISTS aircraft;
+DROP TABLE IF EXISTS airports;
+
+-- Create new tables
 CREATE TABLE airports (
     airport_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),

@@ -7,6 +7,8 @@ services:
     volumes:
       - ./mariadb-data:/var/lib/mysql
     restart: always
+    env_file:
+      - .env
     environment:
       - MARIADB_DATABASE=${DB_NAME}
       - MARIADB_ROOT_PASSWORD=${DB_PASS}
