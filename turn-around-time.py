@@ -5,7 +5,7 @@ def TurnAroundTime(refueling):
     timeToBoardPassengers = 15
     timeToRefuel = 10
 
-    # time colculation
+    # time calculation
     totalTurnAroundTime = timeToDisembarkPassengers + timeToCleanAircraftAndChangeCrew + timeToBoardPassengers
     if refueling:
         totalTurnAroundTime += timeToRefuel
