@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Define the SQLAlchemy base
-Base = declarative_base()
+Base = sqlalchemy.orm.declarative_base()
 
 # Define the Airport class to map to the airports table
 class Airport(Base):
