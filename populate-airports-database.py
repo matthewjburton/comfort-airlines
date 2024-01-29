@@ -1,9 +1,14 @@
+# This is a program designed to store the information about all of the airports. 
+# When executed, the airports database table will be cleared and the list of airports
+# will be added back to the table to ensure their information matches the list in this file.
 from sqlalchemy import create_engine, Column, String, Float, Integer
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
+from contextlib import contextmanager
+
+debugging = True
 
 # Define the SQLAlchemy base
-Base = sqlalchemy.orm.declarative_base()
+Base = declarative_base()
 
 # Define the Airport class to map to the airports table
 class Airport(Base):
@@ -20,13 +25,14 @@ class Airport(Base):
     state = Column(String)
 
 # Create a database engine. Connection string format: mariadb://username:password@host:port/database_name
-engine = create_engine('mariadb://admin:Cloud9@localhost:3306/cloudnine')
+engine = create_engine('mariadb://admin:Cloud9@172.22.0.2:3306/cloudnine')
 
 ### Skipping this step because we already created the tables in the databse using the schema.sql file. However, we can use this step to create new tables in the future if we want
 # Create the database tables
 # Base.metadata.create_all(engine)
 
 # Define a context manager for the session
+@contextmanager
 def session_scope():
     # Create a session. A session represents a connection to the database for a series of operations
     Session = sessionmaker(bind = engine)
@@ -352,6 +358,9 @@ with session_scope() as session:
 
     # Insert airport entries into the database
     for entry in airport_entries:
+        if debugging:
+            print("Adding airport: " + entry[0])
+
         airport = Airport(
             name=entry[0],
             abbreviation=entry[1],
