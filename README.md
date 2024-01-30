@@ -2,14 +2,6 @@
 
 ## Softeware Engineering Capstone Project
 
-### Requirements
-
-This project relies on various dependencies which can be installed by running the following command
-
-```bash
-pip3 install -r requirements.txt
-```
-
 ### Comment Example for Methods  
 
 ```cpp
