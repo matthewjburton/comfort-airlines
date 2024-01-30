@@ -16,3 +16,8 @@ services:
       - MARIADB_PASSWORD=${DB_USER_PASS}
     container_name: mariadb-container
     image: mariadb:11.2
+  adminer:
+    image: adminer
+    restart: always
+    ports: 
+      - 8080:8080
