@@ -30,6 +30,7 @@ docker exec -it mariadb sh
 1. Execute the following command in the terminal to jump straight into the "cloudnine" database
 
 ```bash
+#docker exec -it <container name> mariadb -u <username> -p <database name>
 docker exec -it mariadb-container mariadb -u admin -p cloudnine
 ```
 
