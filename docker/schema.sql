@@ -1,3 +1,21 @@
+-- Purpose: Drop all tables if they exist in the database
+--          then add the following tables with their respective attibutes
+-- Author:  Matt Burton
+-- Notes:   Currently using a many to many table to handle 
+--          the relationship between flights and routes
+-- Execute: 1. Move to the comfort-airlines/docker/ directory
+--          2. Copy this file from the repository into the docker using: docker cp <local_file_path> <container_name_or_id>:<container_path>
+--              
+--              docker cp schema.sql mariadb-container:/tmp/
+--
+--          3. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+--              
+--              docker exec -it mariadb-container mariadb -u admin -p cloudnine
+--
+--          4. To execute the schema.sql file: source <file_name.sql>
+--              
+--              source /tmp/schema.sql
+
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS routes;
 DROP TABLE IF EXISTS flights;
