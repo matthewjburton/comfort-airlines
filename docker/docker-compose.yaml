@@ -7,8 +7,18 @@ services:
     volumes:
       - ./mariadb-data:/var/lib/mysql
     restart: always
+    env_file:
+      - .env
     environment:
       - MARIADB_DATABASE=${DB_NAME}
       - MARIADB_ROOT_PASSWORD=${DB_PASS}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_USER_PASS}
     container_name: mariadb-container
     image: mariadb:11.2
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports: 
+      - 8080:8080
