@@ -1,3 +1,8 @@
+# Purpose:  Track the current simulation time and
+#           manage incrementing time minute by minute
+# Author:   Matt Burton
+# Notes:    Currently, no support for daylight savings time
+
 class Clock:
     def __init__(self):
         self.time = (1, 0, 0)  # (day, hour, minute)
