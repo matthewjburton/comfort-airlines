@@ -1,3 +1,9 @@
+-- Purpose: Removes all entries from the airports table
+--          then inserts all of the airports in the list below
+-- Author:  Matt Burton
+-- Notes:   The list does not include paris
+--          Populations should be changed from the number in millions to the actual value
+
 -- Clear the airports table
 TRUNCATE TABLE airports;
 
