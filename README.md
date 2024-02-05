@@ -7,7 +7,6 @@
 ```python
 # XYZ Function - will perform xyz task 
 # Takes `abc` as input and transforms it into `123`
-#
 def XYZ(abc):
     return 123 # Single line comment explaining code if necessary
 ```
