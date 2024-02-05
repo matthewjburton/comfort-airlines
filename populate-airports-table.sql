@@ -17,7 +17,7 @@
 --              source /tmp/populate-airports-table.sql
 
 -- Clear the airports table
-TRUNCATE TABLE airports;
+DELETE FROM airports;
 
 -- Insert airport entries into the table
 INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, city, state)
@@ -51,4 +51,5 @@ VALUES
     ('Harry Reid International Airport', 'LAS', 36.06601, -115.153969, -8, 2.3, 'Las Vegas', 'Nevada'),
     ('Austin-Bergstrom International Airport', 'AUS', 30.1945, -97.6699, -6, 2.3, 'Austin', 'Texas'),
     ('Nashville International Airport', 'BNA', 36.1263, -86.6774, -6, 2, 'Nashville', 'Tennessee'),
-    ('Salt Lake City International Airport', 'SLC', 40.7899, -111.9791, -7, 1.2, 'Salt Lake City', 'Utah');
+    ('Salt Lake City International Airport', 'SLC', 40.7899, -111.9791, -7, 1.2, 'Salt Lake City', 'Utah'),
+    ('Paris Charles de Gaulle Airport', 'CDG', 49.0079, 2.5508, 1, 11277000, 'Paris', 'France');
