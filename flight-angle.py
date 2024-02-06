@@ -22,9 +22,9 @@ def calculatePercentage(start, end, wind=.045):
     result = angle/90
 
     if start.long > end.long:
-        return result*wind#Time saved
+        return result*wind#Time lost
 
     elif end.long > start.long:
-        return result*wind*-1#Time lost
+        return result*wind*-1#Time gained
     else:
         return 0
