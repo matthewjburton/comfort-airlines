@@ -11,8 +11,6 @@ def calculatePercentage(start, end, wind=.045):
     offset = abs((start.lat - end.lat)*69.4) #Gives latitude distance in miles
     horizontalDistance = abs((start.long-end.long)*69.4) #Gives longitiude distance in miles
 
-    hypotenuse = math.sqrt(offset**2 + horizontalDistance**2)
-
     tangentPart = offset/horizontalDistance
 
     angle = math.atan(tangentPart)
