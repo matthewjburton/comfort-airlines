@@ -21,7 +21,6 @@ CREATE TABLE aircraft (
     aircraft_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     tail_number VARCHAR(20),
-    model VARCHAR(255),
     maximum_speed INT,
     maximum_capacity INT,
     maximum_fuel INT,
