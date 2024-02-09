@@ -13,18 +13,17 @@ CREATE TABLE airports (
     longitude FLOAT,
     timezone_offset INT,
     metro_population INT,
-    city VARCHAR(255),
-    state VARCHAR(255)
+    total_gates INT
 );
 
 CREATE TABLE aircraft (
-    aircraft_id INT AUTO_INCREMENT PRIMARY KEY,
+    tail_number VARCHAR(20) PRIMARY KEY,
     name VARCHAR(255),
-    tail_number VARCHAR(20),
     model VARCHAR(255),
     maximum_speed INT,
     maximum_capacity INT,
     maximum_fuel INT,
+    cargo_volume INT,
     leasing_cost INT
 );
 
@@ -34,8 +33,17 @@ CREATE TABLE flights (
     destination_airport_id INT,
     direction_of_flight FLOAT,
     flight_duration_minutes INT,
-    departure_time INT,
-    arrival_time INT,
+    local_departure_time INT,
+    local_arrival_time INT,
+    plane VARCHAR(20),
+    flight_number INT,
+    available_seats INT,
+    on_time_bin BINARY,
+    gate_arrival_bin BINARY,
+    gate_destination_bin BINARY,
+    gate_departure INT,
+    gate_arrival INT,
+    FOREIGN KEY (aircraft) REFERENCES aircraft(tail_number),
     FOREIGN KEY (departure_airport_id) REFERENCES airports(airport_id),
     FOREIGN KEY (destination_airport_id) REFERENCES airports(airport_id)
 );
