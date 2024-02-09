@@ -13,7 +13,8 @@ CREATE TABLE airports (
     longitude FLOAT,
     timezone_offset INT,
     metro_population INT,
-    total_gates INT
+    total_gates INT,
+    is_hub BINARY
 );
 
 CREATE TABLE aircraft (
