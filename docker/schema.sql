@@ -43,7 +43,7 @@ CREATE TABLE flights (
     on_time_bin BINARY,
     gate_departure INT,
     gate_arrival INT,
-    FOREIGN KEY (aircraft_id) REFERENCES aircraft(tail_number),
+    FOREIGN KEY (aircraft_id) REFERENCES aircraft(aircraft_id),
     FOREIGN KEY (departure_airport_id) REFERENCES airports(airport_id),
     FOREIGN KEY (destination_airport_id) REFERENCES airports(airport_id)
 );
