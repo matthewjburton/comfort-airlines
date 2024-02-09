@@ -50,13 +50,11 @@ CREATE TABLE flights (
 
 CREATE TABLE routes (
     route_id INT AUTO_INCREMENT PRIMARY KEY,
-    layover_times JSON
-);
-
-CREATE TABLE flights_routes (
-    flight_id INT,
-    route_id INT,
-    FOREIGN KEY (flight_id) REFERENCES flights(flight_id),
-    FOREIGN KEY (route_id) REFERENCES routes(route_id),
-    PRIMARY KEY (flight_id, route_id)
+    layover_time INT[],
+    starting_airport INT,
+    destination_airport INT,
+    flight_legs INT[],
+    FOREIGN KEY (starting_airport) REFERENCES airports(airport_id),
+    FOREIGN KEY (destination_airport) REFERENCES airports(airport_id),
+    FOREIGN KEY (flight_legs) REFERENCES flights(flight_id)
 );
