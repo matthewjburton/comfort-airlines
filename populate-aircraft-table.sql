@@ -1,8 +1,7 @@
 -- Purpose: Removes all entries from the aircraft table
 --          then inserts all of the aircraft in the list below
 -- Author:  Justin Chen
--- Notes:   
--- Execute: 1. Move to the comfort-airlines/ directory
+-- Execute: 1. Move to the /comfort-airlines directory
 --          2. Copy this file from the repository into the docker using: docker cp <local_file_path> <container_name_or_id>:<container_path>
 --              
 --              docker cp populate-aircraft-table.sql mariadb-container:/tmp/
@@ -19,7 +18,7 @@
 DELETE FROM aircraft;
 
 -- Insert airport entries into the table
-INSERT INTO aircraft (name, tail_number, maximum_speed, maximum_capacity, maximum_fuel, leasing_cost)
+INSERT INTO aircraft (tail_number, name, model, maximum_speed, maximum_capacity, maximum_fuel, cargo_volume, leasing_cost)
 VALUES
     -- Boeing 737-600
     ('N100C9', 'Boeing', '737-600', 588, '108/130', 6875, 756, 245000),

@@ -1,9 +1,7 @@
 -- Purpose: Removes all entries from the airports table
 --          then inserts all of the airports in the list below
 -- Author:  Matt Burton
--- Notes:   The list does not include paris
---          Populations should be changed from the number in millions to the actual value
--- Execute: 1. Move to the comfort-airlines/ directory
+-- Execute: 1. Move to the /comfort-airlines directory
 --          2. Copy this file from the repository into the docker using: docker cp <local_file_path> <container_name_or_id>:<container_path>
 --              
 --              docker cp populate-airports-table.sql mariadb-container:/tmp/
