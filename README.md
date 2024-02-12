@@ -32,3 +32,27 @@ docker exec -it mariadb-container mariadb -u admin -p cloudnine
 ```
 
 2. When prompted, enter the password: Cloud9
+
+### How to reset the database
+
+To execute a .sql file in the databse you first need to copy it from teh repository into the docker. The general process involved copying the file, entering the database and executing the .sql file which can be done as follows:
+
+```bash
+#cp docker <file to be copied> mariadb-container:/tmp/
+#docker exec -it mariadb-container mariadb -u admin -p cloudnine
+#source /tmp/<file name>
+```
+
+If you want to reset the schema, and repopulate both the airport and aircraft tables, run the following commands in the terminal while in the /comfort-airlines directory:
+
+```bash
+cp docker docker/schema.sql mariadb-container:/tmp/
+cp docker populate-airports-table.sql mariadb-container:/tmp/
+cp docker populate-aircraft-table.sql mariadb-container:/tmp/
+
+docker exec -it mariadb-container mariadb -u admin -p cloudnine
+
+source /tmp/schema.sql
+source /tmp/populate-airports-table.sql
+source /tmp/populate-aircraft-table.sql
+```
