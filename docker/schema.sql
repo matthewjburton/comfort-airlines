@@ -17,24 +17,15 @@
 -- Disable foreign key checks
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Delete entities from existing tables to remove data
-DELETE FROM layovers;
-DELETE FROM route_legs;
-DELETE FROM flights;
-DELETE FROM aircraft;
-DELETE FROM routes;
-DELETE FROM airports;
-
--- Enable foreign key checks
-SET FOREIGN_KEY_CHECKS = 1;
-
 -- Drop existing tables if they exist
-DROP TABLE IF EXISTS layovers;
-DROP TABLE IF EXISTS route_legs;
+DROP TABLE IF EXISTS flights_routes;
 DROP TABLE IF EXISTS routes;
 DROP TABLE IF EXISTS flights;
 DROP TABLE IF EXISTS aircraft;
 DROP TABLE IF EXISTS airports;
+
+-- Enable foreign key checks
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- Create new tables
 CREATE TABLE IF NOT EXISTS airports (
@@ -69,7 +60,7 @@ CREATE TABLE IF NOT EXISTS flights (
     flight_duration_minutes INT,
     local_departure_time INT,
     local_arrival_time INT,
-    aircraft_id VARCHAR(20),
+    aircraft_id INT,
     flight_number INT,
     available_seats INT,
     on_time_bin BINARY,
@@ -88,7 +79,7 @@ CREATE TABLE IF NOT EXISTS routes (
     FOREIGN KEY (destination_airport_id) REFERENCES airports(airport_id)
 );
 
-CREATE TABLE IF NOT EXISTS route_legs (
+CREATE TABLE IF NOT EXISTS flights_routes (
     route_leg_id INT AUTO_INCREMENT PRIMARY KEY,
     route_id INT,
     flight_id INT,
@@ -96,9 +87,23 @@ CREATE TABLE IF NOT EXISTS route_legs (
     FOREIGN KEY (flight_id) REFERENCES flights(flight_id)
 );
 
-CREATE TABLE IF NOT EXISTS layovers (
-    layover_id INT AUTO_INCREMENT PRIMARY KEY,
-    route_id INT,
-    layover_time INT,
-    FOREIGN KEY (route_id) REFERENCES routes(route_id)
-);
+-- Set delimiter to define the trigger
+DELIMITER //
+
+--  Trigger to calculate the total number of gates at each airport
+CREATE TRIGGER calculate_total_gates
+BEFORE INSERT ON airports
+FOR EACH ROW
+BEGIN
+    DECLARE gates INT;
+    
+    -- Calculate total gates based on the provided formula
+    SET gates = LEAST(ROUND(NEW.metro_population / 1000000), IF(NEW.is_hub, 11, 5));
+    
+    -- Set the calculated value to the total_gates column
+    SET NEW.total_gates = gates;
+END;
+//
+
+-- Reset the delimeter
+DELIMITER ;
