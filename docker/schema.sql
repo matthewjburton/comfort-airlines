@@ -31,13 +31,13 @@ SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE IF NOT EXISTS airports (
     airport_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
-    abbreviation VARCHAR(3),
-    latitude FLOAT,
-    longitude FLOAT,
-    timezone_offset INT,
-    metro_population INT,
-    total_gates INT,
-    is_hub BINARY
+    abbreviation VARCHAR(3), 
+    latitude FLOAT, -- coordinate position
+    longitude FLOAT, -- coordinate position
+    timezone_offset INT, -- difference in hours from 0 in UTC
+    metro_population INT, -- amount of people
+    total_gates INT, -- number of gates
+    is_hub BINARY -- 1 for hub, 0 for normal airport
 );
 
 CREATE TABLE IF NOT EXISTS aircraft (
@@ -45,25 +45,24 @@ CREATE TABLE IF NOT EXISTS aircraft (
     tail_number VARCHAR(20),
     name VARCHAR(255),
     model VARCHAR(255),
-    maximum_speed INT,
-    maximum_capacity INT,
-    maximum_fuel INT,
-    cargo_volume INT,
-    leasing_cost INT
+    maximum_speed INT, -- miles per hour
+    maximum_capacity INT, -- number of people
+    maximum_fuel INT, -- amount in gallons
+    cargo_volume INT, -- volume in cubic feet
+    leasing_cost INT -- price in USD
 );
 
 CREATE TABLE IF NOT EXISTS flights (
     flight_id INT AUTO_INCREMENT PRIMARY KEY,
+    flight_number VARCHAR(20),
+    aircraft_id INT,
     departure_airport_id INT,
     destination_airport_id INT,
-    angle_of_flight FLOAT,
-    flight_duration_minutes INT,
-    local_departure_time INT,
-    local_arrival_time INT,
-    aircraft_id INT,
-    flight_number INT,
-    available_seats INT,
-    on_time_bin BINARY,
+    angle_of_flight FLOAT, -- angle from 0 to 360
+    flight_duration_minutes INT, -- time in minutes
+    local_departure_time INT,  -- time in UTC
+    local_arrival_time INT,  -- time in UTC
+    on_time_bin BINARY, -- 0 for on time, 1 for delayed
     gate_departure INT,
     gate_arrival INT,
     FOREIGN KEY (aircraft_id) REFERENCES aircraft(aircraft_id),
@@ -91,7 +90,7 @@ CREATE TABLE IF NOT EXISTS flights_routes (
 DELIMITER //
 
 --  Trigger to calculate the total number of gates at each airport
-CREATE TRIGGER calculate_total_gates
+CREATE TRIGGER IF NOT EXISTS calculate_total_gates
 BEFORE INSERT ON airports
 FOR EACH ROW
 BEGIN
