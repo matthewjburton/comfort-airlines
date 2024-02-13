@@ -1,18 +1,12 @@
--- Purpose: Removes all entries from the aircraft table
---          then inserts all of the aircraft in the list below
--- Author:  Justin Chen
--- Execute: 1. Move to the /comfort-airlines directory
---          2. Copy this file from the repository into the docker using: docker cp <local_file_path> <container_name_or_id>:<container_path>
---              
---              docker cp populate-aircraft-table.sql mariadb-container:/tmp/
---
---          3. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+-- Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
+-- Author:  Justin Chen and Matt Burton
+-- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
 --              
 --              docker exec -it mariadb-container mariadb -u admin -p cloudnine
 --
---          4. To execute the populate-aircraft-table.sql file: source <file_name.sql>
+--          2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
 --              
---              source /tmp/populate-aircraft-table.sql
+--              source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
 
 -- Clear the aircraft table
 DELETE FROM aircraft;

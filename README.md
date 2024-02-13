@@ -1,6 +1,6 @@
 # comfort-airlines
 
-## Softeware Engineering Capstone Project
+## Software Engineering Capstone Project
 
 ### Comment Example for Methods  
 
@@ -11,49 +11,60 @@ def XYZ(abc):
     return 123 # Single line comment explaining code if necessary
 ```
 
-### How to access the Docker container
+## Docker
 
-1. Make sure you have the Docker daemon running. (You can make sure it's running by opening the Docker Desktop app on your local machine)
-2. To open a new shell within the docker, run the following command in the terminal:
+Make sure you have the Docker daemon running. (Open the Docker Desktop app on your local machine)
+
+### Create a shell in the Docker
+
+To open a new shell within the docker, run the following command in the terminal:
 
 ```bash
 #docker exec -it <container name> <shell>
 docker exec -it mariadb-container sh
 ```
 
-3. To exit the Docker container, use the *exit* keyword
+To exit the Docker container, use the *exit* keyword
 
-### How to access the Database
+### How to enter the MariaDB container
 
-1. Execute the following command in the terminal to jump straight into the "cloudnine" database
+Make sure you are already within the docker by creating a shell as described above. To enter the MariaDB container, execute the following command:
+
+```bash
+# mariadb -u <username> -p
+mariadb -u admin -p
+```
+
+### How to enter the cloudnine database
+
+Make sure you are already within the MariaDB container as described above. To enter the cloudnine database, execute the following sql command:
+
+```bash
+# USE <database name>;
+USE cloudnine;
+```
+
+### How to directly enter the Database
+
+To jump straight into the "cloudnine" database, execute the following command:
 
 ```bash
 #docker exec -it <container name> mariadb -u <username> -p <database name>
 docker exec -it mariadb-container mariadb -u admin -p cloudnine
 ```
 
-2. When prompted, enter the password: Cloud9
+### How to execute .sql files
 
-### How to reset the database
-
-To execute a .sql file in the databse you first need to copy it from teh repository into the docker. The general process involved copying the file, entering the database and executing the .sql file which can be done as follows:
+.sql files are linked to the database using a docker volume. The /docker/sql-files directory is the volume designated for .sql files that will be run when the docker is initialized. Any .sql files in this folder are also accessible within the docker through the /docker-entrypoint-initdb.d directory. You can execute .sql files using the source command and the file path as follows:
 
 ```bash
-#docker cp <file to be copied> mariadb-container:/tmp/
-#docker exec -it mariadb-container mariadb -u admin -p cloudnine
-#source /tmp/<file name>
+#source /docker-entrypoint-initdb.d/<file_name.sql>
 ```
 
-If you want to reset the schema, and repopulate both the airport and aircraft tables, run the following commands in the terminal while in the /comfort-airlines directory:
+If you want to reset the schema, repopulate the airport table, or the aircraft table, run the following command(s) in the cloudnine database:
 
 ```bash
-docker cp docker/schema.sql mariadb-container:/tmp/
-docker cp populate-airports-table.sql mariadb-container:/tmp/
-docker cp populate-aircraft-table.sql mariadb-container:/tmp/
-
-docker exec -it mariadb-container mariadb -u admin -p cloudnine
-
-source /tmp/schema.sql
-source /tmp/populate-airports-table.sql
-source /tmp/populate-aircraft-table.sql
+source /docker-entrypoint-initdb.d/schema.sql
+source /docker-entrypoint-initdb.d/populate-airports-table.sql
+source /docker-entrypoint-initdb.d/populate-aircraft-table.sql
 ```

@@ -1,18 +1,12 @@
--- Purpose: Removes all entries from the airports table
---          then inserts all of the airports in the list below
+-- Purpose: Removes all entries from the airports table then inserts all of the airports in the list below
 -- Author:  Matt Burton
--- Execute: 1. Move to the /comfort-airlines directory
---          2. Copy this file from the repository into the docker using: docker cp <local_file_path> <container_name_or_id>:<container_path>
---              
---              docker cp populate-airports-table.sql mariadb-container:/tmp/
---
---          3. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+-- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
 --              
 --              docker exec -it mariadb-container mariadb -u admin -p cloudnine
 --
---          4. To execute the populate-airports-table.sql file: source <file_name.sql>
+--          2. To execute the populate-airport-table.sql file: source <file/path/file_name.sql>
 --              
---              source /tmp/populate-airports-table.sql
+--              source /docker-entrypoint.initdb.d/populate-airport-table.sql
 
 -- Clear the airports table
 DELETE FROM airports;
