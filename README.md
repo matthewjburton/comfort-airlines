@@ -17,7 +17,8 @@ def XYZ(abc):
 2. To open a new shell within the docker, run the following command in the terminal:
 
 ```bash
-docker exec -it mariadb sh
+#docker exec -it <container name> <shell>
+docker exec -it mariadb-container sh
 ```
 
 3. To exit the Docker container, use the *exit* keyword

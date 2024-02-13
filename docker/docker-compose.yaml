@@ -5,7 +5,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mariadb-data:/var/lib/mysql
+      - ./mariadb-data:/var/lib/mysql # Mounts a volume for MariaDB data
+      - ./sql-files:/docker-entrypoint-initdb.d # Mounts a volume for SQL files
     restart: always
     env_file:
       - .env
@@ -16,9 +17,9 @@ services:
       - MARIADB_PASSWORD=${DB_USER_PASS}
     container_name: mariadb-container
     image: mariadb:11.2
-  
+
   adminer:
     image: adminer
     restart: always
-    ports: 
+    ports:
       - 8080:8080
