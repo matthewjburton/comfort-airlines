@@ -2,12 +2,12 @@
 
 ## Meeting Information
 
-**Date:** 1/11/24
-**Start Time:** 1:35 pm
-**End Time:** 3:15 pm
-**Present Attendees:** Matt, Ryan, Kevin, McHale, Justin, Jeremy
-**Absent Attendees:** n/a
-**Scribe:** Matt
+**Date:** 1/11/24  
+**Start Time:** 1:35 pm  
+**End Time:** 3:15 pm  
+**Present Attendees:** Matt, Ryan, Kevin, McHale, Justin, Jeremy  
+**Absent Attendees:** n/a  
+**Scribe:** Matt  
 
 ## Sprint Recap
 
