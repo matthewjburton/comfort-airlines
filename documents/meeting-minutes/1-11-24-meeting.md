@@ -19,18 +19,18 @@ Matt
 
 ## Agenda
 
-Get everyone access to Jira
-Explain GitHub workflow
-Explain Jira agile development workflow
-Estimate how many total points we can complete within a week
-Explain the scrum development point system
-Break down the project into as many identifiable parts as possible
-Organize issues from necessary to nice to have
-Organize nice to have parts from most interested in trying to implement to the least
-Assign scrum points to every task
-Divvy up issues for the week to each member of the group
-Document what language we choose to work with
-Choose a team name
+[X] Get everyone access to Jira  
+[X] Explain GitHub workflow  
+[X] Explain Jira agile development workflow  
+[X] Estimate how many total points we can complete within a week  
+[X] Explain the scrum development point system  
+[X] Break down the project into as many identifiable parts as possible  
+[X] Organize issues from necessary to nice to have  
+[X] Organize nice to have parts from most interested in trying to implement to the least  
+[X] Assign scrum points to every task  
+[X] Divvy up issues for the week to each member of the group  
+[X] Document what language we choose to work with  
+[X] Choose a team name  
 
 ## Synopsis
 
