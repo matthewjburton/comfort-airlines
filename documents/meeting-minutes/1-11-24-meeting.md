@@ -59,18 +59,11 @@ We decided on the team name Cloud Nine.
 
 ## Action Items
 
-- **Assignee:** All team members
-- **Task:** Using Jira, create a test issue, a branch, make a change, commit, and merge their change to ensure that everyone understands the Jira, GitHub, and VS Code workflow
-- **Due Date:** 1/18/24
+## Action Items
 
-- **Assignee:** All team members
-- **Task:** Research potential language options and come prepared with their strengths and weaknesses
-- **Due Date:** 1/18/24
-
-- **Assignee:** All team members
-- **Task:** Review the project.pdf file on Blackboard
-- **Due Date:** 1/18/24
-
-- **Assignee:** McHale
-- **Task:** Write a first draft of the great circle formula
-- **Due Date:** 1/18/24
+| **Assignee**       | **Task**                                                                                                                | **Due Date** |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------|--------------|
+| All team members | Using Jira, create a test issue, a branch, make a change, commit, and merge their change to ensure workflow understanding | 1/18/24      |
+| All team members | Research potential language options and come prepared with their strengths and weaknesses                              | 1/18/24      |
+| All team members | Review the project.pdf file on Blackboard                                                                             | 1/18/24      |
+| McHale            | Write a first draft of the great circle formula                                                                       | 1/18/24      |
