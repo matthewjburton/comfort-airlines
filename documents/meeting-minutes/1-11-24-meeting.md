@@ -59,8 +59,6 @@ We decided on the team name Cloud Nine.
 
 ## Action Items
 
-## Action Items
-
 | **Assignee**       | **Task**                                                                                                                | **Due Date** |
 |-------------------|-----------------------------------------------------------------------------------------------------------------------|--------------|
 | All team members | Using Jira, create a test issue, a branch, make a change, commit, and merge their change to ensure workflow understanding | 1/18/24      |
