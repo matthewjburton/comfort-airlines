@@ -35,9 +35,9 @@
 
 ## Agenda
 
-- Review and finalize documents and code for checkpoint one
-- Compile checkpoint one submission
-- Review outstanding pull requests on GitHub
+- [X] Review and finalize documents and code for checkpoint one
+- [ ] Compile checkpoint one submission
+- [ ] Review outstanding pull requests on GitHub
 
 ## Synopsis
 
