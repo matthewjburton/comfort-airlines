@@ -26,3 +26,12 @@
 - **Assignee(s):** Matt and Justin
 - **Date Fixed:** 2/12/24  
 - **Solution:** Ensuring the aircraft attributes matched the ERD and that the ERD was functional
+
+## Bug 4
+
+- **Issue Description:** Pushing the meeting minutes to the documentation branch resulted in a divergent branch issue
+- **Date Found:** 2/15/24
+- **Action Plan:** Rebase the branch
+- **Assignee(s):** Matt
+- **Date Fixed:** 2/15/24  
+- **Solution:** Ran git rebase
