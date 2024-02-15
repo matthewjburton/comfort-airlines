@@ -25,14 +25,91 @@
 ### Database
 
 - Well formed and Active ERD
+    https://lucid.app/lucidchart/5309d00f-f70a-4fd5-8814-b1b4376db552/edit?invitationId=inv_474a4f67-407a-4268-8d16-66c24e7f123d&page=0_0#
 - Relationships identified (0, many, 1)
 - Table names
 - Table columns
 - Column data types
 - Null/not null
 - Estimated number of rows
-- Safe accessibility (update/insert/select)
-- Departure airport must not equal destination airport
+- Protected or Unprotected (update/insert/select)
+
++---------------------+
+| Tables_in_cloudnine |
++---------------------+
+| aircraft            |
+| airports            |
+| flights             |
+| flights_routes      |
+| routes              |
++---------------------+
+
+[ Aircraft Table - 55 rows - Protected - Hardcoded]
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| aircraft_id      | int(11)      | NO   | PRI | NULL    | auto_increment |
+| tail_number      | varchar(20)  | YES  |     | NULL    |                |
+| name             | varchar(255) | YES  |     | NULL    |                |
+| model            | varchar(255) | YES  |     | NULL    |                |
+| maximum_speed    | int(11)      | YES  |     | NULL    |                |
+| maximum_capacity | int(11)      | YES  |     | NULL    |                |
+| maximum_fuel     | int(11)      | YES  |     | NULL    |                |
+| cargo_volume     | int(11)      | YES  |     | NULL    |                |
+| leasing_cost     | int(11)      | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+
+[ Airports Table - 31 rows - Protected - Hardcoded ]
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| airport_id       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name             | varchar(255) | YES  |     | NULL    |                |
+| abbreviation     | varchar(3)   | YES  |     | NULL    |                |
+| latitude         | float        | YES  |     | NULL    |                |
+| longitude        | float        | YES  |     | NULL    |                |
+| timezone_offset  | int(11)      | YES  |     | NULL    |                |
+| metro_population | int(11)      | YES  |     | NULL    |                |
+| total_gates      | int(11)      | YES  |     | NULL    |                |
+| is_hub           | binary(1)    | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+
+[ Flights Table - 100+ rows - Protected - Softcoded and updateable ]
++-------------------------+-------------+------+-----+---------+----------------+
+| Field                   | Type        | Null | Key | Default | Extra          |
++-------------------------+-------------+------+-----+---------+----------------+
+| flight_id               | int(11)     | NO   | PRI | NULL    | auto_increment |
+| flight_number           | varchar(20) | YES  |     | NULL    |                |
+| aircraft_id             | int(11)     | YES  | MUL | NULL    |                |
+| departure_airport_id    | int(11)     | YES  | MUL | NULL    |                |
+| destination_airport_id  | int(11)     | YES  | MUL | NULL    |                |
+| angle_of_flight         | float       | YES  |     | NULL    |                |
+| flight_duration_minutes | int(11)     | YES  |     | NULL    |                |
+| local_departure_time    | int(11)     | YES  |     | NULL    |                |
+| local_arrival_time      | int(11)     | YES  |     | NULL    |                |
+| on_time_bin             | binary(1)   | YES  |     | NULL    |                |
+| gate_departure          | int(11)     | YES  |     | NULL    |                |
+| gate_arrival            | int(11)     | YES  |     | NULL    |                |
++-------------------------+-------------+------+-----+---------+----------------+
+
+[ Flight Routes Table - 100+ rows - Protected - Softcoded and updateable ]
++--------------+---------+------+-----+---------+----------------+
+| Field        | Type    | Null | Key | Default | Extra          |
++--------------+---------+------+-----+---------+----------------+
+| route_leg_id | int(11) | NO   | PRI | NULL    | auto_increment |
+| route_id     | int(11) | YES  | MUL | NULL    |                |
+| flight_id    | int(11) | YES  | MUL | NULL    |                |
++--------------+---------+------+-----+---------+----------------+
+
+
+[ Routes Table - 100+ rows - Protected - Softcoded and updateable ]
++------------------------+---------+------+-----+---------+----------------+
+| Field                  | Type    | Null | Key | Default | Extra          |
++------------------------+---------+------+-----+---------+----------------+
+| route_id               | int(11) | NO   | PRI | NULL    | auto_increment |
+| starting_airport_id    | int(11) | YES  | MUL | NULL    |                |
+| destination_airport_id | int(11) | YES  | MUL | NULL    |                |
++------------------------+---------+------+-----+---------+----------------+
 
 ### Docker
 
