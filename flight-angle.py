@@ -11,7 +11,7 @@ class Airport:#Temp Airport class
         self.latitude = latitude
         self.longitude = longitude
 
-# Returns a float (negative for time saved, positive for time gained)
+# Returns a float to multiply with flight time to find the actual time the flight will take
 def calculatePercentage(startAirport, endAirport, wind=.045):
 
     dif = endAirport.longitude-startAirport.longitude
