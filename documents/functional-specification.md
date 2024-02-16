@@ -15,21 +15,21 @@
 - READMEs talking about use cases and functionality
 
 [ clock.py ]
-Purpose:  Track the current simulation time and
-          manage incrementing time minute by minute
-Author:   Matt Burton
-Notes:    Currently, no support for daylight savings time
-          This class is not meant to be a stand-alone class, instead
-          it will be used by the main simulation
-Execute:  1. Move to the comfort-airlines/ directory
-          2. Execute the file using the following command in the terminal:
-              python3 clock.py
+-- Purpose:  Track the current simulation time and
+--           manage incrementing time minute by minute
+-- Author:   Matt Burton
+-- Notes:    Currently, no support for daylight savings time
+--           This class is not meant to be a stand-alone class, instead
+--           it will be used by the main simulation
+-- Execute:  1. Move to the comfort-airlines/ directory
+--           2. Execute the file using the following command in the terminal:
+--               python3 clock.py
 
 [ great-circle.py ]
-Purpose:  Return the distance in miles between two airports
-Author:   Matt Burton
-Notes:    The Airport class is entirely temprorary
-          There is example usage below the function
+-- Purpose:  Return the distance in miles between two airports
+-- Author:   Matt Burton
+-- Notes:    The Airport class is entirely temprorary
+--           There is example usage below the function
 
 [ schema.sql ]
 -- Purpose: Removes all tables from the database and recreates them using the schema below
@@ -167,8 +167,10 @@ Notes:    The Airport class is entirely temprorary
 - Must be able to run container with populated data from Github branch
 
 [ docker-compose.yaml ]
-Configurations for docker are listed in here which are parsed when to composing up an
-instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.
+-- Configurations for docker are listed in here which are parsed when to composing up an
+-- instance with key value pairs. This specifies the volumes to mount for SQL files and 
+-- MariaDB data, environment values like database name and password prompt, and GUI for 
+-- database.
 
 Compose command: docker compose up mariadb -d
 
