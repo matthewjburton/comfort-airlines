@@ -77,20 +77,18 @@ Execute: 1. Move to the comfort-airlines/ directory
 - Estimated number of rows
 - Protected or Unprotected (update/insert/select)
 
-+---------------------+
 | Tables_in_cloudnine |
-+---------------------+
+|---------------------|
 | aircraft            |
 | airports            |
 | flights             |
 | flights_routes      |
 | routes              |
-+---------------------+
+
 
 [ Aircraft Table - 55 rows - Protected - Hardcoded ]
-+------------------+--------------+------+-----+---------+----------------+
 | Field            | Type         | Null | Key | Default | Extra          |
-+------------------+--------------+------+-----+---------+----------------+
+|------------------|--------------|------|-----|---------|----------------|
 | aircraft_id      | int(11)      | NO   | PRI | NULL    | auto_increment |
 | tail_number      | varchar(20)  | YES  |     | NULL    |                |
 | name             | varchar(255) | YES  |     | NULL    |                |
@@ -100,12 +98,11 @@ Execute: 1. Move to the comfort-airlines/ directory
 | maximum_fuel     | int(11)      | YES  |     | NULL    |                |
 | cargo_volume     | int(11)      | YES  |     | NULL    |                |
 | leasing_cost     | int(11)      | YES  |     | NULL    |                |
-+------------------+--------------+------+-----+---------+----------------+
+
 
 [ Airports Table - 31 rows - Protected - Hardcoded ]
-+------------------+--------------+------+-----+---------+----------------+
 | Field            | Type         | Null | Key | Default | Extra          |
-+------------------+--------------+------+-----+---------+----------------+
+|------------------|--------------|------|-----|---------|----------------|
 | airport_id       | int(11)      | NO   | PRI | NULL    | auto_increment |
 | name             | varchar(255) | YES  |     | NULL    |                |
 | abbreviation     | varchar(3)   | YES  |     | NULL    |                |
@@ -115,12 +112,11 @@ Execute: 1. Move to the comfort-airlines/ directory
 | metro_population | int(11)      | YES  |     | NULL    |                |
 | total_gates      | int(11)      | YES  |     | NULL    |                |
 | is_hub           | binary(1)    | YES  |     | NULL    |                |
-+------------------+--------------+------+-----+---------+----------------+
+
 
 [ Flights Table - 100+ rows - Protected - Softcoded and updateable ]
-+-------------------------+-------------+------+-----+---------+----------------+
 | Field                   | Type        | Null | Key | Default | Extra          |
-+-------------------------+-------------+------+-----+---------+----------------+
+|-------------------------|-------------|------|-----|---------|----------------|
 | flight_id               | int(11)     | NO   | PRI | NULL    | auto_increment |
 | flight_number           | varchar(20) | YES  |     | NULL    |                |
 | aircraft_id             | int(11)     | YES  | MUL | NULL    |                |
@@ -133,26 +129,24 @@ Execute: 1. Move to the comfort-airlines/ directory
 | on_time_bin             | binary(1)   | YES  |     | NULL    |                |
 | gate_departure          | int(11)     | YES  |     | NULL    |                |
 | gate_arrival            | int(11)     | YES  |     | NULL    |                |
-+-------------------------+-------------+------+-----+---------+----------------+
+
 
 [ Flight Routes Table - 100+ rows - Protected - Softcoded and updateable ]
-+--------------+---------+------+-----+---------+----------------+
 | Field        | Type    | Null | Key | Default | Extra          |
-+--------------+---------+------+-----+---------+----------------+
+|--------------|---------|------|-----|---------|----------------|
 | route_leg_id | int(11) | NO   | PRI | NULL    | auto_increment |
 | route_id     | int(11) | YES  | MUL | NULL    |                |
 | flight_id    | int(11) | YES  | MUL | NULL    |                |
-+--------------+---------+------+-----+---------+----------------+
+
 
 
 [ Routes Table - 100+ rows - Protected - Softcoded and updateable ]
-+------------------------+---------+------+-----+---------+----------------+
 | Field                  | Type    | Null | Key | Default | Extra          |
-+------------------------+---------+------+-----+---------+----------------+
+|------------------------|---------|------|-----|---------|----------------|
 | route_id               | int(11) | NO   | PRI | NULL    | auto_increment |
 | starting_airport_id    | int(11) | YES  | MUL | NULL    |                |
 | destination_airport_id | int(11) | YES  | MUL | NULL    |                |
-+------------------------+---------+------+-----+---------+----------------+
+
 
 ### Docker
 
