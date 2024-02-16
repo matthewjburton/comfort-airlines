@@ -4,7 +4,7 @@
 # Notes:    Currently, no support for daylight savings time
 #           This class is not meant to be a stand-alone class, instead
 #           it will be used by the main simulation
-# Execute:  1. Move to the comfort-airlines/ directory
+# Execute:  1. Move to the /comfort-airlines directory
 #           2. Execute the file using the following command in the terminal:
 #               python3 clock.py
 
