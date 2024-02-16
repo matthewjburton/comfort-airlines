@@ -14,6 +14,49 @@
 - Private/public data structures and why
 - READMEs talking about use cases and functionality
 
+[ clock.py ]
+Purpose:  Track the current simulation time and
+          manage incrementing time minute by minute
+Author:   Matt Burton
+Notes:    Currently, no support for daylight savings time
+          This class is not meant to be a stand-alone class, instead
+          it will be used by the main simulation
+Execute:  1. Move to the comfort-airlines/ directory
+          2. Execute the file using the following command in the terminal:
+              python3 clock.py
+
+[ great-circle.py ]
+Purpose:  Return the distance in miles between two airports
+Author:   Matt Burton
+Notes:    The Airport class is entirely temprorary
+          There is example usage below the function
+
+[ schema.sql ]
+Purpose: Build the infrastructure of the tables
+Author:  Matt Burton and Ryan Hirscher
+Notes:   Currently finalized, built for predesigned routes.
+Execute: Run or restart docker, it will build automatically
+         -Visit the README for running docker
+
+[ populate-airports-table.sql ]
+Purpose: Removes all entries from the airports table
+         then inserts all of the airports in the list below
+Author:  Matt Burton
+Notes:   The list does not include paris
+         Populations should be changed from the number in millions to the actual value
+Execute: 1. Move to the comfort-airlines/ directory
+         2. Copy this file from the repository into the docker using: docker cp <local_file_path> <container_name_or_id>:<container_path>
+             
+             docker cp populate-airports-table.sql mariadb-container:/tmp/
+
+         3. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+              
+             docker exec -it mariadb-container mariadb -u admin -p cloudnine
+
+         4. To execute the populate-airports-table.sql file: source <file_name.sql>
+              
+             source /tmp/populate-airports-table.sql
+
 ### User Manual
 
 - How client can make and run
@@ -44,7 +87,7 @@
 | routes              |
 +---------------------+
 
-[ Aircraft Table - 55 rows - Protected - Hardcoded]
+[ Aircraft Table - 55 rows - Protected - Hardcoded ]
 +------------------+--------------+------+-----+---------+----------------+
 | Field            | Type         | Null | Key | Default | Extra          |
 +------------------+--------------+------+-----+---------+----------------+
@@ -118,6 +161,12 @@
 - README and instructions on how to use
 - IDE integration with Github (user can commit, pull, merge, and branch)
 - Must be able to run container with populated data from Github branch
+
+[ docker-compose.yaml ]
+Configurations for docker are listed in here which are parsed when to composing up an
+instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.
+
+Compose command: docker compose up mariadb -d
 
 ### Simulation
 
