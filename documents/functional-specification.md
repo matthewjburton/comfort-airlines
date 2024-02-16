@@ -35,36 +35,30 @@
 - Purpose: Removes all tables from the database and recreates them using the schema below
 - Authors: Matt Burton
 - Editor: Ryan Hirscher
-- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
--              
--              docker exec -it mariadb-container mariadb -u admin -p cloudnine
-
--          2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
--              
--              source /docker-entrypoint.initdb.d/schema.sql
+- Execute: 
+    1. Log into the database:  docker exec -it <container name> mariadb -u <username> -p <database name>                         
+-      docker exec -it mariadb-container mariadb -u admin -p cloudnine
+    2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
+-       source /docker-entrypoint.initdb.d/schema.sql
 
 [ populate-airports-table.sql ]
 - Purpose: Removes all entries from the airports table then inserts all of the airports in the list below
 - Author:  Matt Burton
-- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
--              
--              docker exec -it mariadb-container mariadb -u admin -p cloudnine
--
--          2. To execute the populate-airport-table.sql file: source <file/path/file_name.sql>
--              
--              source /docker-entrypoint.initdb.d/populate-airport-table.sql
+- Execute:
+    1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+-       docker exec -it mariadb-container mariadb -u admin -p cloudnine
+    2. To execute the populate-airport-table.sql file: source <file/path/file_name.sql>
+-       source /docker-entrypoint.initdb.d/populate-airport-table.sql
 
 
 [ populate-aircraft-table.sql ]
 - Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
 - Author:  Justin Chen and Matt Burton
-- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
--              
--              docker exec -it mariadb-container mariadb -u admin -p cloudnine
-
--          2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
--              
--              source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
+- Execute: 
+    1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+-       docker exec -it mariadb-container mariadb -u admin -p cloudnine
+    2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
+-       source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
 
 
 ### User Manual
