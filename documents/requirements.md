@@ -59,6 +59,7 @@ Table containing all flight information for a specific day, including starting a
 ### Great Circle Function
 
 - Function takes two Airport Objects as inputs, and returns the distance in miles accounting for the Earth's curvature
+
 ### Flight Turnaround Time Function
 
 - Function used to calculate how long a flight takes, takes into account flight % gain/loss, plane speed, account for events, and distance between airports
@@ -85,22 +86,22 @@ Table containing all flight information for a specific day, including starting a
 ## Non-Functional Requirements
 
 - Requirements document
-    - This document
-    - Contains all the functional and non functional requirements for our project, is updated when new requirements are needed
+  - This document
+  - Contains all the functional and non functional requirements for our project, is updated when new requirements are needed
 - Create the Functional Specification document
-    - Contains function specific documentation, such as input, what the function does, and output
+  - Contains function specific documentation, such as input, what the function does, and output
 - Meeting Minutes
-    - Group notes that summarize our discussions, planning, and accomplishments during a meeting
+  - Group notes that summarize our discussions, planning, and accomplishments during a meeting
 - Gantt Chart/PERT Chart
-    - Outlines our timeline for completing different aspects of the project such as planning, implementing, debugging, and testing
+  - Outlines our timeline for completing different aspects of the project such as planning, implementing, debugging, and testing
 - Test Plan
-    - Document detailing how we will go about testing our product
+  - Document detailing how we will go about testing our product
 - Defect Logs - track bugs
-    - Document detailing a chronological order to bugs as we encountered them
+  - Document detailing a chronological order to bugs as we encountered them
 - User manual
-    - Document outlining how to use/run our simulation
+  - Document outlining how to use/run our simulation
 - Properly Commented Code
-    - Easy to read, understand, and modify code through concise commenting
+  - Easy to read, understand, and modify code through concise commenting
 - Reflective Essay (individual)
 - Journaling
 
