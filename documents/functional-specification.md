@@ -33,7 +33,8 @@ Notes:    The Airport class is entirely temprorary
 
 [ schema.sql ]
 -- Purpose: Removes all tables from the database and recreates them using the schema below
--- Authors: Matt Burton and Ryan Hirscher 
+-- Authors: Matt Burton
+-- Editor: Ryan Hirscher
 -- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
 --              
 --              docker exec -it mariadb-container mariadb -u admin -p cloudnine
