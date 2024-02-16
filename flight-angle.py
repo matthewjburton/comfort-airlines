@@ -1,5 +1,7 @@
-#This file will be used to calculate the % of flight time that the flight will actually take
-#It will calculate gain or loss based on wind direction + bearing angle
+#Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
+#Author:  Jeremy Maas
+#Notes:   Airport class is temporary
+#         Example usages shown below
 
 
 import math
