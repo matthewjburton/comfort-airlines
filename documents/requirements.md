@@ -64,9 +64,10 @@ Table containing all flight information for a specific day, including starting a
 - Function used to calculate how long a flight takes, takes into account flight % gain/loss, plane speed, account for events, and distance between airports
 - Leverages Clock
 
-### Flight Direction Function
+### Flight Angle Function
 
-- Calculates % gain or loss on flight based on direction, Leverages given % values for east/west and updates percentage based on latitude changes
+- Calculates bearing angle between two airports
+- Then leverages the angle and given wind percentage to find the percentage time saved or gained based on the angle
 
 ### Flight Class pulling from timetable
 
