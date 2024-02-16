@@ -69,7 +69,7 @@
 ### Database
 
 - Well formed and Active ERD
-    https://lucid.app/lucidchart/5309d00f-f70a-4fd5-8814-b1b4376db552/edit?invitationId=inv_474a4f67-407a-4268-8d16-66c24e7f123d&page=0_0#
+- https://lucid.app/lucidchart/5309d00f-f70a-4fd5-8814-b1b4376db552/edit?invitationId=inv_474a4f67-407a-4268-8d16-66c24e7f123d&page=0_0#
 - Relationships identified (0, many, 1)
 - Table names
 - Table columns
@@ -160,7 +160,7 @@
 [ docker-compose.yaml ]
 - Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.
 
-Compose command: docker compose up mariadb -d
+- Compose command: docker compose up mariadb -d
 
 ### Simulation
 
