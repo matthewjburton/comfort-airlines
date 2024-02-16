@@ -6,7 +6,7 @@
 --
 --          2. To execute the populate-flights-table.sql file: source <file/path/file_name.sql>
 --              
---              source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
+--              source /docker-entrypoint.initdb.d/populate-flights-table.sql
 
 
 -- Clears the flights table.
