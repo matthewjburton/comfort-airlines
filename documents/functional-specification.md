@@ -33,7 +33,7 @@
 - Authors: Matt Burton
 - Editor: Ryan Hirscher
 - Execute: 
-    1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u username -p &lt;database name&gt;                         
+    1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &gt;username&gt; -p &lt;database name&gt;                         
 -      docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/schema.sql
@@ -42,7 +42,7 @@
 - Purpose: Removes all entries from the airports table then inserts all of the airports in the list below
 - Author:  Matt Burton
 - Execute:
-    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u username -p &lt;database name&gt;              
+    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &gt;username&gt; -p &lt;database name&gt;              
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-airport-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/populate-airport-table.sql
@@ -52,7 +52,7 @@
 - Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
 - Author:  Justin Chen and Matt Burton
 - Execute: 
-    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u username -p &lt;database name&gt;             
+    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &gt;usernam&gt; -p &lt;database name&gt;             
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
