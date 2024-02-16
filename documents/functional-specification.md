@@ -32,37 +32,46 @@ Notes:    The Airport class is entirely temprorary
           There is example usage below the function
 
 [ schema.sql ]
-Purpose: Build the infrastructure of the tables
-Author:  Matt Burton and Ryan Hirscher
-Notes:   Currently finalized, built for predesigned routes.
-Execute: Run or restart docker, it will build automatically
-         -Visit the README for running docker
+-- Purpose: Removes all tables from the database and recreates them using the schema below
+-- Authors: Matt Burton and Ryan Hirscher 
+-- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+--              
+--              docker exec -it mariadb-container mariadb -u admin -p cloudnine
+--
+--          2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
+--              
+--              source /docker-entrypoint.initdb.d/schema.sql
 
 [ populate-airports-table.sql ]
-Purpose: Removes all entries from the airports table
-         then inserts all of the airports in the list below
-Author:  Matt Burton
-Notes:   The list does not include paris
-         Populations should be changed from the number in millions to the actual value
-Execute: 1. Move to the comfort-airlines/ directory
-         2. Copy this file from the repository into the docker using: docker cp <local_file_path> <container_name_or_id>:<container_path>
-             
-             docker cp populate-airports-table.sql mariadb-container:/tmp/
+-- Purpose: Removes all entries from the airports table then inserts all of the airports in the list below
+-- Author:  Matt Burton
+-- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+--              
+--              docker exec -it mariadb-container mariadb -u admin -p cloudnine
+--
+--          2. To execute the populate-airport-table.sql file: source <file/path/file_name.sql>
+--              
+--              source /docker-entrypoint.initdb.d/populate-airport-table.sql
 
-         3. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
-              
-             docker exec -it mariadb-container mariadb -u admin -p cloudnine
 
-         4. To execute the populate-airports-table.sql file: source <file_name.sql>
-              
-             source /tmp/populate-airports-table.sql
+[ populate-aircraft-table.sql ]
+-- Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
+-- Author:  Justin Chen and Matt Burton
+-- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+--              
+--              docker exec -it mariadb-container mariadb -u admin -p cloudnine
+--
+--          2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
+--              
+--              source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
+
 
 ### User Manual
 
 - How client can make and run
 - Clear concise manual on surface level goals, usage, and reveals
 - How to read and understand what is happening in simulation
-- How to generate a route from one airport to any other airport (without input complex queries)
+- How to lookup a route from one airport to any other airport (without input complex queries)
 - Application is simple and straightforward
 
 ### Database
