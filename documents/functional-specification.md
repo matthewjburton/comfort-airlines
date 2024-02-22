@@ -14,6 +14,15 @@
 - Private/public data structures and why
 - READMEs talking about use cases and functionality
 
+[ flight-angle.py ]
+- Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
+- Author:  Jeremy Maas
+- Notes:   Airport class is temporary
+- Execute:
+    1. Move to the comfort-airlines/ directory
+    2. Execute the file using the following command in the terminal:
+-       python3 flight-angle.py
+
 [ clock.py ]
 - Purpose:  Track the current simulation time and manage incrementing time minute by minute
 - Author:   Matt Burton
