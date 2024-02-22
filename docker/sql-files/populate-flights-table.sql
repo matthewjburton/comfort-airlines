@@ -15,7 +15,7 @@ CREATE TRIGGER IF NOT EXISTS calculate_flight_angle
 BEFORE INSERT ON flights
 FOR EACH ROW
 BEGIN
-    IF NEW.angle_of_flight I THEN
+    IF NEW.angle_of_flight IS NULL THEN
         SET @departure_lat = (SELECT latitude FROM airports WHERE airport_id = NEW.departure_airport_id);
         SET @departure_lon = (SELECT longitude FROM airports WHERE airport_id = NEW.departure_airport_id);
         SET @destination_lat = (SELECT latitude FROM airports WHERE airport_id = NEW.destination_airport_id);
