@@ -6,12 +6,17 @@
 --
 --          2. To execute the populate-flights-table.sql file: source <file/path/file_name.sql>
 --              
---              source /docker-entrypoint.initdb.d/populate-flights-table.sql
+--              source /docker-entrypoint-initdb.d/populate-flights-table.sql
 
 
+
+
+/*
 DELIMITER //
 
-CREATE TRIGGER IF NOT EXISTS calculate_flight_angle
+DROP TRIGGER IF EXISTS calculate_flight_angle1;
+
+CREATE TRIGGER IF NOT EXISTS calculate_flight_angle1
 BEFORE INSERT ON flights
 FOR EACH ROW
 BEGIN
@@ -28,7 +33,7 @@ END;
 //
 
 DELIMITER ;
-
+*/
 
 -- Clears the flights table.
 DELETE FROM flights;
