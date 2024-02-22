@@ -1,35 +1,31 @@
 #Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
-#Author:  Jeremy Maas
-#Notes:   Airport class is temporary
-#         Example usages shown below
+#Authors:  Jeremy Maas, Matt Burton, McHale Trotter, Ryan Hirscher, Kevin Sampson, Justin Chen
+
 
 
 import math
+import airport
 
-class Airport:#Temp Airport class
-    def __init__(self, latitude, longitude):
-        self.latitude = latitude
-        self.longitude = longitude
 
 # Returns a float to multiply with flight time to find the actual time the flight will take
 def calculatePercentage(startAirport, endAirport, wind=.045):
 
-    dif = endAirport.longitude-startAirport.longitude
+    dif = endAirport.get_airport_longitude()-startAirport.get_airport_longitude
 
     #Edge case: Flight is perfectly vertical, wind has no effect
     if(dif == 0):
         return 1
 
     #Edge case: Flight is perfectly horizontal, wind has full effect
-    if(startAirport.latitude == endAirport.latitude):
+    if(startAirport.get_airport_latitude() == endAirport.get_airport_latitude()):
         if(dif<0):
             return 1+wind #East to West, Time added
         else:
             return 1-wind #West to East, Time saved
 
     #Math to determine the bearing angle: will yield value between -180 to 180
-    X = math.cos(math.radians(endAirport.latitude)) * math.sin(math.radians(dif))
-    Y = math.cos(math.radians(startAirport.latitude)) * math.sin(math.radians(endAirport.latitude)) - math.sin(math.radians(startAirport.latitude) )* math.cos(math.radians(endAirport.latitude)) * math.cos(math.radians(dif))
+    X = math.cos(math.radians(endAirport.get_airport_latitude())) * math.sin(math.radians(dif))
+    Y = math.cos(math.radians(startAirport.get_airport_latitude())) * math.sin(math.radians(endAirport.get_airport_latitude())) - math.sin(math.radians(startAirport.get_airport_latitude()) )* math.cos(math.radians(endAirport.get_airport_latitude())) * math.cos(math.radians(dif))
 
     Z = math.degrees(math.atan2(X,Y))#Z is the variable that will be manipulated, as it is the bearing angle between airports
 
@@ -50,26 +46,3 @@ def calculatePercentage(startAirport, endAirport, wind=.045):
 
 
     return Z #Multiply this result by flight time to get actual flight time accounting for wind
-
-#Test Airports below
-
-JFK = Airport(40.641766, -73.780968)
-LAX = Airport(33.9416, -118.4085)
-ORD = Airport(41.978611, -87.904724)
-DFW = Airport(32.89748, -97.040443)
-KC = Airport(39.099912,-94.581213)
-SL = Airport(38.627089,-90.200203)
-CHI = Airport(41.8781,-87.6298)
-MEM = Airport(35.1495,-90.0490)
-
-print(f"% of base flight time based on wind for JFK and LAX:")
-print(calculatePercentage(JFK, LAX))
-print(f"% of base flight time based on wind for JFK and ORD:")
-print(calculatePercentage(JFK, ORD))
-print(f"% of base flight time based on wind for JFK and DFW:")
-print(calculatePercentage(JFK, DFW))
-print(f"% of base flight time based on wind for KC and SL:")
-print(calculatePercentage(KC, SL))
-print(f"% of base flight time based on wind for CHI and MEM:")
-print(calculatePercentage(CHI, MEM))
-
