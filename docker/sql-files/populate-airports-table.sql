@@ -14,13 +14,13 @@ DELETE FROM airports;
 -- Insert airport entries into the table
 INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, is_hub)
 VALUES
-    ('John F. Kennedy International Airport', 'JFK', 40.641766, -73.780968, -5, 19034000, 1),
+    ('John F. Kennedy International Airport', 'JFK', 40.641766, -73.780968, -5, 19034000, 0),
     ('Newark Liberty International Airport', 'EWR', 40.6895314, -74.1744624, -5, 19034000, 1),
-    ('LaGuardia Airport', 'LGA', 40.7769, -73.874, -5, 19034000, 1),
+    ('LaGuardia Airport', 'LGA', 40.7769, -73.874, -5, 19034000, 0),
     ('Los Angeles International Airport', 'LAX', 33.9416, -118.4085, -8, 12598000, 1),
     ('O''Hare International Airport', 'ORD', 41.978611, -87.904724, -6, 8984000, 0),
-    ('Chicago Midway International Airport', 'MDW', 41.7868, -87.7522, -6, 8984000, 0),
-    ('Dallas/Fort Worth International Airport', 'DFW', 32.89748, -97.040443, -6, 6655000, 0),
+    ('Chicago Midway International Airport', 'MDW', 41.7868, -87.7522, -6, 8984000, 1),
+    ('Dallas/Fort Worth International Airport', 'DFW', 32.89748, -97.040443, -6, 6655000, 1),
     ('George Bush Intercontinental Airport', 'IAH', 29.9902, -95.3368, -6, 6802000, 0),
     ('Ronald Reagan Washington National Airport', 'DCA', 38.8512, -77.0402, -5, 5545000, 0),
     ('Washington Dulles International Airport', 'IAD', 38.9531, -77.4565, -5, 5545000, 0),
