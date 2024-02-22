@@ -29,10 +29,6 @@ END;
 
 DELIMITER ;
 
---const y = Math.sin(λ2-λ1) * Math.cos(φ2); -- SIN(RADIANS(@destination_lon - @departure_lon)) * COS(RADIANS(@destination_lat))
---const x = Math.cos(φ1)*Math.sin(φ2) - Math.sin(φ1)*Math.cos(φ2)*Math.cos(λ2-λ1); -- COS(RADIANS(@departure_lat)) * SIN(RADIANS(@destination_lat)) - SIN(RADIANS(@departure_lat)) * COS(RADIANS(@destination_lat)) * COS(RADIANS(@destination_lon - @departure_lon))
---const θ = Math.atan2(y, x);
---const brng = (θ*180/Math.PI + 360) % 360; // in degrees
 
 -- Clears the flights table.
 DELETE FROM flights;
