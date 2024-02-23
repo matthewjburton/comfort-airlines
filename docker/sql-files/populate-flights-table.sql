@@ -11,7 +11,7 @@
 
 
 
-/*
+
 DELIMITER //
 
 DROP TRIGGER IF EXISTS calculate_flight_angle1;
@@ -33,7 +33,7 @@ END;
 //
 
 DELIMITER ;
-*/
+
 
 -- Clears the flights table.
 DELETE FROM flights;
