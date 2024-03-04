@@ -14,57 +14,112 @@
 - Private/public data structures and why
 - READMEs talking about use cases and functionality
 
-[ flight-angle.py ]
-- Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
-- Author:  Jeremy Maas
-- Notes:   Airport class is temporary
+```[ turn-around-time.py ]
+- {function: TurnAroundTime}
+- Purpose:  Return the minimum amount of time in minutes that an
+-           aircraft must wait before taking off for its next flight
+- Author:   Matt Burton
+- Notes:    This function will be in the simulation immediately after a flight lands
+-           Consider moving this function to an event scheduler or the aircraft class
+{ test: Call to refuel and not refuel }
+- Precondition: A plane is at the gate
+- Postcondition: The turn around time is calculated
+- Parameters: refueling is a boolean where if true, it must add refueling time to the total turnaround time.
+- Returns: totalTurnAroundTime which is the minimum sum of time to disembark, time to clean the aircraft and change the crew, and board the passengers
 - Execute:
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
--       python3 flight-angle.py
+-       python3 turn-around-time.py```
 
-[ clock.py ]
+```[ flight-angle.py ]
+- { function: calculatePercentage }
+- Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
+- Author:  Jeremy Maas
+- Notes:   Airport class is temporary
+- Precondition: % of flight angle is not accounted for in flight time
+- Postcondition: % of flight angle is returned
+- Parameters: Source airport and destination ariport for a single leg flight and wind speed which is default set to 0.045
+- Returns: Z, the % of the flight angle
+{ test: Crosscheck flight angle percentages against well known values found online for current flights }
+- Execute:
+    1. Move to the comfort-airlines/ directory
+    2. Execute the file using the following command in the terminal:
+-       python3 flight-angle.py```
+
+```[ clock.py ]
+{ class: Clock }
 - Purpose:  Track the current simulation time and manage incrementing time minute by minute
 - Author:   Matt Burton
 - Notes:    Currently, no support for daylight savings time. This class is not meant to be a stand-alone class, instead it will be used by the main simulation
+{ method: __init__(self) }
+- Set time to day 1 at 0 hours and 0 minutes
+{ method: ResetClock }
+- Reset time to day 1 at 0 hours and 0 minutes
+{ method: IncrementClock }
+- Increment 1 minute, at 60 minutes add one hour and reset minutes. At 24 hours increment day and reset hours and minutes
+- Precondition: Time is not set or incrementing
+- Postcondition: Time is set at 1.0.0 and is incrementing
+- Parameters: current time in day, hour, minute
+{ test: Loop one day of iterations and see if 1 day with 0 hours and 0 minutes }
 - Execute: 
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
--       python3 clock.py
+-       python3 clock.py```
 
-[ great-circle.py ]
+```[ great-circle.py ]
+{ function: GreatCircle }
 - Purpose:  Return the distance in miles between two airports
 - Author:   Matt Burton
-- Notes:    The Airport class is entirely temporary. There is example usage below the function
+- Notes:    The Airport class is entirely temporary from within this file.
+- Precondition: Distance between two airports is not calculated
+- Postcondition: Distance is calculated and returned
+- Return Value: distance float in miles
+{ test: hardcoded airport values passed to the function which returns the distance. Tested against real values through Haversine formula. }
+- Execute: 
+    1. Move to the comfort-airlines/ directory
+    2. Execute the file using the following command in the terminal:
+-       python3 great-circle.py```
 
-[ schema.sql ]
-- Purpose: Removes all tables from the database and recreates them using the schema below
+```[ schema.sql ]
+- Purpose: Removes all tables from the database and recreates them using the schema
 - Authors: Matt Burton
 - Editor: Ryan Hirscher
+- Notes: The tables are created and foreign keys are identified
+- Precondition: Old database volume or structure
+- Postcondition: Baseline infrastructure created
+{ trigger: calculate_total_gates }
+- This SQL trigger populates gates at a given airport. 5 per airport and 11 per hub up until the population limit.
+{ test: periodically compose down and up the container. Connect to mariadb then to the database and show tables. }
 - Execute: 
     1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;                         
 -      docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/schema.sql
+-       source /docker-entrypoint.initdb.d/schema.sql```
 
-[ populate-airports-table.sql ]
-- Purpose: Removes all entries from the airports table then inserts all of the airports in the list below
+```[ populate-airports-table.sql ]
+- Purpose: Removes all entries from the airports table then inserts all of the airports in the list
 - Author:  Matt Burton
+- Precondition: Airports table is created but unpopulated or populated with old data
+- Postcondition: Airports table is populated with new data
+{ test: periodically compose down and up the container. Connect to mariadb then to the database and show tables. }
 - Execute:
     1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;              
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-airport-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/populate-airport-table.sql
+-       source /docker-entrypoint.initdb.d/populate-airport-table.sql```
 
 
-[ populate-aircraft-table.sql ]
+```[ populate-aircraft-table.sql ]
 - Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
 - Author:  Justin Chen and Matt Burton
+- Precondition: Aircrafts table is created but unpopulated or populated with old data
+- Postcondition: Aircrafts table is populated with new data
+{ test: periodically compose down and up the container. Connect to mariadb then to the database and show tables. }
 - Execute: 
     1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;             
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
+-       source /docker-entrypoint.initdb.d/populate-aircraft-table.sql```
 
 
 ### User Manual
@@ -166,8 +221,8 @@
 - IDE integration with Github (user can commit, pull, merge, and branch)
 - Must be able to run container with populated data from Github branch
 
-[ docker-compose.yaml ]
-- Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.
+```[ docker-compose.yaml ]
+- Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.```
 
 - Compose command: docker compose up mariadb -d
 
