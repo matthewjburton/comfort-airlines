@@ -14,7 +14,7 @@
 - Private/public data structures and why
 - READMEs talking about use cases and functionality
 
-```[ turn-around-time.py ]
+[ turn-around-time.py ]
 - {function: TurnAroundTime}
 - Purpose:  Return the minimum amount of time in minutes that an
 -           aircraft must wait before taking off for its next flight
@@ -29,9 +29,9 @@
 - Execute:
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
--       python3 turn-around-time.py```
+-       python3 turn-around-time.py
 
-```[ flight-angle.py ]
+[ flight-angle.py ]
 - { function: calculatePercentage }
 - Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
 - Author:  Jeremy Maas
@@ -44,9 +44,9 @@
 - Execute:
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
--       python3 flight-angle.py```
+-       python3 flight-angle.py
 
-```[ clock.py ]
+[ clock.py ]
 { class: Clock }
 - Purpose:  Track the current simulation time and manage incrementing time minute by minute
 - Author:   Matt Burton
@@ -64,9 +64,9 @@
 - Execute: 
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
--       python3 clock.py```
+-       python3 clock.py
 
-```[ great-circle.py ]
+[ great-circle.py ]
 { function: GreatCircle }
 - Purpose:  Return the distance in miles between two airports
 - Author:   Matt Burton
@@ -78,9 +78,9 @@
 - Execute: 
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
--       python3 great-circle.py```
+-       python3 great-circle.py
 
-```[ schema.sql ]
+[ schema.sql ]
 - Purpose: Removes all tables from the database and recreates them using the schema
 - Authors: Matt Burton
 - Editor: Ryan Hirscher
@@ -94,9 +94,9 @@
     1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;                         
 -      docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/schema.sql```
+-       source /docker-entrypoint.initdb.d/schema.sql
 
-```[ populate-airports-table.sql ]
+[ populate-airports-table.sql ]
 - Purpose: Removes all entries from the airports table then inserts all of the airports in the list
 - Author:  Matt Burton
 - Precondition: Airports table is created but unpopulated or populated with old data
@@ -106,10 +106,10 @@
     1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;              
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-airport-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/populate-airport-table.sql```
+-       source /docker-entrypoint.initdb.d/populate-airport-table.sql
 
 
-```[ populate-aircraft-table.sql ]
+[ populate-aircraft-table.sql ]
 - Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
 - Author:  Justin Chen and Matt Burton
 - Precondition: Aircrafts table is created but unpopulated or populated with old data
@@ -119,7 +119,7 @@
     1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;             
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/populate-aircraft-table.sql```
+-       source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
 
 
 ### User Manual
@@ -221,8 +221,8 @@
 - IDE integration with Github (user can commit, pull, merge, and branch)
 - Must be able to run container with populated data from Github branch
 
-```[ docker-compose.yaml ]
-- Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.```
+[ docker-compose.yaml ]
+- Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.
 
 - Compose command: docker compose up mariadb -d
 
