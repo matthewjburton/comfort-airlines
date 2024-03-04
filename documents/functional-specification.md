@@ -21,7 +21,7 @@
 - Author:   Matt Burton
 - Notes:    This function will be in the simulation immediately after a flight lands
             Consider moving this function to an event scheduler or the aircraft class
-- { test: Call to refuel and not refuel }
+- test: Call to refuel and not refuel
 - Precondition: A plane is at the gate
 - Postcondition: The turn around time is calculated
 - Parameters: refueling is a boolean where if true, it must add refueling time to the total turnaround time.
@@ -42,7 +42,7 @@
 - Parameters: Source airport and destination ariport for a single leg flight 
               and wind speed which is default set to 0.045
 - Returns: Z, the % of the flight angle
-- { test: Crosscheck flight angle percentages against well known values found online for current flights }
+- test: Crosscheck flight angle percentages against well known values found online for current flights
 - Execute:
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
@@ -63,7 +63,7 @@
 - Precondition: Time is not set or incrementing
 - Postcondition: Time is set at 1.0.0 and is incrementing
 - Parameters: current time in day, hour, minute
-- { test: Loop one day of iterations and see if 1 day with 0 hours and 0 minutes }
+- test: Loop one day of iterations and see if 1 day with 0 hours and 0 minutes
 - Execute: 
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
@@ -77,7 +77,7 @@
 - Precondition: Distance between two airports is not calculated
 - Postcondition: Distance is calculated and returned
 - Return Value: distance float in miles
-- { test: hardcoded airport values passed to the function which returns the distance. Tested against real values through Haversine formula. }
+- test: hardcoded airport values passed to the function which returns the distance. Tested against real values through Haversine formula.
 - Execute: 
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
@@ -92,7 +92,7 @@
 - Postcondition: Baseline infrastructure created
 - { trigger: calculate_total_gates }
 - This SQL trigger populates gates at a given airport. 5 per airport and 11 per hub up until the population limit.
-- { test: periodically compose down and up the container. Connect to mariadb then to the database and show tables. }
+- test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute: 
     1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;                         
 -      docker exec -it mariadb-container mariadb -u admin -p cloudnine
@@ -104,7 +104,7 @@
 - Author:  Matt Burton
 - Precondition: Airports table is created but unpopulated or populated with old data
 - Postcondition: Airports table is populated with new data
-- { test: periodically compose down and up the container. Connect to mariadb then to the database and show tables. }
+- test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute:
     1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;              
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
@@ -117,7 +117,7 @@
 - Author:  Justin Chen and Matt Burton
 - Precondition: Aircrafts table is created but unpopulated or populated with old data
 - Postcondition: Aircrafts table is populated with new data
-- { test: periodically compose down and up the container. Connect to mariadb then to the database and show tables. }
+- test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute: 
     1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;             
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
