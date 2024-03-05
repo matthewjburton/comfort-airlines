@@ -6,11 +6,10 @@
 import math
 import airport
 
-
 # Returns a float to multiply with flight time to find the actual time the flight will take
 def calculatePercentage(startAirport, endAirport, wind=.045):
 
-    dif = endAirport.get_airport_longitude()-startAirport.get_airport_longitude
+    dif = endAirport.get_airport_longitude()-startAirport.get_airport_longitude()
 
     #Edge case: Flight is perfectly vertical, wind has no effect
     if(dif == 0):

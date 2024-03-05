@@ -7,10 +7,10 @@
 #
 # How to use: Import airport.py in file
 #             Run methods as part of Airport class object.
-#             At the moment, you will need to use Airport.(airportname).(methodname) as the format
+#             At the moment, you will need to use airport.Airport.(airportname).(methodname) as the format
 #
 # Example:    import airport
-#             Airport.JFK.get_airport_latitude() // returns JFK latitude
+#             airport.Airport.JFK.get_airport_latitude() // returns JFK latitude
 
 import mysql.connector
 import pandas as pd
@@ -39,7 +39,7 @@ class Airport:
     def get_airport_name(self):
         return self.airport_name
 
-    def get_airport_abbreviation(self):
+    def get_airport_abbgireviation(self):
         return self.airport_abbreviation
 
     def get_airport_latitude(self):
@@ -94,7 +94,8 @@ dataframe['is_hub'] = dataframe['is_hub'].str.decode('utf-8')
 
 #Convert to list of dictionaries
 dataframe = dataframe.to_dict(orient='records')
-
+airport_list=[]
+total_population = 0
 #Change '0' to False, '1' to True for easier readability and usage
 for x in dataframe:
     if x['is_hub'] == '0':
@@ -105,4 +106,9 @@ for x in dataframe:
     #Create all Airport objects using the Abbreviation as the Object name
     setattr(Airport, x['abbreviation'], Airport(x['airport_id'], x['name'], 
     x['abbreviation'], x['latitude'], x['longitude'], x['timezone_offset'], 
-    x['metro_population'], x['total_gates'], x['total_gates'], x['is_hub'])) 
+    x['metro_population'], x['total_gates'], x['total_gates'], x['is_hub']))
+    airport_list.append(x['abbreviation'])
+    total_population+=x['metro_population']
+
+#print(Airport.JFK)
+#print(airport_list)
