@@ -36,11 +36,7 @@
 -       python3 turn-around-time.py
 
 [ flight-angle.py ]
-<<<<<<< HEAD
 - { function: calculatePercentage }
-=======
-
->>>>>>> main
 - Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
 - Author:  Jeremy Maas
 - Notes:   Airport class is temporary
@@ -56,7 +52,6 @@
 -       python3 flight-angle.py
 
 [ clock.py ]
-<<<<<<< HEAD
 - { class: Clock }
 - Purpose:  Track the current simulation time and manage incrementing time minute by minute
 - Author:   Matt Burton
@@ -73,23 +68,12 @@
 - Parameters: current time in day, hour, minute
 - Test: Loop one day of iterations and see if 1 day with 0 hours and 0 minutes
 - Execute: 
-=======
-
-- Purpose:  Track the current simulation time and manage incrementing time minute by minute
-- Author:   Matt Burton
-- Notes:    Currently, no support for daylight savings time. This class is not meant to be a stand-alone class, instead it will be used by the main simulation
-- Execute:
->>>>>>> main
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
 -       python3 clock.py
 
 [ great-circle.py ]
-<<<<<<< HEAD
 - { function: GreatCircle }
-=======
-
->>>>>>> main
 - Purpose:  Return the distance in miles between two airports
 - Author:   Matt Burton
 - Notes:    The Airport class is entirely temporary from within this file.
@@ -103,7 +87,6 @@
 -       python3 great-circle.py
 
 [ schema.sql ]
-<<<<<<< HEAD
 - Purpose: Removes all tables from the database and recreates them using the schema
 - Authors: Matt Burton
 - Editor: Ryan Hirscher
@@ -115,25 +98,12 @@
 - Test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute: 
     1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;                         
-=======
-
-- Purpose: Removes all tables from the database and recreates them using the schema below
-- Authors: Matt Burton
-- Editor: Ryan Hirscher
-- Execute:
-    1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;
->>>>>>> main
 -      docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/schema.sql
 
 [ populate-airports-table.sql ]
-<<<<<<< HEAD
 - Purpose: Removes all entries from the airports table then inserts all of the airports in the list
-=======
-
-- Purpose: Removes all entries from the airports table then inserts all of the airports in the list below
->>>>>>> main
 - Author:  Matt Burton
 - Precondition: Airports table is created but unpopulated or populated with old data
 - Postcondition: Airports table is populated with new data
@@ -148,16 +118,11 @@
 
 - Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
 - Author:  Justin Chen and Matt Burton
-<<<<<<< HEAD
 - Precondition: Aircrafts table is created but unpopulated or populated with old data
 - Postcondition: Aircrafts table is populated with new data
 - Test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute: 
     1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;             
-=======
-- Execute:
-    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;
->>>>>>> main
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
