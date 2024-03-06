@@ -1,7 +1,10 @@
-#Purpose: Determine Departure and Destination demands in # of people
-#         who want to fly out of/into different airports from another
-#
-#Authors: Cloud9: Jeremy Maas, Matt Burton, McHale Trotter, Justin Chen, Ryan Hirscher, Kevin Sampson
+"""
+Returns number of people flying from Airport A to Airport B based on metro population
+
+__team_name__ = Cloud Nine
+__team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+__author__ = Jeremy Maas
+"""
 
 import airport
 import flight_angle
