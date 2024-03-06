@@ -57,7 +57,7 @@ class Airport:
     def get_airport_name(self):
         return self.airport_name
 
-    def get_airport_abbgireviation(self):
+    def get_airport_abbreviation(self):
         return self.airport_abbreviation
 
     def get_airport_latitude(self):
