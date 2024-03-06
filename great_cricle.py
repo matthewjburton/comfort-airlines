@@ -30,8 +30,3 @@ def GreatCircle(airportOne, airportTwo):
     distance = R * c
     
     return distance
-
-# Example usage
-print("Distance between JFK and LAX: {:.3f} miles".format(GreatCircle(airport.Airport.JFK, airport.Airport.LAX)))
-print("Distance between JFK and ORD: {:.3f} miles".format(GreatCircle(airport.Airport.JFK, airport.Airport.ORD)))
-print("Distance between JFK and DFW: {:.3f} miles".format(GreatCircle(airport.Airport.JFK, airport.Airport.DFW)))
