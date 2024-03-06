@@ -2,7 +2,7 @@
 
 ## Software Engineering Capstone Project
 
-- **Team Name:** Clout Nine  
+- **Team Name:** Cloud Nine  
 - **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 
 ### Comment Example for Methods  
@@ -70,4 +70,13 @@ If you want to reset the schema, repopulate the airport table, or the aircraft t
 source /docker-entrypoint-initdb.d/schema.sql
 source /docker-entrypoint-initdb.d/populate-airports-table.sql
 source /docker-entrypoint-initdb.d/populate-aircraft-table.sql
+```
+
+### Dependencies
+
+This prpject relies on certain dependencies to be installed on your local machine to execute the programs involved.  
+To download these dependencies all at once first naviagte to the /documents directory then run the following command in your terminal:
+
+```bash
+pip install -r dependencies.txt
 ```
