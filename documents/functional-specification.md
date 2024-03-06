@@ -1,5 +1,8 @@
 # Functional Specification
 
+- **Team Name:** Cloud Nine  
+- **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+
 ## Language of choice: Python
 
 ### Files
@@ -33,7 +36,11 @@
 -       python3 turn-around-time.py
 
 [ flight-angle.py ]
+<<<<<<< HEAD
 - { function: calculatePercentage }
+=======
+
+>>>>>>> main
 - Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
 - Author:  Jeremy Maas
 - Notes:   Airport class is temporary
@@ -49,6 +56,7 @@
 -       python3 flight-angle.py
 
 [ clock.py ]
+<<<<<<< HEAD
 - { class: Clock }
 - Purpose:  Track the current simulation time and manage incrementing time minute by minute
 - Author:   Matt Burton
@@ -65,12 +73,23 @@
 - Parameters: current time in day, hour, minute
 - test: Loop one day of iterations and see if 1 day with 0 hours and 0 minutes
 - Execute: 
+=======
+
+- Purpose:  Track the current simulation time and manage incrementing time minute by minute
+- Author:   Matt Burton
+- Notes:    Currently, no support for daylight savings time. This class is not meant to be a stand-alone class, instead it will be used by the main simulation
+- Execute:
+>>>>>>> main
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
 -       python3 clock.py
 
 [ great-circle.py ]
+<<<<<<< HEAD
 - { function: GreatCircle }
+=======
+
+>>>>>>> main
 - Purpose:  Return the distance in miles between two airports
 - Author:   Matt Burton
 - Notes:    The Airport class is entirely temporary from within this file.
@@ -84,6 +103,7 @@
 -       python3 great-circle.py
 
 [ schema.sql ]
+<<<<<<< HEAD
 - Purpose: Removes all tables from the database and recreates them using the schema
 - Authors: Matt Burton
 - Editor: Ryan Hirscher
@@ -95,35 +115,52 @@
 - test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute: 
     1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;                         
+=======
+
+- Purpose: Removes all tables from the database and recreates them using the schema below
+- Authors: Matt Burton
+- Editor: Ryan Hirscher
+- Execute:
+    1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;
+>>>>>>> main
 -      docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/schema.sql
 
 [ populate-airports-table.sql ]
+<<<<<<< HEAD
 - Purpose: Removes all entries from the airports table then inserts all of the airports in the list
+=======
+
+- Purpose: Removes all entries from the airports table then inserts all of the airports in the list below
+>>>>>>> main
 - Author:  Matt Burton
 - Precondition: Airports table is created but unpopulated or populated with old data
 - Postcondition: Airports table is populated with new data
 - test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute:
-    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;              
+    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-airport-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/populate-airport-table.sql
 
-
 [ populate-aircraft-table.sql ]
+
 - Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
 - Author:  Justin Chen and Matt Burton
+<<<<<<< HEAD
 - Precondition: Aircrafts table is created but unpopulated or populated with old data
 - Postcondition: Aircrafts table is populated with new data
 - test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute: 
     1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;             
+=======
+- Execute:
+    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;
+>>>>>>> main
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/populate-aircraft-table.sql
-
 
 ### User Manual
 
@@ -136,7 +173,7 @@
 ### Database
 
 - Well formed and Active ERD
-- https://lucid.app/lucidchart/5309d00f-f70a-4fd5-8814-b1b4376db552/edit?invitationId=inv_474a4f67-407a-4268-8d16-66c24e7f123d&page=0_0#
+- <https://lucid.app/lucidchart/5309d00f-f70a-4fd5-8814-b1b4376db552/edit?invitationId=inv_474a4f67-407a-4268-8d16-66c24e7f123d&page=0_0#>
 - Relationships identified (0, many, 1)
 - Table names
 - Table columns
@@ -153,7 +190,6 @@
 | flights_routes      |
 | routes              |
 
-
 [ Aircraft Table - 55 rows - Protected - Hardcoded ]
 | Field            | Type         | Null | Key | Default | Extra          |
 |------------------|--------------|------|-----|---------|----------------|
@@ -167,7 +203,6 @@
 | cargo_volume     | int(11)      | YES  |     | NULL    |                |
 | leasing_cost     | int(11)      | YES  |     | NULL    |                |
 
-
 [ Airports Table - 31 rows - Protected - Hardcoded ]
 | Field            | Type         | Null | Key | Default | Extra          |
 |------------------|--------------|------|-----|---------|----------------|
@@ -180,7 +215,6 @@
 | metro_population | int(11)      | YES  |     | NULL    |                |
 | total_gates      | int(11)      | YES  |     | NULL    |                |
 | is_hub           | binary(1)    | YES  |     | NULL    |                |
-
 
 [ Flights Table - 100+ rows - Protected - Softcoded and updateable ]
 | Field                   | Type        | Null | Key | Default | Extra          |
@@ -198,7 +232,6 @@
 | gate_departure          | int(11)     | YES  |     | NULL    |                |
 | gate_arrival            | int(11)     | YES  |     | NULL    |                |
 
-
 [ Flight Routes Table - 100+ rows - Protected - Softcoded and updateable ]
 | Field        | Type    | Null | Key | Default | Extra          |
 |--------------|---------|------|-----|---------|----------------|
@@ -206,15 +239,12 @@
 | route_id     | int(11) | YES  | MUL | NULL    |                |
 | flight_id    | int(11) | YES  | MUL | NULL    |                |
 
-
-
 [ Routes Table - 100+ rows - Protected - Softcoded and updateable ]
 | Field                  | Type    | Null | Key | Default | Extra          |
 |------------------------|---------|------|-----|---------|----------------|
 | route_id               | int(11) | NO   | PRI | NULL    | auto_increment |
 | starting_airport_id    | int(11) | YES  | MUL | NULL    |                |
 | destination_airport_id | int(11) | YES  | MUL | NULL    |                |
-
 
 ### Docker
 
@@ -225,6 +255,7 @@
 - Must be able to run container with populated data from Github branch
 
 [ docker-compose.yaml ]
+
 - Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.
 
 - Compose command: docker compose up mariadb -d

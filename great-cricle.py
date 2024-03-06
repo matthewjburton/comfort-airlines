@@ -1,8 +1,14 @@
-# Purpose:  Return the distance in miles between two airports
-# Author:   Matt Burton
-# Notes:    The Airport class is entirely temprorary
-#           There is example usage below the function
+"""
+Return the distance in miles between two airports
 
+__team_name__ = Cloud Nine
+__team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+__author__ = Matt Burton
+
+Notes:
+    The Airport class is entirely temprorary
+    There is example usage below the function
+"""
 import math
 
 class Airport:
