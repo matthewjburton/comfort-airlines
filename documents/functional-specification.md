@@ -57,7 +57,7 @@
 - Author:   Matt Burton
 - Notes:    Currently, no support for daylight savings time. This class is not meant to be 
             a stand-alone class, instead it will be used by the main simulation
-- { method: __init__(self) }
+- { method: ``__``init``__``(self) }
 - Set time to day 1 at 0 hours and 0 minutes
 - { method: ResetClock }
 - Reset time to day 1 at 0 hours and 0 minutes
