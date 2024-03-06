@@ -1,7 +1,10 @@
-#Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
-#Authors:  Jeremy Maas, Matt Burton, McHale Trotter, Ryan Hirscher, Kevin Sampson, Justin Chen
+"""
+Returns % of base flight time that a flight will take based on wind and bearing angle
 
-
+__team_name__ = Cloud Nine
+__team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+__author__ = Jeremy Maas
+"""
 
 import math
 import airport

@@ -1,12 +1,20 @@
--- Purpose: Removes all tables from the database and recreates them using the schema below
--- Authors: Matt Burton and Ryan Hirscher 
--- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
---              
---              docker exec -it mariadb-container mariadb -u admin -p cloudnine
---
---          2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
---              
---              source /docker-entrypoint.initdb.d/schema.sql
+/*
+Removes all tables from the database and recreates them using the schema below
+Also creates a trigger to calculate the total avaialable gates at each airport
+
+__team_name__ = Cloud Nine
+__team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+__author__ = Matt Burton and Ryan Hirscher
+
+Execute: 
+    1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+             
+        docker exec -it mariadb-container mariadb -u admin -p cloudnine
+
+    2. To execute the populate-aircraft-table.sql file: source <file/path/file_name.sql>
+        
+        source /docker-entrypoint.initdb.d/schema.sql
+*/
 
 -- Disable foreign key checks
 SET FOREIGN_KEY_CHECKS = 0;

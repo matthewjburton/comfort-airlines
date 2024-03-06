@@ -2,6 +2,9 @@
 
 ## Software Engineering Capstone Project
 
+- **Team Name:** Clout Nine  
+- **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+
 ### Comment Example for Methods  
 
 ```python

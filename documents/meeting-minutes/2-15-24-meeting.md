@@ -5,6 +5,8 @@
 - **Date:** 2/15/24
 - **Start Time:** 1:40 pm
 - **End Time:** 2:50 pm
+- **Team Name:** Cloud Nine  
+- **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 - **Present Attendees:** Matt, Ryan, Kevin, Justin, Jeremy, McHale
 - **Absent Attendees:** n/a
 - **Scribe:** Matt
