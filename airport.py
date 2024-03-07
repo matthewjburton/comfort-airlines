@@ -115,6 +115,13 @@ dataframe['is_hub'] = dataframe['is_hub'].str.decode('utf-8')
 # Convert to list of dictionaries
 dataframe = dataframe.to_dict(orient='records')
 
+# Create total_population variable to help with flight demand
+total_population = 0
+
+# Create Airport list, just to have a list of the airport objects we have, mostly for
+# debugging or ease of access purposes
+airport_list = []
+
 # Change '0' to False, '1' to True for easier readability and usage
 for x in dataframe:
     if x['is_hub'] == '0':
@@ -125,4 +132,9 @@ for x in dataframe:
     # Create all Airport objects using the Abbreviation as the Object name
     setattr(Airport, x['abbreviation'], Airport(x['airport_id'], x['name'], 
     x['abbreviation'], x['latitude'], x['longitude'], x['timezone_offset'], 
-    x['metro_population'], x['total_gates'], x['total_gates'], x['is_hub'])) 
+    x['metro_population'], x['total_gates'], x['total_gates'], x['is_hub']))
+
+    # Update Total Population and add airport to list
+    airport_list.append(x['abbreviation'])
+    total_population+=x['metro_population']
+
