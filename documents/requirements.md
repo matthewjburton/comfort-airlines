@@ -12,11 +12,11 @@ We will provide a timetable that contains the list of flights that will be perfo
 - Run a simulation based on the timetable provided 
 - Will provide report of operating costs, revenue raised, net profits based on the flights ran (This is currently not implemented)
 - Cost estimates are currently accurate because we account for:
-      - Wind speed/Jet stream
-      - Earth Curvature 
-      - Bearing angle between airports
+    - Wind speed/Jet stream
+    - Earth Curvature 
+    - Bearing angle between airports
 - We will further improve cost estimates by implementing accounting for the following in the future:
-      - Delays
-      - Cancellations
-      - Aircraft faliures
+    - Delays
+    - Cancellations
+    - Aircraft faliures
 - Simulation will additionally provide a number of people who flew over the course of the simulation
