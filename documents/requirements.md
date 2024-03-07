@@ -1,5 +1,8 @@
 # Cloud Nine Functional Requirements
 
+- **Team Name:** Cloud Nine  
+- **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+
 ## Timetable
 
 Table containing all flight information for a specific day, including starting and ending airports, plane tail number, flight number, (any layovers), flight times, and passenger capacity, price

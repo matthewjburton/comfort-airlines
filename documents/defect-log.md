@@ -1,5 +1,8 @@
 # Defect Log
 
+- **Team Name:** Cloud Nine  
+- **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+
 ## Bug 1
 
 - **Issue Description:** The docker was constantly restarting and we couldnt log into the database  
@@ -35,3 +38,12 @@
 - **Assignee(s):** Matt
 - **Date Fixed:** 2/15/24  
 - **Solution:** Ran git rebase
+
+## Bug 5
+
+- **Issue Description:** The sql trigger for the flight angle attribute in the flights table was only populating null values
+- **Date Found:** 2/22/24
+- **Action Plan:** Add a line to drop the trigger if it already exists, (the old trigger was still in place)
+- **Assignee(s):** McHale
+- **Date Fixed:** 2/23/24  
+- **Solution:** Renamed the trigger from "calculate_flight_angle" to "calculate_flight_angle1" and added a line to drop the trigger if it exists already.

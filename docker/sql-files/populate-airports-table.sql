@@ -1,12 +1,19 @@
--- Purpose: Removes all entries from the airports table then inserts all of the airports in the list below
--- Author:  Matt Burton
--- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
---              
---              docker exec -it mariadb-container mariadb -u admin -p cloudnine
---
---          2. To execute the populate-airport-table.sql file: source <file/path/file_name.sql>
---              
---              source /docker-entrypoint.initdb.d/populate-airport-table.sql
+/*
+Removes all entries from the airports table then inserts all of the airports in the list below
+
+__team_name__ = Cloud Nine
+__team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+__author__ = Matt Burton
+
+Execute: 
+    1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
+        
+        docker exec -it mariadb-container mariadb -u admin -p cloudnine
+
+    2. To execute the populate-airport-table.sql file: source <file/path/file_name.sql>
+        
+        source /docker-entrypoint.initdb.d/populate-airport-table.sql
+*/
 
 -- Clear the airports table
 DELETE FROM airports;
