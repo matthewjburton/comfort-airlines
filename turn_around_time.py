@@ -10,16 +10,18 @@ Notes:
     Consider moving this function to an event scheduler or the aircraft class
 """
 
-def TurnAroundTime(refueling):
-    # time breakdown
+def turn_around_time(aircraftNeedsRefueling):
+    # Time breakdown
     timeToDisembarkPassengers = 15
     timeToCleanAircraftAndChangeCrew = 10
     timeToBoardPassengers = 15
     timeToRefuel = 10
 
-    # time calculation
+    # Time calculation
     totalTurnAroundTime = timeToDisembarkPassengers + timeToCleanAircraftAndChangeCrew + timeToBoardPassengers
-    if refueling:
+
+    # Account for refueling
+    if aircraftNeedsRefueling:
         totalTurnAroundTime += timeToRefuel
 
     return totalTurnAroundTime
