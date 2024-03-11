@@ -8,10 +8,9 @@ __author__ = Matt Burton
 import math
 import airport
 
+RADIUS = 3958.8 # Radius of the Earth in miles
+
 def great_circle(airportOne, airportTwo):
-    # Radius of the Earth in miles
-    radius = 3958.8
-    
     # Convert latitude and longitude from degrees to radians
     latitudeOne = math.radians(airportOne.latitude)
     longitudeOne = math.radians(airportOne.longitude)
@@ -27,6 +26,6 @@ def great_circle(airportOne, airportTwo):
     haversineTerm = 2 * math.atan2(math.sqrt(intermediateTerm), math.sqrt(1 - intermediateTerm))
 
     # Final distance calculation
-    distance = radius * haversineTerm
+    distance = RADIUS * haversineTerm
     
     return distance
