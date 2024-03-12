@@ -1,7 +1,7 @@
 # Cloud Nine Requirements
 
-- **Team Name:** Cloud Nine  
-- **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+**Team Name:** Cloud Nine  
+**Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 
 ## Deliverables
 
@@ -110,4 +110,18 @@ The user can run a simulation that will use the timetable to govern the flights 
 
 The user can modify the specifications of the simulation as offered in subsequent menu options.
 
-#####
+###### Start date
+
+The user can set the start date of the simulation. By default the simulation starts on day one.
+
+###### Duration
+
+The user can set the duration that the simulation will run for in days.
+
+###### Report frequency
+
+The user can set how often the simulation generates reports. The options include daily, weekly, monthly, yearly, and final. Final will produce only one report once the simulation is complete.
+
+###### Costs
+
+The user can redefine the cost values for the following submenu options.
