@@ -3,45 +3,83 @@
 - **Team Name:** Cloud Nine  
 - **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 
-## Language of choice: Python
+## Language: Python
 
 ### Files
 
-- General organization
-- Structural organization/path
-- List functions at the top of files
-- Pre/post conditions at the top of functions
-- Reasoning and criteria for a file/function
-- Tested/untested files/functions
-- Functional drivers (critical/fragile code identified)
-- Private/public data structures and why
-- READMEs talking about use cases and functionality
+- [ Filename ]
+- { Functions/classes list | Purpose, Returns, Parameters, Tests }
+- Function call
+- Purpose
+- Author
+- Current testing
+- Preconditions
+- Postconditions
+- Parameters
+- Returns
+- Execution steps
 
-[ turn-around-time.py ]
-- { function: TurnAroundTime }
+[ flight_demand.py ]
+- { function: individualDemand }
+```python
+# Purpose: Calculate the number of people flying from A to B
+# Returns: Integer number of people
+# Parameters: starting airport, destination airport
+# Test cases: calculate by hand and add a test case for a given flight
+individualDemand(JFK, LAX)
+```
+
+- Purpose: Return the exact number of people flying on a given flight
+- Author: Jeremy
+- Test: Handwritten test case against this unit based on a flight
+- Precondition: number of people flying a flight is unknown
+- Postcondition: number of people flying a flight is known and returned
+- Parameters: starting airport, destination airport
+- Returns: Number of people flying a flight from A to B
+- Execute:
+    1. Move to the comfort-airlines/ directory
+    2. Execute the file using the following command in the terminal:
+-       python3 flight_demand.py
+
+[ turn_around_time.py ]
+- { function: turnAroundTime }
+```python
+# Purpose: Must be able to calculate the turnaround time
+# Returns: Total minimum turn around time for an aircraft
+# Parameters: Refueling binary value
+# Test cases: 0 and 1
+# 0: No extra time needed for refueling
+# 1: Extra time needed for refueling
+turnAroundTime(0)
+```
+
 - Purpose:  Return the minimum amount of time in minutes that an
             aircraft must wait before taking off for its next flight
 - Author:   Matt Burton
-- Notes:    This function will be in the simulation immediately after a flight lands
-            Consider moving this function to an event scheduler or the aircraft class
 - Test: Call to refuel and not refuel
 - Precondition: A plane is at the gate
 - Postcondition: The turn around time is calculated
 - Parameters: refueling is a boolean where if true, it must add refueling time to the total turnaround time.
-- Returns: totalTurnAroundTime which is the minimum sum of time to disembark, 
-           time to clean the aircraft and change the crew, and board the passengers
+- Returns: totalTurnAroundTime which is the minimum sum of time to disembark, time to clean the aircraft and change the crew, and board the passengers
 - Execute:
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
 -       python3 turn-around-time.py
 
-[ flight-angle.py ]
+[ flight_angle.py ]
 - { function: calculatePercentage }
+```python
+# Purpose: Returns the percentage of base flight time that a flight will take based on the wind and bearing angle
+# Returns: A float to multiply with flight time to find the actual time the flight will take
+# Parameter: startAirport, endAirport, wind
+# Test cases: One of any airport for start and end, wind default is 0.045
+calculatePercentage(JFK, LAX, 0.045)
+```
+
 - Purpose: Returns % of base flight time that a flight will take based on wind and bearing angle
 - Author:  Jeremy Maas
-- Notes:   Airport class is temporary
-- Precondition: % of flight angle is not accounted for in flight time
-- Postcondition: % of flight angle is returned
+- Precondition: % of flight time is not accounted for
+- Postcondition: % of flight time is returned
 - Parameters: Source airport and destination ariport for a single leg flight 
               and wind speed which is default set to 0.045
 - Returns: Z, the % of the flight angle
@@ -53,18 +91,42 @@
 
 [ clock.py ]
 - { class: Clock }
-- Purpose:  Track the current simulation time and manage incrementing time minute by minute
+- Purpose: Track the current simulation time and manage incrementing time minute by minute
 - Author:   Matt Burton
-- Notes:    Currently, no support for daylight savings time. This class is not meant to be 
-            a stand-alone class, instead it will be used by the main simulation
 - { method: __init\__(self) }
-- Set time to day 1 at 0 hours and 0 minutes
+- Initialize time to day 1 at 0 hours and 0 minutes
 - { method: ResetClock }
 - Reset time to day 1 at 0 hours and 0 minutes
+```python
+# Purpose: Reset the minutes, hours, and days to zero
+# Returns: none
+# Parameter: none
+# Test cases: At any time the clock will be reset to 1,0,0
+ResetClock()
+```
 - { method: IncrementClock }
 - Increment 1 minute, at 60 minutes add one hour and reset minutes. At 24 hours increment day and reset hours and minutes
-- Precondition: Time is not set or incrementing
-- Postcondition: Time is set at 1.0.0 and is incrementing
+```python
+# Purpose: Increment the clock by 1 minute and check for hour increment and day increment
+# Return: none
+# Parameter: none
+# Test cases: At any time the clock will be incremented by one minute, the hour is incremented at 60 minutes and the minutes are set to 0, at 24 hours the day is incremented and the hours and minutes are set to 0
+# 0: Increment the length of a day in minutes and examine the time
+IncrementClock()
+```
+
+- { method: PrintTime}
+- Print current clock time to terminal
+```python
+# Purpose: Output the current time of the clock
+# Return: none
+# Parameter: none
+# Test cases: The time printed must match the time when printed
+PrintTime()
+```
+
+- Precondition: Time is not set or incrementing/incrementable
+- Postcondition: Time is set at 1.0.0 and is incrementing/incrementable
 - Parameters: current time in day, hour, minute
 - Test: Loop one day of iterations and see if 1 day with 0 hours and 0 minutes
 - Execute: 
@@ -72,15 +134,24 @@
     2. Execute the file using the following command in the terminal:
 -       python3 clock.py
 
-[ great-circle.py ]
+[ great_circle.py ]
+- { class: Airport }
+- Initialize airports for testing (temporary)
 - { function: GreatCircle }
+```python
+# Purpose: Return the distance between the two airports
+# Return: Distance float value in miles
+# Paramter: departure airport, and arrival airport
+# Test cases: No two airports should be flying to itself or to another within 150 miles
+GreatCircle(JFK, LAX)
+```
+
 - Purpose:  Return the distance in miles between two airports
 - Author:   Matt Burton
-- Notes:    The Airport class is entirely temporary from within this file.
 - Precondition: Distance between two airports is not calculated
 - Postcondition: Distance is calculated and returned
 - Return Value: distance float in miles
-- Test: hardcoded airport values passed to the function which returns the distance. Tested against real values through Haversine formula.
+- Test: Airport values passed to the function which returns the distance. Tested against real values through Haversine formula.
 - Execute: 
     1. Move to the comfort-airlines/ directory
     2. Execute the file using the following command in the terminal:
@@ -90,7 +161,6 @@
 - Purpose: Removes all tables from the database and recreates them using the schema
 - Authors: Matt Burton
 - Editor: Ryan Hirscher
-- Notes: The tables are created and foreign keys are identified
 - Precondition: Old database volume or structure
 - Postcondition: Baseline infrastructure created
 - { trigger: calculate_total_gates }
@@ -114,7 +184,7 @@
     2. To execute the populate-airport-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/populate-airport-table.sql
 
-[ populate-aircraft-table.sql ]
+[ populate_aircraft_table.sql ]
 
 - Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
 - Author:  Justin Chen and Matt Burton
@@ -219,7 +289,7 @@
 - IDE integration with Github (user can commit, pull, merge, and branch)
 - Must be able to run container with populated data from Github branch
 
-[ docker-compose.yaml ]
+[ docker_compose.yaml ]
 
 - Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.
 
