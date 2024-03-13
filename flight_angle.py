@@ -10,7 +10,7 @@ import math
 import airport
 
 # Returns a float to multiply with flight time to find the actual time the flight will take
-def calculatePercentage(startAirport, endAirport, wind=.045):
+def calculate_percentage(startAirport, endAirport, wind=.045):
 
     dif = endAirport.get_airport_longitude()-startAirport.get_airport_longitude()
 
@@ -26,25 +26,25 @@ def calculatePercentage(startAirport, endAirport, wind=.045):
             return 1-wind #West to East, Time saved
 
     #Math to determine the bearing angle: will yield value between -180 to 180
-    X = math.cos(math.radians(endAirport.get_airport_latitude())) * math.sin(math.radians(dif))
-    Y = math.cos(math.radians(startAirport.get_airport_latitude())) * math.sin(math.radians(endAirport.get_airport_latitude())) - math.sin(math.radians(startAirport.get_airport_latitude()) )* math.cos(math.radians(endAirport.get_airport_latitude())) * math.cos(math.radians(dif))
+    firstPart = math.cos(math.radians(endAirport.get_airport_latitude())) * math.sin(math.radians(dif))
+    secondPart = math.cos(math.radians(startAirport.get_airport_latitude())) * math.sin(math.radians(endAirport.get_airport_latitude())) - math.sin(math.radians(startAirport.get_airport_latitude()) )* math.cos(math.radians(endAirport.get_airport_latitude())) * math.cos(math.radians(dif))
 
-    Z = math.degrees(math.atan2(X,Y))#Z is the variable that will be manipulated, as it is the bearing angle between airports
+    degrees = math.degrees(math.atan2(firstPart,secondPart))#degrees is the variable that will be manipulated, as it is the bearing angle between airports
 
 
-    if(Z<0): #Flight direction is : East to West
-        Z = Z/90 #Gets percentage of 90(Full wind speed) that the flight angle contains
-        if(Z< -1): #If it is below negative one, need to do additional calculations to get correct %
-            Z = -1*(Z + 2)
+    if(degrees<0): #Flight direction is : East to West
+        percentValue = degrees/90 #Gets percentage of 90(Full wind speed) that the flight angle contains
+        if(percentValue< -1): #If it is below negative one, need to do additional calculations to get correct %
+            percentValue = -1*(percentValue + 2)
 
-        Z = 1+(Z*-1*wind)#Since negative number indicates % increase in flight time, change % to positive, mulitply by wind, and add one to find % of base flight time this flight will have
+        percentValue = 1+(percentValue*-1*wind)#Since negative number indicates % increase in flight time, change % to positive, mulitply by wind, and add one to find % of base flight time this flight will have
 
     else:#Flight direction is: West to East
-        Z = Z/90#Gets percentage of 90(Full wind speed) that the flight angle contains
-        if (Z > 1): #If it is above one, need to do additional calculations to get correct %
-            Z = (1 - Z) + 1
+        percentValue = degrees/90#Gets percentage of 90(Full wind speed) that the flight angle contains
+        if (percentValue > 1): #If it is above one, need to do additional calculations to get correct %
+            percentValue = (1 - percentValue) + 1
 
-        Z = 1-(Z*wind)#Since % number indicates % decrease in flight time, multiply % by wind, and subtract from 1 to get % time of base flight time this flight will have
+        percentValue = 1-(percentValue*wind)#Since % number indicates % decrease in flight time, multiply % by wind, and subtract from 1 to get % time of base flight time this flight will have
 
 
-    return Z #Multiply this result by flight time to get actual flight time accounting for wind
+    return percentValue #Multiply this result by flight time to get actual flight time accounting for wind
