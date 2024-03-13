@@ -5,6 +5,13 @@
 
 ## Language: Python
 
+## Naming Conventions
+
+- Functions: thisFunctionName
+- Classes: ThisClassName
+- Files: this_file_name.py
+- Attributes: attribute_name_convention
+
 ### Files
 
 - [ Filename ]
