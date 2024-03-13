@@ -5,7 +5,7 @@
 
 ## Deliverables
 
-Cloud Nine will provide Comfort Airlines with software to manage a timetable, gather profibility data, and evaluate customer satisfaction by simulating their business plan.
+Cloud Nine will provide Comfort Airlines with software to manage a timetable, gather profitability data, and evaluate customer satisfaction by simulating their business plan.
 
 ## Features
 
@@ -49,7 +49,7 @@ The software provided by Cloud Nine to Comfort Airlines will support the followi
 
 #### View timetable
 
-Viewing the timetable lists every flight and route avaiable to potential flyers. This list will detail which aircraft are scheduled to fly between which airports and at what times.
+Viewing the timetable lists every flight and route available to potential flyers. This list will detail which aircraft are scheduled to fly between which airports and at what times.
 
 #### Search routes
 
@@ -63,9 +63,9 @@ Searching for routes finds routes between two airports.
 
 #### Edit timetable
 
-- **Add route**: Adds a new route to the timetable with user defined details. This process will fail if the aircraft in unavaiable or the flight is invalid.
+- **Add route**: Adds a new route to the timetable with user defined details. This process will fail if the aircraft in unavailable or the flight is invalid.
 
-- **Remove route**: Removes a route from the time table. Cannot remove indiviual flights.
+- **Remove route**: Removes a route from the time table. Cannot remove individual flights.
 
 - **Upload timetable**: Upload a .csv file to override the existing timetable.
 
@@ -103,7 +103,7 @@ List every airport in the simulation and all of their details. Details include: 
 
 #### Edit airports
 
-- **Add airport**: Add an aiport to the simulation.
+- **Add airport**: Add an airport to the simulation.
 
 - **Remove airport**: Remove an airport from the simulation. An airport cannot be removed if timetable uses that airport.
 
@@ -111,7 +111,7 @@ List every airport in the simulation and all of their details. Details include: 
 
 #### View aircraft
 
-Lists every aircraft in the simulation all of their details. Deatils include: tail number, name, model, maximum speed, maximum capacity, maximum fuel, cargo volume, and leasing cost.
+Lists every aircraft in the simulation all of their details. Details include: tail number, name, model, maximum speed, maximum capacity, maximum fuel, cargo volume, and leasing cost.
 
 #### Edit aircraft
 
