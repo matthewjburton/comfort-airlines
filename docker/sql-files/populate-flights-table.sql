@@ -1,12 +1,18 @@
--- Purpose: Removes all entries from the flights table, then inserts all of the flights in the list below.
--- Author:  McHale Trotter
--- Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>              
---              
---              docker exec -it mariadb-container mariadb -u admin -p cloudnine
---
---          2. To execute the populate-flights-table.sql file: source <file/path/file_name.sql>
---              
---              source /docker-entrypoint-initdb.d/populate-flights-table.sql
+/*
+Removes all entries from the flights table, then inserts all of the flights in the list below.
+__team_name__ = Cloud Nine
+__team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+__author__ = McHale Trotter
+
+    Execute: 1. Log into the database: docker exec -it <container name> mariadb -u <username> -p <database name>       
+       
+        docker exec -it mariadb-container mariadb -u admin -p cloudnine
+            
+            2. To execute the populate-flights-table.sql file: source <file/path/file_name.sql>
+
+        source /docker-entrypoint-initdb.d/populate-flights-table.sql
+*/
+
 
 
 
