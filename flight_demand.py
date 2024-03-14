@@ -7,17 +7,16 @@ __author__ = Jeremy Maas
 """
 
 import airport
-import flight_angle
 
 def individual_demand(startingAirport, endingAirport):
 
-    airport_pop = endingAirport.get_metro_population()
-    flyer_percent = airport_pop/airport.total_population
+    airportPopulation = endingAirport.get_metro_population()
+    flyerPercent = airportPopulation/airport.total_population
 
-    percent_flying_out = .005
+    PERCENT_FLYING_OUT = 0.005
     
-    num_flying_out = startingAirport.get_metro_population() * percent_flying_out
+    numFlyingOut = startingAirport.get_metro_population() * PERCENT_FLYING_OUT
 
     #Number of people from startingAirport who want to fly to endingAirport
-    return num_flying_out * flyer_percent
+    return numFlyingOut * flyerPercent
         
