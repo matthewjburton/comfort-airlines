@@ -50,7 +50,7 @@ ALTER TABLE flights AUTO_INCREMENT = 1;
 -- Inserts 28 flight entries into the table
 INSERT INTO flights (flight_number, aircraft_id, departure_airport_id, destination_airport_id, flight_duration_minutes, local_departure_time, local_arrival_time, on_time_bin, gate_departure, gate_arrival)
 VALUES
-    ('ABC123', 1, 1, 2, 120, 10, 12, 1, 1, 2);
+    ('ABC123', 1, 4, 5, 120, 10, 12, 1, 1, 2);
 --    ('DEF456', 2, 2, 3, 180, 10, 13, 1, 3, 1),
 --    ('GHI789', 3, 3, 4, 120, 10, 12, 0, 2, 3),
 --    ('JKL123', 4, 4, 5, 180, 12, 15, 1, 4, 5),
