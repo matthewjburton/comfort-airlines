@@ -1,0 +1,66 @@
+# Meeting Minutes
+
+## Meeting Information
+
+**Date:** 3/14/24  
+**Start Time:** 1:45pm  
+**End Time:**  
+**Team Name:** Cloud Nine  
+**Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher  
+**Present Attendees:** Jeremy Maas, Matt Burton, McHale Trotter, Justin Chen, Ryan Hirscher  
+**Absent Attendees:** Kevin Sampson  
+**Scribe:** Matt  
+
+## Sprint Recap
+
+**Matt:**
+
+- Rewrote requirements document
+- Started work on main executable file and user menu design
+- Updated clock, great circle, and turn around time to match new naming standards
+- Reread entire project.pdf file and answers all outstanding questions with the client
+- Created meeting agenda
+
+**Ryan:**
+
+- Finalized functional specification document and caught it up to our existing code
+
+**Kevin:**
+
+- absent
+
+**Justin:**
+
+- Inspection tested great circle formula
+
+**McHale:**
+
+- Remade the gantt chart by reviewing all the previous action items and schedulding future goals
+- Unit tested the clock class
+
+**Jeremy:**
+
+- Reformatted naming conventions for airport class, flight demand, and flight angle functions
+- Revised the requirements document
+
+## Agenda
+
+- [X] Fill in sprint recap
+- [ ] Handle outstanding pull requests
+- [ ] Confirm we updated to new naming standards
+- [ ] Determine which requirements document we want to go with
+- [ ] Check in on testing progress
+- [ ] Present user menu and main executable file
+- [ ] Decide on how to deal with Paris
+- [ ] Get Jira up to date
+- [ ] Create new Jira issues
+- [ ] Start new Jira sprint
+
+## Synopsis and Discussion
+
+-
+
+## Action Items
+
+| **Assignee**        | **Task**                                          | **Due Date**  |
+|---------------------|---------------------------------------------------|---------------|
