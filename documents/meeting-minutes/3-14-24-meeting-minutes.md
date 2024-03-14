@@ -48,10 +48,10 @@
 
 - [X] Fill in sprint recap
 - [X] Confirm with Oudshoorn that our documents are improvements
-- [ ] Handle outstanding pull requests
-- [ ] Confirm we updated to new naming standards
-- [ ] Determine which requirements document we want to go with
-- [ ] Check in on testing progress
+- [X] Handle outstanding pull requests
+- [X] Confirm we updated to new naming standards
+- [X] Determine which requirements document we want to go with
+- [X] Check in on testing progress
 - [ ] Present user menu and main executable file
 - [ ] Decide on how to deal with Paris
 - [ ] Get Jira up to date
@@ -68,6 +68,8 @@
 - Functional spoecification can remove redundancy to reduce its length
 - Populate flights template just needed a file header, added it, merged into main
 - Merged in naming convention updates
+- Merged in new requirements document
+- McHale tested the clock but no one else was able to test anything until we updated the naming conventions
 
 ## Action Items
 
