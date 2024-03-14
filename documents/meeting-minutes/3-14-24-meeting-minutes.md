@@ -27,7 +27,7 @@
 
 **Kevin:**
 
-- absent
+- Updated flight duration to meet naming standards
 
 **Justin:**
 
@@ -37,6 +37,7 @@
 
 - Remade the gantt chart by reviewing all the previous action items and schedulding future goals
 - Unit tested the clock class
+- Fixed populate flight template
 
 **Jeremy:**
 
@@ -46,6 +47,7 @@
 ## Agenda
 
 - [X] Fill in sprint recap
+- [X] Confirm with Oudshoorn that our documents are improvements
 - [ ] Handle outstanding pull requests
 - [ ] Confirm we updated to new naming standards
 - [ ] Determine which requirements document we want to go with
@@ -58,7 +60,14 @@
 
 ## Synopsis and Discussion
 
--
+- Make sure to move deliverable features out of the main user menu tree if we dont get around to implementing them and explain why we weren't able to implement them
+- Add specifications on how we plan to implement the user interface using images and a description
+- Functional specification document only needs to list the public functions
+- Explain how using a database has been a trade off between implementing additional functionality to support the full scope of the project
+- Add milestones that describe the functionality we expect from our software to the Gantt chart
+- Functional spoecification can remove redundancy to reduce its length
+- Populate flights template just needed a file header, added it, merged into main
+- Merged in naming convention updates
 
 ## Action Items
 
