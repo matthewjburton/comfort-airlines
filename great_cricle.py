@@ -4,17 +4,9 @@ Return the distance in miles between two airports
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
-
-Notes:
-    The Airport class is entirely temprorary
-    There is example usage below the function
 """
 import math
-
-class Airport:
-    def __init__(self, latitude, longitude):
-        self.latitude = latitude
-        self.longitude = longitude
+import airport
 
 def GreatCircle(airportOne, airportTwo):
     # Radius of the Earth in miles
@@ -34,13 +26,3 @@ def GreatCircle(airportOne, airportTwo):
     distance = R * c
     
     return distance
-
-# Example usage
-JFK = Airport(40.641766, -73.780968)
-LAX = Airport(33.9416, -118.4085)
-ORD = Airport(41.978611, -87.904724)
-DFW = Airport(32.89748, -97.040443)
-
-print("Distance between JFK and LAX: {:.3f} miles".format(GreatCircle(JFK, LAX)))
-print("Distance between JFK and ORD: {:.3f} miles".format(GreatCircle(JFK, ORD)))
-print("Distance between JFK and DFW: {:.3f} miles".format(GreatCircle(JFK, DFW)))
