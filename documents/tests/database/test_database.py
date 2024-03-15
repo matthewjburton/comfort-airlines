@@ -1,3 +1,14 @@
+"""
+Unit tests for the database class
+
+__team_name__ = Cloud Nine
+__team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+__author__ = Matt Burton
+
+To run execute the following command in the terminal: 
+
+    python3 test_database.py
+"""
 import unittest
 from unittest.mock import patch
 import sys
