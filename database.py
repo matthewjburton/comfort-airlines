@@ -33,6 +33,7 @@ class Database:
         self.password = os.environ.get("DB_PASS")
         self.database = os.environ.get("DB_NAME")
         self.connection = None
+        self.cursor = None
         
     """Establishes a connection to the database."""
     def connect(self):
@@ -71,7 +72,13 @@ class Database:
             cursor = self.execute_query(query)
             data = cursor.fetchall()
             columns = [col[0] for col in cursor.description]
-            return pd.DataFrame(data, columns=columns)
+            dataframe = pd.DataFrame(data, columns=columns)
+
+            # Convert columns with 0/1 values to integers
+            binary_columns = ['is_hub']  # Add other column names here if needed
+            dataframe[binary_columns] = dataframe[binary_columns].astype(int)
+
+            return dataframe
         except mysql.connector.Error as e:
             print(f"Error executing query: {e}")
 
