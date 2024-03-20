@@ -45,5 +45,4 @@ def calculate_percentage(startAirport, endAirport, wind = .045):
 
         percentValue = 1 - (percentValue * wind) # Since % number indicates % decrease in flight time, multiply % by wind, and subtract from 1 to get % time of base flight time this flight will have
 
-
     return percentValue # Multiply this result by flight time to get actual flight time accounting for wind
