@@ -9,6 +9,7 @@
 - [Introduction](#introduction)
     - [Naming Conventions](#naming-conventions)
 - [Files Information Template](#files-information-template)
+    - [airport](#airportpy)
     - [flight_duration](#flight_durationpy)
     - [flight_demand](#flight_demandpy)
     - [turn_around_time](#turn_around_timepy)
@@ -31,7 +32,7 @@
 
 ## Introduction
 
-  This document serves as a detailed introduction to the codebase highlighting the purpose and use of files, functions, schemas, and conditions involved in each. The overall codebase is coded in Python as the choice of language. 
+  This document serves as a detailed introduction to the codebase highlighting the purpose and use of files, functions, schemas, and conditions involved in each. The overall codebase is coded in Python as the choice of language. Defects should be logged in defect-log.md and implementation shall be updated here making this a living document. Testing for the functions can be found in test-plan.md.
 
 ##### Naming Conventions
 
@@ -56,6 +57,60 @@
 - Parameters
 - Returns
 - Execution steps
+
+##### airport.py
+- { class: Airport }
+Author: Jeremy
+Purpose: Pull airport information from the database into python class objects allowing easier access.
+```python
+# Author/Editors: Jeremy
+# Purpose: Import and create an instance of an airport 
+# Returns: The airport instance instantiated
+# Parameters: The abbreviation for the airport
+# Precondition: Airport object not created and instantiated
+# Postcondition: Airport object created and instantiated
+# Test cases: Make sure that expected values are stored in a given airport instantiation
+import airport
+JFK = airport.Airport("JFK")
+```
+- {get method list}
+```python
+# Author/Editors: Jeremy
+# Purpose: Able to retreive airport information with get methods
+# Returns: The information stored in the database
+# Parameters: None
+# Precondition: None
+# Postcondition: Airport information of that instance is returned
+# Test: Expected information is returned for different instances
+# Airport Methods:
+JFK.get_airport_id()
+JFK.get_airport_name()
+JFK.get_airport_abbreviation()
+JFK.get_airport_latitude()
+JFK.get_airport_longitude()
+JFK.get_airport_timezone_offset()
+JFK.get_metro_population()
+JFK.get_total_gates()
+JFK.get_available_gates()
+JFK.get_is_hub()
+```
+- { Modifying Functions }
+```python
+# Author/Editors: Jeremy
+# Purpose: Adjust gate values to ensure consistency
+# Parameters: None
+# Returns: None
+# Precondition: A gate becomes available or taken up
+# Postcondition: Gate availability is consistent and up to date
+# Test: Take and free gates up until an expected value
+# Modifying Functions:
+remote_gate()
+add_gate()
+```
+- Execute:
+    1. Move to the comfort-airlines/ directory
+    2. Execute the file using the following command in the terminal:
+-       python3 airport.py
 
 #####  flight_duration.py 
 - { function: calculate_flight_time }
@@ -355,4 +410,3 @@ great_circle(JFK, LAX)
 - Parameters
 - Returns
 - Execution steps
-
