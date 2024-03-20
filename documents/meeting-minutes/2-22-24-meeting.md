@@ -71,4 +71,4 @@
 
 | **Assignee**        | **Task**                                          | **Due Date**  |
 |---------------------|---------------------------------------------------|---------------|
-| Matt Burton| Update functional specification document | Next meeting |
+| Matt Burton | Update functional specification document | Next meeting |

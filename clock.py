@@ -20,27 +20,29 @@ class Clock:
     def __init__(self):
         self.time = (1, 0, 0)  # (day, hour, minute)
 
-    def ResetClock(self):
+    def reset_clock(self):
         self.time = (1, 0, 0)
 
-    def IncrementClock(self):
+    def increment_clock(self):
         day, hour, minute = self.time # temporarily breakdown time into its parts
         
-        # incrememnt the clock by one
-        if minute < 59:
-            minute += 1
-        elif hour < 23:
+        # Increment the clock by one minute
+        minute += 1
+        
+        # Check to increment the hour
+        if minute == 60:
+            minute = 0
             hour += 1
-            minute = 0
-        else:
-            day += 1
-            hour = 0
-            minute = 0
+            
+            # Check to increment the day
+            if hour == 24:
+                hour = 0
+                day += 1
         
         # set the time with the updated value(s)
         self.time = (day, hour, minute)
     
-    def PrintTime(self):
+    def print_time(self):
         day, hour, minute = self.time # temporarily breakdown time into its parts
 
         print("Day:" + str(day) + " " + str(hour) + ":" + str(minute))
@@ -49,5 +51,5 @@ clock = Clock() # create a new clock object
 
 # test the incrementing and output for a single day
 for i in range(0,1441):
-    clock.PrintTime()
-    clock.IncrementClock()
+    clock.print_time()
+    clock.increment_clock()
