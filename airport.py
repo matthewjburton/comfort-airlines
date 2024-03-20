@@ -101,7 +101,7 @@ dbConnection = mysql.connector.connect(
 query = pd.read_sql_query('''SELECT * FROM airports''', dbConnection)
 
 # Put query results into a Pandas dataframe
-dataframe = pd.DataFrame(query, columns=['id', 'name', 'abbreviation', 'latitude', 'longitude',
+dataframe = pd.DataFrame(query, columns=['airport_id', 'name', 'abbreviation', 'latitude', 'longitude',
                                         'timezone_offset', 'metro_population', 'total_gates', 'is_hub'])
 
 # Format dataframe to remove 'b' strings using utf-8 format
@@ -125,7 +125,7 @@ for x in dataframe:
         x['is_hub'] = True
 
     # Create all Airport objects using the Abbreviation as the Object name
-    setattr(Airport, x['abbreviation'], Airport(x['id'], x['name'], 
+    setattr(Airport, x['abbreviation'], Airport(x['airport_id'], x['name'], 
     x['abbreviation'], x['latitude'], x['longitude'], x['timezone_offset'], 
     x['metro_population'], x['total_gates'], x['total_gates'], x['is_hub']))
 
