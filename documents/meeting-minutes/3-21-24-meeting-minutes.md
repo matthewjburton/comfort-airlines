@@ -4,7 +4,7 @@
 
 **Date:** 3/21/24  
 **Start Time:** 1:50pm  
-**End Time:**  
+**End Time:** 3:00pm  
 **Team Name:** Cloud Nine  
 **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher  
 **Present Attendees:** Matt Burton, McHale Trotter, Justin Chen, Ryan Hirscher, Kevin Sampson  
@@ -50,11 +50,11 @@
 - [X] Ask Oudshoorn questions
 - [X] Fill in sprint recap
 - [X] Check in on all documentation (especially the defect log)
-- [ ] Handle outstanding pull requests
-- [ ] Check in on testing progress
-- [ ] Get Jira up to date
-- [ ] Create new Jira issues
-- [ ] Start new Jira sprint
+- [X] Handle outstanding pull requests
+- [X] Check in on testing progress
+- [X] Get Jira up to date
+- [X] Create new Jira issues
+- [X] Start new Jira sprint
 
 ## Synopsis and Discussion
 
@@ -75,6 +75,11 @@
 - Merged in the revised test plan that more accurately reflects our python testing approach over shell scripting
 - Skipping over merging in just the database class because Matt opened a pull request including the new class and implementing it
 - Merged the integrated database class which updated the connection in airport.py to use the new database class
+- Merged in the user menu branch
+- Matt, Ryan, and McHale have completed their tests
+- Justin has started testing the great circle formula
+- Kevin and Jeremy have not reported on their testing
+- Updated Jira to reflect our current status and plan for the final checkpoint
 
 ## Action Items
 
