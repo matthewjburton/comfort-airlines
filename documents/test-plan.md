@@ -17,17 +17,21 @@ As the author, it is expected that you have tested your code with at a basic lev
 
 ### /documents/tests
 
-Test data is stored in the _/documents/tests_ directory. Each module will have its own sub-directory within the _/tests_ directory.
+Test scripts and data are stored in the _/documents/tests_ directory. Each module has its own sub-directory within the _/tests_ directory.
 
 #### documents/tests/module
 
-Testers must create a new directory **named after the module** to store all of the test data
-  
+Testers must create a new directory **named after the module** to store all of the test scripts and data
+
+#### Scripts
+
+Test scripts should be stored in the _/documents/tests/module_ directory.
+
 ##### documents/tests/module/inputs
 
-A sub directory named _/inputs_ can be used to contain a set of input files, each file containing one test.
+If a module needs external input, a sub directory named _/inputs_ can be used to contain a set of input files, each file containing one test.
 
-Test sets should include all of the following:
+When applicable, test sets should include all of the following:
 
   1. An example from each equivalence case
   2. Additional tests around the boundaries of each equivalence case range
@@ -36,14 +40,6 @@ Test sets should include all of the following:
 ##### documents/tests/module/outputs
 
 If testing requires an input set, a sub-directory named _/outputs_ must contain the set of expected values from each input test.
-
-#### Scripts
-
-If a test requires a script, the script should also be stored in the _/documents/tests/module_ directory.
-
-The results from each test should be listed in a results.txt files stored in the _documents/tests/module_ directory.
-
-Each test must be listed including its input, expected output, PASS/FAIL and in the event of a failed test the actual output generated.
 
 ## Unit Tests
 
