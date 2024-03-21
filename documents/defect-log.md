@@ -47,3 +47,12 @@
 - **Assignee(s):** McHale
 - **Date Fixed:** 2/23/24  
 - **Solution:** Renamed the trigger from "calculate_flight_angle" to "calculate_flight_angle1" and added a line to drop the trigger if it exists already.
+
+## Bug 6
+
+- **Issue Description:** Adding and removing gates allowed for negative and more than total gate value
+- **Date Found:** 3/18/24
+- **Action Plan:** Add exception handling for when the program calls to add or remove a gate when it doesnt make sense
+- **Assignee(s):** Matt
+- **Date Fixed:** 3/18/24  
+- **Solution:** Add exception handling for when the program calls to add or remove a gate when it doesnt make sense
