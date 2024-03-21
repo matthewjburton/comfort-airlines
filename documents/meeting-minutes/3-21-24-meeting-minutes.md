@@ -44,6 +44,7 @@
 **Jeremy:**
 
 - Worked with McHale on creatint modules and stubs
+- Started testing flight turn around time function
 
 ## Agenda
 
@@ -78,7 +79,8 @@
 - Merged in the user menu branch
 - Matt, Ryan, and McHale have completed their tests
 - Justin has started testing the great circle formula
-- Kevin and Jeremy have not reported on their testing
+- Jeremy has started testing flight turn around time function
+- Kevin has not reported on his testing
 - Updated Jira to reflect our current status and plan for the final checkpoint
 
 ## Action Items
