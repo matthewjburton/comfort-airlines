@@ -12,9 +12,7 @@ How to use: Import airport.py in file
             Run methods as part of Airport class object.
             At the moment, you will need to use (airportname).(methodname) as the format
 """
-
-import mysql.connector
-import pandas as pd
+import database
 
 class Airport:
     def __init__(self, airportID, airportName, airportAbbreviation,
