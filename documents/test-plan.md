@@ -29,7 +29,7 @@ Test scripts should be stored in the _/documents/tests/module_ directory.
 
 ##### documents/tests/module/inputs
 
-If a module need external input, a sub directory named _/inputs_ can be used to contain a set of input files, each file containing one test.
+If a module needs external input, a sub directory named _/inputs_ can be used to contain a set of input files, each file containing one test.
 
 When applicable, test sets should include all of the following:
 
