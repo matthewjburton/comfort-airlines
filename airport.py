@@ -10,7 +10,7 @@ __author__ = Jeremy Maas
 
 How to use: Import airport.py in file
             Run methods as part of Airport class object.
-            At the moment, you will need to use Airport.(airportname).(methodname) as the format
+            At the moment, you will need to use (airportname).(methodname) as the format
 """
 import database
 
@@ -29,45 +29,57 @@ class Airport:
         self.availableGates = availableGates
         self.isHub = isHub
 
-    # Below: Individual get functions. Requires airport object to be passed
-    # Example: Airport.LAX.get_airport_id()
-    def get_airport_id(self):
+    @property
+    def id(self):
         return self.airportID
 
-    def get_airport_name(self):
+    @property
+    def name(self):
         return self.airportName
 
-    def get_airport_abbreviation(self):
+    @property
+    def abbreviation(self):
         return self.airportAbbreviation
 
-    def get_airport_latitude(self):
+    @property
+    def latitude(self):
         return self.latitude
 
-    def get_airport_longitude(self):
+    @property
+    def longitude(self):
         return self.longitude
 
-    def get_airport_timezone_offset(self):
+    @property
+    def timezone_offset(self):
         return self.timezoneOffset
 
-    def get_metro_population(self):
+    @property
+    def metro_population(self):
         return self.metroPopulation
 
-    def get_total_gates(self):
+    @property
+    def total_gates(self):
         return self.totalGates
 
-    def get_available_gates(self):
+    @property
+    def available_gates(self):
         return self.availableGates
-
-    def get_is_hub(self):
-        return self.isHub
-
-    #Modifying functions below
-
+    
     def remove_gate(self):
-        self.availableGates -= 1
+        if self.availableGates > 0:
+            self.availableGates -= 1
+        else:
+            raise ValueError("No available gates to remove.")
 
     def add_gate(self):
-        self.availableGates += 1
+        if self.availableGates < self.totalGates:
+            self.availableGates += 1
+        else:
+            raise ValueError("No available gates to add.")
+
+    @property
+    def is_hub(self):
+        return self.isHub
 
 """
 Below: Everything below is for auto generation of each Airport class instance
