@@ -11,23 +11,6 @@ __author__ = Jeremy Maas
 How to use: Import airport.py in file
             Run methods as part of Airport class object.
             At the moment, you will need to use Airport.(airportname).(methodname) as the format
-
-Example:
-    import airport
-
-    # Create an instance for JFK airport
-    JFK = airport.Airport("JFK")
-
-    # Retrieve JFK's latitude
-    jfk_latitude = JFK.get_airport_latitude()
-    print("JFK latitude:", jfk_latitude)
-
-    # Modify available gates for JFK
-    JFK.set_available_gates(50)
-
-    # Retrieve updated available gates for JFK
-    jfk_gates = JFK.get_available_gates()
-    print("JFK available gates:", jfk_gates)
 """
 
 import mysql.connector
