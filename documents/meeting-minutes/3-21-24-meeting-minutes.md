@@ -74,6 +74,7 @@
 - McHale and Justin ran into issues when running the test program because they didnt have python installed, Kevin had an issue with a missing module, but Ryan and Matt had no issues running the test
 - Merged in the revised test plan that more accurately reflects our python testing approach over shell scripting
 - Skipping over merging in just the database class because Matt opened a pull request including the new class and implementing it
+- Merged the integrated database class which updated the connection in airport.py to use the new database class
 
 ## Action Items
 
