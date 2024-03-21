@@ -60,8 +60,7 @@
 
 ##### airport.py
 - { class: Airport }
-Author: Jeremy
-Purpose: Pull airport information from the database into python class objects allowing easier access.
+- Class purpose: Pull airport information from the database into python class objects allowing easier access.
 ```python
 # Author/Editors: Jeremy
 # Purpose: Import and create an instance of an airport 
@@ -186,8 +185,7 @@ calculate_percentage(JFK, LAX, 0.045)
 
 ##### clock.py 
 - { class: Clock }
-- Author:   Matt Burton
-- Purpose: Track the current simulation time and manage incrementing time minute by minute
+- Class purpose: Track the current simulation time and manage incrementing time minute by minute
 - { method: reset_clock }
 ```python
 # Author/Editors: Matt
