@@ -32,7 +32,7 @@
 
 ## Introduction
 
-  This document serves as a detailed introduction to the codebase highlighting the purpose and use of files, functions, schemas, and conditions involved in each. The overall codebase is coded in Python as the choice of language. Defects should be logged in defect-log.md and implementation shall be updated here making this a living document. Testing for the functions can be found in test-plan.md.
+  This document serves as a detailed introduction to the codebase highlighting the purpose and use of files, functions, schemas, and conditions involved in each. The overall codebase is coded in Python as the choice of language. Defects should be logged in defect-log.md and implementation shall be updated here making this a living document. Testing for the functions can be found in tests directory.
 
 ##### Naming Conventions
 
