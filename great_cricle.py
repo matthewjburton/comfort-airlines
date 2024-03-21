@@ -6,7 +6,6 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton
 """
 import math
-import airport
 
 RADIUS = 3958.8 # Radius of the Earth in miles
 

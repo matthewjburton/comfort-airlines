@@ -10,31 +10,11 @@ __author__ = Jeremy Maas
 
 How to use: Import airport.py in file
             Run methods as part of Airport class object.
-            At the moment, you will need to use Airport.(airportname).(methodname) as the format
-
-Example:
-    import airport
-
-    # Create an instance for JFK airport
-    JFK = airport.Airport("JFK")
-
-    # Retrieve JFK's latitude
-    jfk_latitude = JFK.get_airport_latitude()
-    print("JFK latitude:", jfk_latitude)
-
-    # Modify available gates for JFK
-    JFK.set_available_gates(50)
-
-    # Retrieve updated available gates for JFK
-    jfk_gates = JFK.get_available_gates()
-    print("JFK available gates:", jfk_gates)
+            At the moment, you will need to use (airportname).(methodname) as the format
 """
-
-import mysql.connector
-import pandas as pd
+import database
 
 class Airport:
-
     def __init__(self, airportID, airportName, airportAbbreviation,
     latitude, longitude, timezoneOffset, metroPopulation, totalGates, availableGates, isHub):
 
@@ -49,45 +29,57 @@ class Airport:
         self.availableGates = availableGates
         self.isHub = isHub
 
-    # Below: Individual get functions. Requires airport object to be passed
-    # Example: Airport.LAX.get_airport_id()
-    def get_airport_id(self):
+    @property
+    def id(self):
         return self.airportID
 
-    def get_airport_name(self):
+    @property
+    def name(self):
         return self.airportName
 
-    def get_airport_abbreviation(self):
+    @property
+    def abbreviation(self):
         return self.airportAbbreviation
 
-    def get_airport_latitude(self):
+    @property
+    def latitude(self):
         return self.latitude
 
-    def get_airport_longitude(self):
+    @property
+    def longitude(self):
         return self.longitude
 
-    def get_airport_timezone_offset(self):
+    @property
+    def timezone_offset(self):
         return self.timezoneOffset
 
-    def get_metro_population(self):
+    @property
+    def metro_population(self):
         return self.metroPopulation
 
-    def get_total_gates(self):
+    @property
+    def total_gates(self):
         return self.totalGates
 
-    def get_available_gates(self):
+    @property
+    def available_gates(self):
         return self.availableGates
-
-    def get_is_hub(self):
-        return self.isHub
-
-    #Modifying functions below
-
+    
     def remove_gate(self):
-        self.availableGates -= 1
+        if self.availableGates > 0:
+            self.availableGates -= 1
+        else:
+            raise ValueError("No available gates to remove.")
 
     def add_gate(self):
-        self.availableGates += 1
+        if self.availableGates < self.totalGates:
+            self.availableGates += 1
+        else:
+            raise ValueError("No available gates to add.")
+
+    @property
+    def is_hub(self):
+        return self.isHub
 
 """
 Below: Everything below is for auto generation of each Airport class instance
@@ -95,46 +87,36 @@ Below: Everything below is for auto generation of each Airport class instance
     and algorithmically creating the class objects
 """
 
-# Establish Database connection
-dbConnection = mysql.connector.connect(
-    host="localhost",
-    user="admin",
-    password="Cloud9",
-    database="cloudnine")
+# Query database for airports
+db = database.Database()
+query = 'SELECT * FROM airports'
+dataframe = db.execute_query_to_dataframe(query)
 
-# Run base query to gather all information from airports table
-query = pd.read_sql_query('''SELECT * FROM airports''', dbConnection)
-
-# Put query results into a Pandas dataframe
-dataframe = pd.DataFrame(query, columns=['airport_id', 'name', 'abbreviation', 'latitude', 'longitude',
-                                        'timezone_offset', 'metro_population', 'total_gates', 'is_hub'])
-
-# Format dataframe to remove 'b' strings using utf-8 format
-dataframe['is_hub'] = dataframe['is_hub'].str.decode('utf-8')
-
-# Convert to list of dictionaries
-dataframe = dataframe.to_dict(orient='records')
-
-# Create total_population variable to help with flight demand
+# Track total population or all airports
 totalPopulation = 0
 
 # Create Airport list, just to have a list of the airport objects we have, mostly for
 # debugging or ease of access purposes
+dataframe = dataframe.to_dict(orient='records')
 airportList = []
 
-# Change '0' to False, '1' to True for easier readability and usage
-for x in dataframe:
-    if x['is_hub'] == '0':
-        x['is_hub'] = False 
-    else:
-        x['is_hub'] = True
+for airport in dataframe:
 
-    # Create all Airport objects using the Abbreviation as the Object name
-    setattr(Airport, x['abbreviation'], Airport(x['airport_id'], x['name'], 
-    x['abbreviation'], x['latitude'], x['longitude'], x['timezone_offset'], 
-    x['metro_population'], x['total_gates'], x['total_gates'], x['is_hub']))
+    # Create Airport object using the Abbreviation as the Object name
+    setattr(Airport,
+            airport['abbreviation'], 
+            Airport(airport['airport_id'],
+            airport['name'],
+            airport['abbreviation'],
+            airport['latitude'],
+            airport['longitude'],
+            airport['timezone_offset'],
+            airport['metro_population'],
+            airport['total_gates'],
+            airport['total_gates'],
+            airport['is_hub']))
 
     # Update Total Population and add airport to list
-    airportList.append(x['abbreviation'])
-    totalPopulation+=x['metro_population']
+    airportList.append(airport['abbreviation'])
+    totalPopulation += airport['metro_population']
 
