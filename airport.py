@@ -15,71 +15,71 @@ How to use: Import airport.py in file
 import database
 
 class Airport:
-    def __init__(self, airportID, airportName, airportAbbreviation,
+    def __init__(self, id, name, abbreviation,
     latitude, longitude, timezoneOffset, metroPopulation, totalGates, availableGates, isHub):
 
-        self.airportID = airportID
-        self.airportName = airportName
-        self.airportAbbreviation = airportAbbreviation
-        self.latitude = latitude
-        self.longitude = longitude
-        self.timezoneOffset = timezoneOffset
-        self.metroPopulation = metroPopulation
-        self.totalGates = totalGates
-        self.availableGates = availableGates
-        self.isHub = isHub
+        self._id = id
+        self._name = name
+        self._abbreviation = abbreviation
+        self._latitude = latitude
+        self._longitude = longitude
+        self._timezoneOffset = timezoneOffset
+        self._metroPopulation = metroPopulation
+        self._totalGates = totalGates
+        self._availableGates = availableGates
+        self._isHub = isHub
 
     @property
     def id(self):
-        return self.airportID
+        return self._id
 
     @property
     def name(self):
-        return self.airportName
+        return self._name
 
     @property
     def abbreviation(self):
-        return self.airportAbbreviation
+        return self._abbreviation
 
     @property
     def latitude(self):
-        return self.latitude
+        return self._latitude
 
     @property
     def longitude(self):
-        return self.longitude
+        return self._longitude
 
     @property
     def timezone_offset(self):
-        return self.timezoneOffset
+        return self._timezoneOffset
 
     @property
     def metro_population(self):
-        return self.metroPopulation
+        return self._metroPopulation
 
     @property
     def total_gates(self):
-        return self.totalGates
+        return self._totalGates
 
     @property
     def available_gates(self):
-        return self.availableGates
+        return self._availableGates
     
     def remove_gate(self):
-        if self.availableGates > 0:
-            self.availableGates -= 1
+        if self._availableGates > 0:
+            self._availableGates -= 1
         else:
             raise ValueError("No available gates to remove.")
 
     def add_gate(self):
-        if self.availableGates < self.totalGates:
-            self.availableGates += 1
+        if self._availableGates < self._totalGates:
+            self._availableGates += 1
         else:
             raise ValueError("No available gates to add.")
 
     @property
     def is_hub(self):
-        return self.isHub
+        return self._isHub
 
 """
 Below: Everything below is for auto generation of each Airport class instance
@@ -91,6 +91,10 @@ Below: Everything below is for auto generation of each Airport class instance
 db = database.Database()
 query = 'SELECT * FROM airports'
 dataframe = db.execute_query_to_dataframe(query)
+
+# Convert columns with 0/1 values to integers
+binary_columns = ['is_hub']  # Add other column names here if needed
+dataframe[binary_columns] = dataframe[binary_columns].astype(int)
 
 # Track total population or all airports
 totalPopulation = 0
