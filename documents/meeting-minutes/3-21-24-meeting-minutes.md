@@ -87,3 +87,12 @@
 
 | **Assignee**        | **Task**                                          | **Due Date**  |
 |---------------------|---------------------------------------------------|---------------|
+Justin | Finish testing great circle | Next Meeting
+Justin | Finish aircraft takeoff function | Next Meeting
+McHale | Clarify milestones  on the Gantt chart | Next Meeting
+Jeremy | Finish testing flight turn around function | 3/22/24
+Kevin | Finish the  flight duration function | Next Meeting
+Ryan | Ensure flight duration tests still work after Kevin's changes | Next Meeting
+Ryan and Matt | Start presentation | Next Meeting
+McHale and Jeremy | Continue working on modules and stubs | Next Meeting
+Matt | Connect everything into a rudimentary simulation | Next Meeting
