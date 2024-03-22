@@ -12,6 +12,11 @@ class SimulationMenu:
     @staticmethod
     def run_simulation():
         print("\nExecuting run_simulation()")
+        # initialize some schedule queue
+        # initialize the clock
+        # read in the timetable
+        # populate the schedule queue with events based on the time table
+        # loop: handle every event in the current minute, then increment the clock
 
     @staticmethod
     def configure_simulation():
