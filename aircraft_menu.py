@@ -3,9 +3,9 @@ Class responsible for implementing the menu options under the aircraft menu opti
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
-__author__ = McHale Trotter
+__author__ = McHale Trotter and Matt Burton
 """
-
+from menu import display_menu
 class AircraftMenu:
 
     """Aircraft Options"""
@@ -16,7 +16,11 @@ class AircraftMenu:
     @staticmethod
     def edit_aircraft():
         print("\nExecuting edit_aircraft()")
-        
+        edit_options = {
+            "Add": AircraftMenu.add_aircraft,
+            "Remove": AircraftMenu.remove_aircraft,
+        }
+        display_menu(edit_options, is_submenu = True)
     
     @staticmethod
     def add_aircraft():
