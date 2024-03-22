@@ -8,8 +8,7 @@ __author__ = Jeremy Maas and Matt Burton
 from menu import display_menu
 class SimulationMenu:
 
-    """SimulationOptions"""
-
+    """Simulation Options"""
     @staticmethod
     def run_simulation():
         print("\nExecuting run_simulation()")
@@ -24,15 +23,19 @@ class SimulationMenu:
             "Costs": SimulationMenu.configure_costs,
             "Challenges": SimulationMenu.configure_challenges }
         display_menu(configure_options, is_submenu = True)
-
+    
     @staticmethod
-    def follow_aircraft():
-        print("\nExecuting follow_aircraft()")
+    def analyze_simulation():
+        print("\nExecuting analyze_simulation()")
+        analyze_options = {
+            "Follow aircraft": SimulationMenu.analyze_follow_aircraft,
+            "Download report(s)": SimulationMenu.analyze_download_reports
+            }
+        display_menu(analyze_options, is_submenu=True)
 
-    @staticmethod
-    def download_reports():
-        print("\nExecuting download_reports()")
 
+
+    """Configuration Options"""
     @staticmethod
     def configure_start_date():
         print("\nExecuting configure_start_date()")
@@ -49,14 +52,26 @@ class SimulationMenu:
     def configure_costs():
         print("\nExecuting configure_costs()")
         cost_options = {
-                "Fuel": None,
-                "Gate": None,
-                "Takeoff": None,
-                "Landing": None,
-                "Aircraft": None
+                "Fuel": SimulationMenu.configure_fuel_cost,
+                "Gate": SimulationMenu.configure_gate_cost,
+                "Takeoff": SimulationMenu.configure_takeoff_cost,
+                "Landing": SimulationMenu.configure_landing_cost,
+                "Aircraft": SimulationMenu.configure_aircraft_cost
             }
         display_menu(cost_options, is_submenu=True)
 
+    @staticmethod    
+    def configure_challenges():
+        print("\nExecuting configure_challenges()")
+        challenge_options = {
+                "View": SimulationMenu.view_challenges,
+                "Edit": SimulationMenu.edit_challenges 
+                }
+        display_menu(challenge_options, is_submenu=True)
+
+
+
+    """Cost Options"""
     @staticmethod
     def configure_fuel_cost():
         print("\nExecuting configure_fuel_cost()")
@@ -77,15 +92,9 @@ class SimulationMenu:
     def configure_aircraft_cost():
         print("\nExecuting configure_aircraft_cost()")
 
-    @staticmethod    
-    def configure_challenges():
-        print("\nExecuting configure_challenges()")
-        challenge_options = {
-                "View": SimulationMenu.view_challenges,
-                "Edit": SimulationMenu.edit_challenges 
-                }
-        display_menu(challenge_options, is_submenu=True)
 
+
+    """Challenge Options"""
     @staticmethod
     def view_challenges():
         print("\nExecuting view_challenges()")
@@ -94,15 +103,9 @@ class SimulationMenu:
     def edit_challenges():
         print("\nExecuting edit_challenges()")
 
-    @staticmethod
-    def analyze_simulation():
-        print("\nExecuting analyze_simulation()")
-        analyze_options = {
-            "Follow aircraft": SimulationMenu.analyze_follow_aircraft,
-            "Download report(s)": SimulationMenu.analyze_download_reports
-            }
-        display_menu(analyze_options, is_submenu=True)
 
+
+    """Analyze Options"""
     @staticmethod
     def analyze_follow_aircraft():
         print("\nExecuting analyze_follow_aircraft()")

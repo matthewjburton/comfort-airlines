@@ -22,6 +22,8 @@ class AircraftMenu:
         }
         display_menu(edit_options, is_submenu = True)
     
+    
+    """Edit Options"""
     @staticmethod
     def add_aircraft():
         print("\nExecuting add_aircraft()")

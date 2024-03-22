@@ -38,6 +38,7 @@ class TimetableMenu:
         print("\nExecuting download_timetable()")
 
 
+
     """Search Options"""
     @staticmethod
     def sort_by_cost():
@@ -51,6 +52,7 @@ class TimetableMenu:
     def sort_by_departure_time():
         print("Executing sort_by_departure_time()")
 
+    
     
     """Edit Options"""
     @staticmethod
