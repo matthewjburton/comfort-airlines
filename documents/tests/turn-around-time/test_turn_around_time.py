@@ -1,4 +1,6 @@
-import turn_around_time
+import sys
+sys.path.append('../../../') # provide access to modules in the comfort-airlines directory
+from turn_around_time import turn_around_time
 
 #Testing 4 cases:
 #   Two correct assertions, one for refueling, one without
@@ -6,16 +8,16 @@ import turn_around_time
 #   Results, assertions correctly captured valid output. Function's arithmetic works successfully
 
 def testfuncRefuelCorrect():
-    assert turn_around_time.turn_around_time(True) == 50
+    assert turn_around_time(True) == 50
 
 def testfuncNoRefuelCorrect():
-    assert turn_around_time.turn_around_time(False) == 40
+    assert turn_around_time(False) == 40
 
 def testfuncRefuelIncorrect():
-    assert turn_around_time.turn_around_time(True) == 100
+    assert turn_around_time(True) == 100
 
 #def testfuncNoRefuelIncorrect():
-    #assert turn_around_time.turn_around_time(False) == 100
+    #assert turn_around_time(False) == 100
 
 testfuncRefuelCorrect()
 
