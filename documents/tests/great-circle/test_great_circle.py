@@ -12,11 +12,14 @@ How to use: Execute the following command in the terminal to run the tests:
     python test_great_circle.py
 """
 
-from great_circle import great_circle
+
 
 import unittest
+import sys
+sys.path.append('../../../')
 from unittest.mock import MagicMock
-from airport import Airport  # Assuming you have an Airport class defined
+from airport import Airport 
+from great_circle import great_circle
 
 class TestGreatCircle(unittest.TestCase):
     def test_same_airport(self):
