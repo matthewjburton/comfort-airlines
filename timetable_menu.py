@@ -6,16 +6,19 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton
 """
 from menu import display_menu
+from timetable import Timetable
 class TimetableMenu:
 
     """Timetable Options"""
     @staticmethod
     def view_timetable():
-        print("\nExecuting view_timetable()")
+        # print("\nExecuting view_timetable()")
+        Timetable.view_timetable()
     
     @staticmethod
     def search_routes():
-        print("\nExecuting search_routes()")
+        # print("\nExecuting search_routes()")
+        Timetable.search_routes()
         search_options = {
             "Sort by cost": TimetableMenu.sort_by_cost,
             "Sort by number of stops": TimetableMenu.sort_by_number_of_stops,
