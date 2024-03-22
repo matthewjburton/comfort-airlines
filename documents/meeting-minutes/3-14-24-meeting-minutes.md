@@ -7,8 +7,8 @@
 **End Time:** 2:50pm  
 **Team Name:** Cloud Nine  
 **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher  
-**Present Attendees:** Jeremy Maas, Matt Burton, McHale Trotter, Justin Chen, Ryan Hirscher  
-**Absent Attendees:** Kevin Sampson  
+**Present Attendees:** Jeremy Maas, Matt Burton, McHale Trotter, Justin Chen, Ryan Hirscher, Kevin Sampson  
+**Absent Attendees:** n/a  
 **Scribe:** Matt  
 
 ## Sprint Recap

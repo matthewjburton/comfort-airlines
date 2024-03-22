@@ -8,15 +8,15 @@ __author__ = Jeremy Maas
 
 import airport
 
+PERCENT_FLYING_OUT = 0.005
+
 def individual_demand(startingAirport, endingAirport):
 
-    airportPopulation = endingAirport.get_metro_population()
-    flyerPercent = airportPopulation/airport.total_population
-
-    PERCENT_FLYING_OUT = 0.005
+    airportPopulation = endingAirport.metro_population
+    flyerPercent = airportPopulation / airport.total_population
     
-    numFlyingOut = startingAirport.get_metro_population() * PERCENT_FLYING_OUT
+    numFlyingOut = startingAirport.metro_population * PERCENT_FLYING_OUT
 
-    #Number of people from startingAirport who want to fly to endingAirport
+    # Number of people from startingAirport who want to fly to endingAirport
     return numFlyingOut * flyerPercent
         
