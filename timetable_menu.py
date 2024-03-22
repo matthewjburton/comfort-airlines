@@ -17,8 +17,7 @@ class TimetableMenu:
     
     @staticmethod
     def search_routes():
-        # print("\nExecuting search_routes()")
-        Timetable.search_routes()
+        print("\nExecuting search_routes()")
         search_options = {
             "Sort by cost": TimetableMenu.sort_by_cost,
             "Sort by number of stops": TimetableMenu.sort_by_number_of_stops,
