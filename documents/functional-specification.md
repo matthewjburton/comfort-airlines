@@ -39,6 +39,8 @@
 - Functions/Methods: this_function_name
 - Classes: ThisClassName
 - File: this_file_name.py
+- @Properties: property_name
+- Private variables: _underscorePrefixed
 - Attributes: attribute_name_convention
 - Variables: VariableNames
 - Constants: CONSTANT_NAME

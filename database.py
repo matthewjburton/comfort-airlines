@@ -74,10 +74,6 @@ class Database:
             columns = [col[0] for col in cursor.description]
             dataframe = pd.DataFrame(data, columns=columns)
 
-            # Convert columns with 0/1 values to integers
-            binary_columns = ['is_hub']  # Add other column names here if needed
-            dataframe[binary_columns] = dataframe[binary_columns].astype(int)
-
             return dataframe
         except mysql.connector.Error as e:
             print(f"Error executing query: {e}")

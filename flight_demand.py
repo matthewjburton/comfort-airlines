@@ -13,7 +13,7 @@ PERCENT_FLYING_OUT = 0.005
 def individual_demand(startingAirport, endingAirport):
 
     airportPopulation = endingAirport.metro_population
-    flyerPercent = airportPopulation / airport.total_population
+    flyerPercent = airportPopulation / airport.totalPopulation
     
     numFlyingOut = startingAirport.metro_population * PERCENT_FLYING_OUT
 
