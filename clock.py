@@ -18,38 +18,20 @@ Execute:
 
 class Clock:
     def __init__(self):
-        self.time = (1, 0, 0)  # (day, hour, minute)
+        self.minutes = 0  # Initialize minutes
 
     def reset_clock(self):
-        self.time = (1, 0, 0)
+        self.minutes = 0
 
     def increment_clock(self):
-        day, hour, minute = self.time # temporarily breakdown time into its parts
-        
-        # Increment the clock by one minute
-        minute += 1
-        
-        # Check to increment the hour
-        if minute == 60:
-            minute = 0
-            hour += 1
-            
-            # Check to increment the day
-            if hour == 24:
-                hour = 0
-                day += 1
-        
-        # set the time with the updated value(s)
-        self.time = (day, hour, minute)
-    
+        self.minutes += 1
+
+    def get_time(self):
+        hours = self.minutes // 60
+        minutes = self.minutes % 60
+        days = self.minutes // (24 * 60)
+        return days, hours, minutes
+
     def print_time(self):
-        day, hour, minute = self.time # temporarily breakdown time into its parts
-
-        print("Day:" + str(day) + " " + str(hour) + ":" + str(minute))
-
-clock = Clock() # create a new clock object
-
-# test the incrementing and output for a single day
-for i in range(0,1441):
-    clock.print_time()
-    clock.increment_clock()
+        days, hours, minutes = self.get_time()
+        print(f"Day: {days}, Time: {hours:02}:{minutes:02}")

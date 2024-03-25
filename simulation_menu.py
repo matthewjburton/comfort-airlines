@@ -6,17 +6,14 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Jeremy Maas and Matt Burton
 """
 from menu import display_menu
+from simulation import Simulation
 class SimulationMenu:
 
     """Simulation Options"""
     @staticmethod
     def run_simulation():
         print("\nExecuting run_simulation()")
-        # initialize some schedule queue
-        # initialize the clock
-        # read in the timetable
-        # populate the schedule queue with events based on the time table
-        # loop: handle every event in the current minute, then increment the clock
+        Simulation.run_simulation()
 
     @staticmethod
     def configure_simulation():
