@@ -34,4 +34,4 @@ class Clock:
 
     def print_time(self):
         days, hours, minutes = self.get_time()
-        print(f"Day: {days}, Time: {hours:02}:{minutes:02}")
+        return f"Day: {days}, Time: {hours:02}:{minutes:02}"

@@ -1,4 +1,10 @@
-from clock import Clock  # Import the Clock class
+"""
+Stores a list of all events and at what times they occur. Also, resolves conlficts between invalid event addtions
+
+__team_name__ = Cloud Nine
+__team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+__author__ = Matt Burton
+"""
 
 class Scheduler:
     def __init__(self, clock):
