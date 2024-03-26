@@ -32,3 +32,4 @@ class AircraftMenu:
     def remove_aircraft():
         print("\nExecuting remove_aircraft()")
     
+
