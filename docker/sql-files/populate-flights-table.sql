@@ -13,34 +13,6 @@ __author__ = McHale Trotter
         source /docker-entrypoint-initdb.d/populate-flights-table.sql
 */
 
-
-
-
-
-
-DELIMITER //
-
-DROP TRIGGER IF EXISTS calculate_flight_angle;
-
-CREATE TRIGGER IF NOT EXISTS calculate_flight_angle
-BEFORE INSERT ON flights
-FOR EACH ROW
-BEGIN
-    IF NEW.angle_of_flight IS NULL THEN
-        SET @departure_lat = (SELECT latitude FROM airports WHERE airport_id = NEW.departure_airport_id);
-        SET @departure_lon = (SELECT longitude FROM airports WHERE airport_id = NEW.departure_airport_id);
-        SET @destination_lat = (SELECT latitude FROM airports WHERE airport_id = NEW.destination_airport_id);
-        SET @destination_lon = (SELECT longitude FROM airports WHERE airport_id = NEW.destination_airport_id);
-        SET @bearing_angle = DEGREES(ATAN2(SIN(RADIANS(@destination_lon - @departure_lon)) * COS(RADIANS(@destination_lat)), COS(RADIANS(@departure_lat)) * SIN(RADIANS(@destination_lat)) - SIN(RADIANS(@departure_lat)) * COS(RADIANS(@destination_lat)) * COS(RADIANS(@destination_lon - @departure_lon))));
-        
-        SET NEW.angle_of_flight = @bearing_angle;
-    END IF;
-END;
-//
-
-DELIMITER ;
-
-
 -- Clears the flights table.
 DELETE FROM flights;
 
@@ -78,3 +50,25 @@ VALUES
 --    ('VWX174', 26, 26, 27, 120, 8, 10, 0, 3, 2),
 --    ('YZA643', 27, 27, 28, 180, 10, 13, 1, 3, 2),
 --    ('BCD628', 28, 28, 29, 120, 12, 14, 0, 3, 1);
+
+DELIMITER //
+
+DROP TRIGGER IF EXISTS calculate_flight_angle;
+
+CREATE TRIGGER IF NOT EXISTS calculate_flight_angle
+BEFORE INSERT ON flights
+FOR EACH ROW
+BEGIN
+    IF NEW.angle_of_flight IS NULL THEN
+        SET @departure_lat = (SELECT latitude FROM airports WHERE airport_id = NEW.departure_airport_id);
+        SET @departure_lon = (SELECT longitude FROM airports WHERE airport_id = NEW.departure_airport_id);
+        SET @destination_lat = (SELECT latitude FROM airports WHERE airport_id = NEW.destination_airport_id);
+        SET @destination_lon = (SELECT longitude FROM airports WHERE airport_id = NEW.destination_airport_id);
+        SET @bearing_angle = DEGREES(ATAN2(SIN(RADIANS(@destination_lon - @departure_lon)) * COS(RADIANS(@destination_lat)), COS(RADIANS(@departure_lat)) * SIN(RADIANS(@destination_lat)) - SIN(RADIANS(@departure_lat)) * COS(RADIANS(@destination_lat)) * COS(RADIANS(@destination_lon - @departure_lon))));
+        
+        SET NEW.angle_of_flight = @bearing_angle;
+    END IF;
+END;
+//
+
+DELIMITER ;
