@@ -81,46 +81,12 @@ class Airport:
     def is_hub(self):
         return self._isHub
 
-"""
-Below: Everything below is for auto generation of each Airport class instance
-    this includes database connection, formatting the pandas dataframe, 
-    and algorithmically creating the class objects
-"""
+def calculate_total_population():
+    # Query database for airports
+    db = database.Database()
+    query = 'SELECT SUM(metro_population) FROM airports'
+    total_population = db.execute_query(query)
+    return total_population
 
-# Query database for airports
-db = database.Database()
-query = 'SELECT * FROM airports'
-dataframe = db.execute_query_to_dataframe(query)
-
-# Convert columns with 0/1 values to integers
-binary_columns = ['is_hub']  # Add other column names here if needed
-dataframe[binary_columns] = dataframe[binary_columns].astype(int)
-
-# Track total population or all airports
-totalPopulation = 0
-
-# Create Airport list, just to have a list of the airport objects we have, mostly for
-# debugging or ease of access purposes
-dataframe = dataframe.to_dict(orient='records')
-airportList = []
-
-for airport in dataframe:
-
-    # Create Airport object using the Abbreviation as the Object name
-    setattr(Airport,
-            airport['abbreviation'], 
-            Airport(airport['airport_id'],
-            airport['name'],
-            airport['abbreviation'],
-            airport['latitude'],
-            airport['longitude'],
-            airport['timezone_offset'],
-            airport['metro_population'],
-            airport['total_gates'],
-            airport['total_gates'],
-            airport['is_hub']))
-
-    # Update Total Population and add airport to list
-    airportList.append(airport['abbreviation'])
-    totalPopulation += airport['metro_population']
-
+# Calculate total population
+totalPopulation = calculate_total_population()
