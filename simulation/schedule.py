@@ -5,9 +5,9 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
-from database import Database
-from flight import Flight
-from scheduled_event import DepartureEvent, ArrivalEvent
+from utilities.database import Database
+from objects.flight import Flight
+from objects.scheduled_event import DepartureEvent, ArrivalEvent
 
 class Schedule:
     def __init__(self):

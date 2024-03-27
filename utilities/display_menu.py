@@ -5,7 +5,6 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
-
 def display_menu(menu, is_submenu=False):
     while True:
         print("\nMenu Options:")

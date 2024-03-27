@@ -5,7 +5,7 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = McHale Trotter and Matt Burton
 """
-from menu import display_menu
+from utilities.display_menu import display_menu
 class AircraftMenu:
 
     """Aircraft Options"""

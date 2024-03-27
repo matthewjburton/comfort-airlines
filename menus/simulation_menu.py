@@ -5,8 +5,8 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Jeremy Maas and Matt Burton
 """
-from menu import display_menu
-from simulation import Simulation
+from utilities.display_menu import display_menu
+from simulation.simulation import Simulation
 class SimulationMenu:
 
     """Simulation Options"""

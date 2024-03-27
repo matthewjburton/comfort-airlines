@@ -5,11 +5,11 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
-from schedule import Schedule
-from clock import print_time
-from database import Database
-from airport import Airport
-from aircraft import Aircraft
+from utilities.clock import print_time
+from utilities.database import Database
+from .schedule import Schedule
+from objects.airport import Airport
+from objects.aircraft import Aircraft
 
 MINUTES_IN_A_DAY = 1400
 

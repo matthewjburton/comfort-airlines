@@ -5,8 +5,8 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
-from menu import display_menu
-from timetable import Timetable
+from utilities.display_menu import display_menu
+from timetable.timetable import Timetable
 class TimetableMenu:
 
     """Timetable Options"""
