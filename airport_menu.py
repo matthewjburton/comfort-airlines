@@ -98,6 +98,6 @@ class AirportMenu:
             # Disconnect from the database
             db.disconnect()
 
-AirportMenu.view_airport()
+# AirportMenu.view_airport()
 # AirportMenu.add_airport()
 # AirportMenu.remove_airport()
