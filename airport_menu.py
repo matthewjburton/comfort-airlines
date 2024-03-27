@@ -86,6 +86,24 @@ class AirportMenu:
         # User input for aircraft to be remove based on aircraft_id
         airport_id = input("Enter airport ID number to remove: ")
 
+        # Check if the airport is associated with a flight before removing it
+        try:
+            sql_check_flights = f"SELECT * FROM flights WHERE departure_airport_id = {airport_id} OR destination_airport_id = {airport_id}"
+            result = db.execute_query_to_dataframe(sql_check_flights)
+        
+            # If not associated we remove it.
+            if result.empty:
+                pass
+            
+            # If associated print an error and return.
+            else:
+                print("Cannot remove airport. It is associated with flights.")
+                return
+        except Exception as e:
+                print(f"Error checking flights: {e}")
+                return
+
+
         sql = f"DELETE FROM airports WHERE airport_id = {airport_id}"
 
         try: 
@@ -97,6 +115,9 @@ class AirportMenu:
         finally:
             # Disconnect from the database
             db.disconnect()
+
+
+# Function calls for testing
 
 # AirportMenu.view_airport()
 # AirportMenu.add_airport()
