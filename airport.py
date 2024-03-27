@@ -1,19 +1,10 @@
 """
-Pull Airport information from our database into Python Class Objects 
-allowing for easier access of information.
-Also adds get methods to gather specific airport information,
-as well as modifying methods for more volatile data such as available gates
+Airport class. Used in the simulation to get and set dynamic values
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Jeremy Maas
-
-How to use: Import airport.py in file
-            Run methods as part of Airport class object.
-            At the moment, you will need to use (airportname).(methodname) as the format
 """
-import database
-
 class Airport:
     def __init__(self, id, name, abbreviation,
     latitude, longitude, timezoneOffset, metroPopulation, totalGates, availableGates, isHub):

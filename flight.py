@@ -7,7 +7,7 @@ __author__ = Matt Burton
 """
 class Flight:
     def __init__(self, id, number, aircraftID, departureAirportID, destinationAirportID,
-                 angleOfFlight, durationMinutes, localDepartureTime, localArrivalTime,
+                 angleOfFlight, duration, localDepartureTime, localArrivalTime,
                  onTimeBin, gateDeparture, gateArrival):
         self._id = id
         self._number = number
@@ -15,7 +15,7 @@ class Flight:
         self._departureAirportID = departureAirportID
         self._destinationAirportID = destinationAirportID
         self._angleOfFlight = angleOfFlight
-        self._durationMinutes = durationMinutes
+        self._duration = duration
         self._localDepartureTime = localDepartureTime
         self._localArrivalTime = localArrivalTime
         self._onTimeBin = onTimeBin
@@ -47,8 +47,8 @@ class Flight:
         return self._angleOfFlight
 
     @property
-    def durationMinutes(self):
-        return self._durationMinutes
+    def duration(self):
+        return self._duration
 
     @property
     def localDepartureTime(self):

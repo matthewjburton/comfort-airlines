@@ -15,8 +15,10 @@ class Aircraft:
         self._maximumSpeed = maximumSpeed
         self._maximumCapacity = maximumCapacity
         self._maximumFuel = maximumFuel
+        self._currentFuel = maximumFuel # Doing this costs the company, fuel cant just come from thin air
         self._cargoVolume = cargoVolume
         self._leasingCost = leasingCost
+        self._timeSinceLastMaintenance = 0
 
     @property
     def id(self):
@@ -45,6 +47,10 @@ class Aircraft:
     @property
     def maximumFuel(self):
         return self._maximumFuel
+    
+    @property
+    def currentFuel(self):
+        return self._currentFuel
 
     @property
     def cargoVolume(self):
@@ -53,3 +59,7 @@ class Aircraft:
     @property
     def leasingCost(self):
         return self._leasingCost
+
+    @property
+    def timeSinceLastMaintenance(self):
+        return self._timeSinceLastMaintenance
