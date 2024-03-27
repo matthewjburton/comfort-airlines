@@ -3,7 +3,7 @@ Class responsible for implementing the menu options under the airport menu optio
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
-__author__ = Matt Burton
+__author__ = Matt Burton, McHale Trotter
 """
 from menu import display_menu
 import database
