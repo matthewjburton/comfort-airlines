@@ -5,6 +5,8 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
+REQUIRES_MAINTENANCE = 200 # aircraft require maintenance after 200 hours of flight
+
 class Aircraft:
     def __init__(self, id, tailNumber, name, model, maximumSpeed, maximumCapacity, maximumFuel, cargoVolume, leasingCost):
         self._id = id
@@ -18,6 +20,7 @@ class Aircraft:
         self._cargoVolume = cargoVolume
         self._leasingCost = leasingCost
         self._timeSinceLastMaintenance = 0
+        self._requiresMaintenance = False
 
     @property
     def id(self):
@@ -62,3 +65,10 @@ class Aircraft:
     @property
     def timeSinceLastMaintenance(self):
         return self._timeSinceLastMaintenance
+    
+    @timeSinceLastMaintenance.setter
+    def timeSinceLastMaintenance(self, durationOfLastFlight):
+        self._timeSinceLastMaintenance += durationOfLastFlight
+
+        if self._timeSinceLastMaintenance > (REQUIRES_MAINTENANCE * 60):
+            self._requiresMaintenance = True

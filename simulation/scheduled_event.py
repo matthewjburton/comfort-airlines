@@ -31,12 +31,13 @@ class DepartureEvent(ScheduledEvent):
 class ArrivalEvent(ScheduledEvent):
     def __init__(self, flight):
         super().__init__('Arrival', flight.localArrivalTime)
+        self.flight = flight
         self.aircraft = aircrafts[flight.aircraftID]
         self.airport = airports[flight.destinationAirportID]
 
     def execute(self):
         #self.aircraft.currentFuel -= fuel_burned_during_flight(flight)
-        #self.aircraft.timeSinceLastMaintenance += flight.duration
+        self.aircraft.timeSinceLastMaintenance += self.flight.duration
         #finances.charge += costOfLamding
         
         aircraftTailNumber = self.aircraft.tailNumber
