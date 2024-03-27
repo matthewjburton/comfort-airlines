@@ -7,9 +7,13 @@ __author__ = Matt Burton
 """
 from utilities.clock import print_time
 from utilities.database import Database
-from .schedule import Schedule
+
 from objects.airport import Airport
 from objects.aircraft import Aircraft
+from objects.flight import Flight
+
+from .schedule import Schedule
+from .scheduled_event import DepartureEvent, ArrivalEvent
 
 MINUTES_IN_A_DAY = 1400
 
@@ -18,42 +22,34 @@ class Simulation:
     def run_simulation():
         # Initialize schedule
         schedule = Schedule()
+        schedule = Simulation.populate_schedule_from_timetable(schedule)
 
         # Simulation loop: handle every event for each minute
         for minute in range(MINUTES_IN_A_DAY):
             currentEvents = schedule.get_events_for_minute(minute)
             for currentEvent in currentEvents:
-                print(f"{print_time(minute)}: {currentEvent.execute()}")        
+                print(f"{print_time(minute)}: {currentEvent.execute()}")       
 
     @staticmethod
-    def create_airports_from_database():
-        # Query database for airports
-        db = Database()
-        query = 'SELECT * FROM airports'
-        dataframe = db.execute_query_to_dataframe(query)
+    def populate_schedule_from_timetable(schedule):
+        timetable = Simulation.create_timetable_from_database()
 
-        # Create Airport objects and store them in a list
-        airports = []
-        for _, row in dataframe.iterrows():
-            airport = Airport(row['airport_id'], row['name'], row['abbreviation'], row['latitude'], row['longitude'], row['timezone_offset'], row['metro_population'], row['total_gates'], row['total_gates'], row['is_hub'])
-            airports.append(airport)
-
-        return airports
+        # Populate the schedule queue with events based on the timetable
+        for flight in timetable:
+            schedule.add_event(DepartureEvent(flight))
+            schedule.add_event(ArrivalEvent(flight))
 
     @staticmethod
-    def create_aircrafts_from_database():
-        # Query database for aircraft
+    def create_timetable_from_database():
+        # Query database for flights
         db = Database()
-        query = 'SELECT * FROM aircraft'
+        query = 'SELECT * FROM flights'
         dataframe = db.execute_query_to_dataframe(query)
 
-        # Create Aircraft objects and store them in a list
-        aircrafts = []
+        # Create Flight objects and store them in a list
+        timetable = []
         for _, row in dataframe.iterrows():
-            aircraft = Aircraft(row['aircraft_id'], row['tail_number'], row['name'], row['model'], row['maximum_speed'], row['maximum_capacity'], row['maximum_fuel'], row['cargo_volume'], row['leasing_cost'])
-            aircrafts.append(aircraft)
+            flight = Flight(id=row['flight_id'], number=row['flight_number'], aircraftID=row['aircraft_id'], departureAirportID=row['departure_airport_id'], destinationAirportID=row['destination_airport_id'], angleOfFlight=row['angle_of_flight'], duration=row['flight_duration_minutes'], localDepartureTime=row['local_departure_time'], localArrivalTime=row['local_arrival_time'], onTimeBin=row['on_time_bin'], gateDeparture=row['gate_departure'], gateArrival=row['gate_arrival'])
+            timetable.append(flight)
 
-        return aircrafts
-    
-airports = Simulation.create_airports_from_database()
-aircrafts = Simulation.create_aircrafts_from_database()
+        return timetable

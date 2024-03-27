@@ -5,6 +5,9 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
+from .aircraft_objects import aircrafts
+from .airport_objects import airports
+
 class ScheduledEvent:
     def __init__(self, eventType, time):
         self.event_type = eventType
@@ -17,8 +20,8 @@ class ScheduledEvent:
 class DepartureEvent(ScheduledEvent):
     def __init__(self, flight):
         super().__init__('Departure', flight.localDepartureTime)
-        self.aircraft = flight.aircraftID
-        self.airport = flight.departureAirportID
+        self.aircraft = aircrafts[flight.aircraftID]
+        self.airport = airports[flight.departureAirportID]
 
     def execute(self):
         aircraftTailNumber = self.aircraft.tailNumber
@@ -28,8 +31,8 @@ class DepartureEvent(ScheduledEvent):
 class ArrivalEvent(ScheduledEvent):
     def __init__(self, flight):
         super().__init__('Arrival', flight.localArrivalTime)
-        self.aircraft = flight.aircraftID
-        self.airport = flight.destinationAirportID
+        self.aircraft = aircrafts[flight.aircraftID]
+        self.airport = airports[flight.destinationAirportID]
 
     def execute(self):
         #self.aircraft.currentFuel -= fuel_burned_during_flight(flight)
