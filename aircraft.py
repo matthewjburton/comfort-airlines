@@ -7,24 +7,24 @@ __author__ = Matt Burton
 """
 
 class Aircraft:
-    def __init__(self, aircraft_id, tail_number, name, model, maximum_speed, maximum_capacity, maximum_fuel, cargo_volume, leasing_cost):
-        self._aircraft_id = aircraft_id
-        self._tail_number = tail_number
+    def __init__(self, id, tailNumber, name, model, maximumSpeed, maximumCapacity, maximumFuel, cargoVolume, leasingCost):
+        self._id = id
+        self._tailNumber = tailNumber
         self._name = name
         self._model = model
-        self._maximum_speed = maximum_speed
-        self._maximum_capacity = maximum_capacity
-        self._maximum_fuel = maximum_fuel
-        self._cargo_volume = cargo_volume
-        self._leasing_cost = leasing_cost
+        self._maximumSpeed = maximumSpeed
+        self._maximumCapacity = maximumCapacity
+        self._maximumFuel = maximumFuel
+        self._cargoVolume = cargoVolume
+        self._leasingCost = leasingCost
 
     @property
-    def aircraft_id(self):
-        return self._aircraft_id
+    def id(self):
+        return self._id
 
     @property
-    def tail_number(self):
-        return self._tail_number
+    def tailNumber(self):
+        return self._tailNumber
 
     @property
     def name(self):
@@ -35,21 +35,21 @@ class Aircraft:
         return self._model
 
     @property
-    def maximum_speed(self):
-        return self._maximum_speed
+    def maximumSpeed(self):
+        return self._maximumSpeed
 
     @property
-    def maximum_capacity(self):
-        return self._maximum_capacity
+    def maximumCapacity(self):
+        return self._maximumCapacity
 
     @property
-    def maximum_fuel(self):
-        return self._maximum_fuel
+    def maximumFuel(self):
+        return self._maximumFuel
 
     @property
-    def cargo_volume(self):
-        return self._cargo_volume
+    def cargoVolume(self):
+        return self._cargoVolume
 
     @property
-    def leasing_cost(self):
-        return self._leasing_cost
+    def leasingCost(self):
+        return self._leasingCost

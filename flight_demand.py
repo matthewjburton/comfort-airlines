@@ -5,15 +5,14 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Jeremy Maas
 """
-
-import airport
+import simulation
 
 PERCENT_FLYING_OUT = 0.005
 
 def individual_demand(startingAirport, endingAirport):
 
     airportPopulation = endingAirport.metro_population
-    flyerPercent = airportPopulation / airport.totalPopulation
+    flyerPercent = airportPopulation / simulation.totalPopulation
     
     numFlyingOut = startingAirport.metro_population * PERCENT_FLYING_OUT
 

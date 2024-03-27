@@ -80,13 +80,3 @@ class Airport:
     @property
     def is_hub(self):
         return self._isHub
-
-def calculate_total_population():
-    # Query database for airports
-    db = database.Database()
-    query = 'SELECT SUM(metro_population) FROM airports'
-    total_population = db.execute_query(query)
-    return total_population
-
-# Calculate total population
-totalPopulation = calculate_total_population()
