@@ -7,11 +7,14 @@ __author__ = Matt Burton
 """
 from utilities.database import Database
 from utilities.clock import print_time
+from utilities.flight_duration import calculate_flight_duration
 
 from objects.flight import Flight
 
 from .schedule import Schedule
 from .scheduled_event import DepartureEvent, ArrivalEvent
+from .aircraft_objects import aircrafts
+from .airport_objects import airports
 
 MINUTES_IN_A_DAY = 1400
 
@@ -33,9 +36,14 @@ class Simulation:
         timetable = Simulation.create_timetable_from_database()
 
         # Populate the schedule queue with events based on the timetable
-        for flight in timetable:
-            schedule.add_event(DepartureEvent(timetable[flight]))
-            schedule.add_event(ArrivalEvent(timetable[flight]))
+        for flightKey in timetable:
+            flight = timetable[flightKey]
+
+            schedule.add_event(DepartureEvent(flight))
+
+            flight.duration = calculate_flight_duration(aircrafts[flight.aircraftID], airports[flight.departureAirportID], airports[flight.destinationAirportID])
+
+            schedule.add_event(ArrivalEvent(flight))
 
         return schedule
 

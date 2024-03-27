@@ -49,6 +49,11 @@ class Flight:
     @property
     def duration(self):
         return self._duration
+    
+    @duration.setter
+    def duration(self, duration):
+        self._duration = duration
+        self._localArrivalTime = self._localDepartureTime + duration
 
     @property
     def localDepartureTime(self):
