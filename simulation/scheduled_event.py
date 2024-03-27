@@ -24,6 +24,8 @@ class DepartureEvent(ScheduledEvent):
         self.airport = airports[flight.departureAirportID]
 
     def execute(self):
+        #finances.charge += takeoffFee
+
         aircraftTailNumber = self.aircraft.tailNumber
         airportAbbreviation = self.airport.abbreviation
         return f"Aircraft {aircraftTailNumber} departing from Airport {airportAbbreviation}"        
@@ -38,7 +40,7 @@ class ArrivalEvent(ScheduledEvent):
     def execute(self):
         #self.aircraft.currentFuel -= fuel_burned_during_flight(flight)
         self.aircraft.timeSinceLastMaintenance += self.flight.duration
-        #finances.charge += costOfLamding
+        #finances.charge += landingFee
         
         aircraftTailNumber = self.aircraft.tailNumber
         airportAbbreviation = self.airport.abbreviation
