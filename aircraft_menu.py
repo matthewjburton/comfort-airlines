@@ -87,6 +87,23 @@ class AircraftMenu:
         # User input for aircraft to be remove based on aircraft_id
         aircraft_id = input("Enter aircraft ID number to remove: ")
 
+        # Check if the aircraft is associated with a flight before removing it
+        try:
+            sql_check_flights = f"SELECT * FROM flights WHERE aircraft_id = {aircraft_id}"
+            result = db.execute_query_to_dataframe(sql_check_flights)
+        
+            # If not associated we remove it.
+            if result.empty:
+                pass
+            
+            # If associated print an error and return.
+            else:
+                print("Cannot remove aircraft. It is associated with flights.")
+                return
+        except Exception as e:
+                print(f"Error checking flights: {e}")
+                return
+
         sql = f"DELETE FROM aircraft WHERE aircraft_id = {aircraft_id}"
 
         try: 
