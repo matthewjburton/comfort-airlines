@@ -23,31 +23,26 @@ def calculate_taxi_time(population, is_hub=False):
         taxi_time = min(13, population * 0.00075)
         return min(taxi_time, 13)
 """
+takeoff_time = 1
+landing_time = 2
 
-def calculate_takeoff_time():
-    return 1
-
-def calculate_landing_time():
-    return 2
-
-def calculate_acceleration_time(cruising_altitude, max_speed):
-    time_to_cruise_altitude = (cruising_altitude - 10000) / (250 * 1.15)  # time to ascend to cruising altitude in minutes
-    time_to_max_speed = (max_speed * 0.8 / 1.15 - 280) / (25 * 1.15)  # time to accelerate to 80% of max speed in minutes
-    return time_to_cruise_altitude + time_to_max_speed
+def calculate_acceleration_time(cruisingAltitude, maxSpeed):
+    timeToCruiseAltitude = (cruisingAltitude - 10000) / (250 * 1.15)  # time to ascend to cruising altitude in minutes
+    time_to_max_speed = (maxSpeed * 0.8 / 1.15 - 280) / (25 * 1.15)  # time to accelerate to 80% of max speed in minutes
+    return timeToCruiseAltitude + time_to_max_speed
 
 def calculate_descent_time(distance):
-    descent_rate = 1000 / (3 * 1.15)  # descent rate in feet per nautical mile per minute
     if distance >= 1500:
-        cruising_altitude = 35000
+        cruisingAltitude = 35000
     elif distance >= 350:
-        cruising_altitude = 30000
+        cruisingAltitude = 30000
     elif distance >= 200:
-        cruising_altitude = 25000
+        cruisingAltitude = 25000
     else:
-        cruising_altitude = 20000
-    time_to_cruise_altitude = (cruising_altitude - 10000) / (250 * 1.15)  # time to descend to cruising altitude in minutes
-    time_to_land = (distance * 1.151) / (200 * 1.15)  # time to descend at 200 miles per hour in minutes
-    return time_to_cruise_altitude + time_to_land
+        cruisingAltitude = 20000
+    timeToCruiseAltitude = (cruisingAltitude - 10000) / (250 * 1.15)  # time to descend to cruising altitude in minutes
+    timeToLand = (distance * 1.151) / (200 * 1.15)  # time to descend at 200 miles per hour in minutes
+    return timeToCruiseAltitude + timeToLand
 
 """
 # Example usage:
