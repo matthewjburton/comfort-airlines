@@ -24,6 +24,9 @@ class DepartureEvent(ScheduledEvent):
         self.airport = airports[flight.departureAirportID]
 
     def execute(self):
+        # if self.aircraft.currentFuel < fuel_required_for_flight(flight):
+        #    throw an error because the aircraft cant make it to its destination
+        
         #finances.charge(takeoffFee)
 
         aircraftTailNumber = self.aircraft.tailNumber
