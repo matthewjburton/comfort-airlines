@@ -9,6 +9,14 @@ __author__ = Matt Burton
 POSTPONE_TIME = 3
 
 class Schedule:
+    _instance = None
+
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = Schedule()
+        return cls._instance
+
     def __init__(self):
         self._schedule = {}
 
@@ -16,7 +24,7 @@ class Schedule:
         """
         Add an event to the scheduler.
         """
-        minute = event.time  # Assuming event.time represents minutes
+        minute = event._time  # Assuming event.time represents minutes
         if minute not in self._schedule:
             self._schedule[minute] = []  # Create a list for events at this minute if it doesn't exist
         
@@ -33,9 +41,9 @@ class Schedule:
     def reschedule_conflicts(self, minute, event):
         eventConflict = False
         for scheduledEvent in self._schedule[minute]:
-            if scheduledEvent.airport == event.airport:
+            if scheduledEvent._airport == event._airport:
                 eventConflict = True
 
         if eventConflict:
-            event.time += POSTPONE_TIME
+            event._time += POSTPONE_TIME
             self.add_event(event)

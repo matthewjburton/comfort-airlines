@@ -17,16 +17,19 @@ from .aircraft_objects import aircrafts
 from .airport_objects import airports
 
 MINUTES_IN_A_DAY = 1400
+NUMBER_OF_DAYS = 3
 
 class Simulation:
     @staticmethod
     def run_simulation():
-        # Initialize schedule
-        schedule = Schedule()
+        # Get instance of schedule singleton
+        schedule = Schedule.get_instance()
+
+        # Populate schedule with departure and arrival events
         schedule = Simulation.populate_schedule_from_timetable(schedule)
 
         # Simulation loop: handle every event for each minute
-        for minute in range(MINUTES_IN_A_DAY):
+        for minute in range(MINUTES_IN_A_DAY * NUMBER_OF_DAYS):
             currentEvents = schedule.get_events_for_minute(minute)
             for currentEvent in currentEvents:
                 print(f"{print_time(minute)}: {currentEvent.execute()}")    

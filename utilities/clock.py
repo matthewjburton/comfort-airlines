@@ -9,12 +9,16 @@ Notes: Currently, no support for daylight savings time
    This class is not meant to be a stand-alone class, instead
    it will be used by the main simulation
 """
+MINUTES_IN_A_DAY = 1440
+
 def get_time(minutes):
     hours = minutes // 60
-    minutes = minutes % 60
-    days = minutes // (24 * 60)
+    minutes %= 60
+    days = hours // 24  # Calculate days from hours, not from minutes
+    hours %= 24  # Calculate remaining hours after days are removed
     return days, hours, minutes
 
 def print_time(minutes):
+    minutes += MINUTES_IN_A_DAY # Used to visually change the first day from 0 to 1
     days, hours, minutes = get_time(minutes)
     return f"Day: {days}, Time: {hours:02}:{minutes:02}"
