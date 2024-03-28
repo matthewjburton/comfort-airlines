@@ -1,6 +1,4 @@
-import sys
-sys.path.append('../../../') # provide access to modules in the comfort-airlines directory
-from turn_around_time import turn_around_time
+from utilities.turn_around_time import turn_around_time
 
 #Testing 4 cases:
 #   Two correct assertions, one for refueling, one without
