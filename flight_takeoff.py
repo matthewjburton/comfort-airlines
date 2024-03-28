@@ -28,8 +28,8 @@ landing_time = 2 # On landing, the aircraft spends 2 minutes on the runway
 
 def calculate_acceleration_time(cruisingAltitude, maxSpeed):
     timeToCruiseAltitude = (cruisingAltitude - 10000) / (250 * 1.15)  # time to ascend to cruising altitude in minutes
-    time_to_max_speed = (maxSpeed * 0.8 / 1.15 - 280) / (25 * 1.15)  # time to accelerate to 80% of max speed in minutes
-    return timeToCruiseAltitude + time_to_max_speed
+    timeToMaxSpeed = (maxSpeed * 0.8 / 1.15 - 280) / (25 * 1.15)  # time to accelerate to 80% of max speed in minutes
+    return timeToCruiseAltitude + timeToMaxSpeed
 
 def calculate_descent_time(distance):
     if distance >= 1500:
