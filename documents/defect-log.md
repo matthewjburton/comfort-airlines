@@ -50,9 +50,81 @@
 
 ## Bug 6
 
+- **Issue Description:** Miscalculated the flight demand by included the departure airport and airports within 150 miles
+- **Date Found:** 3/1/24
+- **Action Plan:** Reread the project.pdf and asked the client the specifics for this type of calculation
+- **Assignee(s):** Jeremy
+- **Date Fixed:** 3/2/24  
+- **Solution:** Removed the departure airport and airports within 150 miles from the total population calculation
+
+## Bug 7
+
 - **Issue Description:** Adding and removing gates allowed for negative and more than total gate value
 - **Date Found:** 3/18/24
 - **Action Plan:** Add exception handling for when the program calls to add or remove a gate when it doesnt make sense
 - **Assignee(s):** Matt
 - **Date Fixed:** 3/18/24  
 - **Solution:** Add exception handling for when the program calls to add or remove a gate when it doesnt make sense
+
+## Bug 8
+
+- **Issue Description:** error executing a query, error code 42000
+- **Date Found:** 3/26/24
+- **Action Plan:** Research sql syntax and error code 42000
+- **Assignee(s):** McHale
+- **Date Fixed:** 3/26/24  
+- **Solution:** The variable was not being interpolated into the sql query correctly, so I used an f string
+
+## Bug 9
+
+- **Issue Description:** Error checking flights in the flight table because the truth value of the dataframe was ambigous
+- **Date Found:** 3/27/24
+- **Action Plan:** Reserach ambigous dataframes
+- **Assignee(s):** McHale
+- **Date Fixed:** 3/27/24  
+- **Solution:** Use .empty to check that there was information in the dataframe
+
+## Bug 10
+
+- **Issue Description:** Flight angle doesnt account for bearing
+- **Date Found:** 2/3/24
+- **Action Plan:** Find a way to make it account for bearing
+- **Assignee(s):** Jeremy
+- **Date Fixed:** 2/3/24  
+- **Solution:** Implemented a set of formulas found online for calculating bearing angle
+
+## Bug 11
+
+- **Issue Description:** Tried to use user input and database entried for the flight duration calculation
+- **Date Found:** 2/10/24
+- **Action Plan:** Tried to rework the database connection to get the information
+- **Assignee(s):** Kevin
+- **Date Fixed:** 2/10/24  
+- **Solution:** Pass in aircraft and airport objects as parameters instead of taking input or querying the database
+
+## Bug 12
+
+- **Issue Description:** Variables out of reach for flight duration unit test
+- **Date Found:** 3/20/24
+- **Action Plan:** Use mock variables instead
+- **Assignee(s):** Ryan
+- **Date Fixed:** 3/20/24  
+- **Solution:** Using mock variables solved the issue of variables out of reach
+
+## Bug 13
+
+- **Issue Description:** Ambigous naming between class variables and initializing variables when implenting @propety to airport
+- **Date Found:** 3/20/24
+- **Action Plan:** Rename private variables to something else
+- **Assignee(s):** Matt
+- **Date Fixed:** 3/20/24  
+- **Solution:** private variables were renamed to use an underscore prefix to distinguish them from @propertys
+
+## Bug 14
+
+- **Issue Description:** Methods and stubs for timetable, aircraft, and airport menus weren't linked to the main menu
+- **Date Found:** 3/22/24
+- **Action Plan:** Link the stubs to the comfor_airlines.py main menu using imports
+- **Assignee(s):** Matt
+- **Date Fixed:** 3/22/24  
+- **Solution:** Imported timetable, aircraft, and airport
