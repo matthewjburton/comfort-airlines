@@ -23,8 +23,8 @@ def calculate_taxi_time(population, is_hub=False):
         taxi_time = min(13, population * 0.00075)
         return min(taxi_time, 13)
 """
-takeoff_time = 1
-landing_time = 2
+takeoff_time = 1 # Each aircraft spends 1 minute on the runway in order to take-off
+landing_time = 2 # On landing, the aircraft spends 2 minutes on the runway
 
 def calculate_acceleration_time(cruisingAltitude, maxSpeed):
     timeToCruiseAltitude = (cruisingAltitude - 10000) / (250 * 1.15)  # time to ascend to cruising altitude in minutes
