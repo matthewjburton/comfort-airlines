@@ -6,11 +6,11 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
-from menu import display_menu
-from timetable_menu import TimetableMenu
-from simulation_menu import SimulationMenu
-from airport_menu import AirportMenu
-from aircraft_menu import AircraftMenu
+from utilities.display_menu import display_menu
+from menus.timetable_menu import TimetableMenu
+from menus.simulation_menu import SimulationMenu
+from menus.airport_menu import AirportMenu
+from menus.aircraft_menu import AircraftMenu
 
 menu_options = {
     "Timetable": {

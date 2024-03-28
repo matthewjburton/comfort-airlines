@@ -7,7 +7,11 @@ definer_user=mariadb.sys
 definer_host=localhost
 suid=0
 with_check_option=0
+<<<<<<< HEAD
 timestamp=0001711496639076068
+=======
+timestamp=0001711388852169847
+>>>>>>> main
 create-version=2
 source=SELECT DIGEST_TEXT AS query,\n       SCHEMA_NAME as db,\n       COUNT_STAR AS exec_count,\n       SUM_ERRORS AS errors,\n       IFNULL(SUM_ERRORS / NULLIF(COUNT_STAR, 0), 0) * 100 as error_pct,\n       SUM_WARNINGS AS warnings,\n       IFNULL(SUM_WARNINGS / NULLIF(COUNT_STAR, 0), 0) * 100 as warning_pct,\n       FIRST_SEEN as first_seen,\n       LAST_SEEN as last_seen,\n       DIGEST AS digest\n  FROM performance_schema.events_statements_summary_by_digest\n WHERE SUM_ERRORS > 0\n    OR SUM_WARNINGS > 0\nORDER BY SUM_ERRORS DESC, SUM_WARNINGS DESC;
 client_cs_name=utf8mb3
