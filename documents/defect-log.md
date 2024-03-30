@@ -128,3 +128,19 @@
 - **Assignee(s):** Matt
 - **Date Fixed:** 3/22/24  
 - **Solution:** Imported timetable, aircraft, and airport
+
+## Bug 15
+- **Issue Description:** The python interpreter couldn't find the module named 'utilities' when trying to import it in the 'aircraft_menu.py' script.
+- **Date Found:** 3/27/24
+- **Action Plan:** Find a way to execute the function from the comfort-airlines directory, where it can see all import folders.
+- **Assignee(s):** McHale
+- **Date Fixed:** 3/29/24  
+- **Solution:** Created a test file in comfort-airlines which let me run these functions from the correct directory.
+
+## Bug 16
+- **Issue Description:** AirportMenu.view_airport() was printing out [48] and [49] instead of 0 and 1 for the 'is_hub' attribute.
+- **Date Found:** 3/27/24
+- **Action Plan:** Research a way to convert the form from ASCII to an integer before printing it to the terminal.
+- **Assignee(s):** McHale
+- **Date Fixed:** 3/29/24  
+- **Solution:** Used the '.astype()' function to adjust the column before it's printed.
