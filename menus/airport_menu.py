@@ -26,6 +26,10 @@ class AirportMenu:
         try:
             # Execute the select query, (returns dataframe)
             df = db.execute_query_to_dataframe(sql)
+
+            # Adjust the 'is_hub' attribute to be interpolated as an int
+            df['is_hub'] = df['is_hub'].astype(int)
+
             # Print the dataframe
             print(df)
         except Exception as e:
