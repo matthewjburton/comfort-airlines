@@ -5,12 +5,9 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton, McHale Trotter
 """
-<<<<<<< HEAD:airport_menu.py
-from menu import display_menu
-import database
-=======
-from utilities.display_menu import display_menu
->>>>>>> main:menus/airport_menu.py
+from utilities import display_menu
+from utilities import database
+
 class AirportMenu:
 
     """Airport Options"""
@@ -26,6 +23,10 @@ class AirportMenu:
         try:
             # Execute the select query, (returns dataframe)
             df = db.execute_query_to_dataframe(sql)
+
+            # Adjust the 'is_hub' attribute to be interpolated as an int
+            df['is_hub'] = df['is_hub'].astype(int)
+
             # Print the dataframe
             print(df)
         except Exception as e:
