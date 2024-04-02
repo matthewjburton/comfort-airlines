@@ -21,6 +21,7 @@ def create_airports_from_database():
         airport = Airport(row['airport_id'], row['name'], row['abbreviation'], row['latitude'], row['longitude'], row['timezone_offset'], row['metro_population'], row['total_gates'], row['total_gates'], int(row['is_hub']), 0)
         airports[row['airport_id']] = airport
 
+
     return airports
 
 airports = create_airports_from_database()

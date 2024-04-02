@@ -130,6 +130,33 @@
 - **Solution:** Imported timetable, aircraft, and airport
 
 ## Bug 15
+
+- **Issue Description:** Aircraft can be maintenanced at airports that arent hubs
+- **Date Found:** 3/28/24
+- **Action Plan:** Convert the is_hub value in the dataframe to an integer
+- **Assignee(s):** Matt
+- **Date Fixed:** 4/2/24  
+- **Solution:** Cast the is_hub value to an integer when creating airport objects
+
+## Bug 16
+
+- **Issue Description:** Running back to back simulations increases the number of events
+- **Date Found:** 4/2/24
+- **Action Plan:** Reset the schedule before running each simulation
+- **Assignee(s):** Matt
+- **Date Fixed:** 4/2/24  
+- **Solution:** Clear the schedule before each simulation run
+
+## Bug 17
+
+- **Issue Description:** Selecting the run option from the simulation menu runs the simulation but also says invalid choice
+- **Date Found:** 4/2/24
+- **Action Plan:** Invesstigate when invalid choice is displayed
+- **Assignee(s):** Matt
+- **Date Fixed:** 4/2/24  
+- **Solution:** Added a try/except block around the event.execute() part of the simulation loop to handle raised exceptions
+
+## Bug 15
 - **Issue Description:** The python interpreter couldn't find the module named 'utilities' when trying to import it in the 'aircraft_menu.py' script.
 - **Date Found:** 3/27/24
 - **Action Plan:** Find a way to execute the function from the comfort-airlines directory, where it can see all import folders.
