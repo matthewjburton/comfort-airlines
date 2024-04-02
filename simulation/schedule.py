@@ -42,9 +42,13 @@ class Schedule:
         return self._schedule.get(minute, [])  # Return the list of events for the given minute, or an empty list if no events
     
     def reschedule_conflicts(self, minute, event):
+        """
+        Find existing events that would conflict with a new event and resechule the new event
+        """
         eventConflict = False
         for scheduledEvent in self._schedule[minute]:
-            if scheduledEvent._airport == event._airport:
+            # If the event type for both the scheduled event and the new event are either a departure or arrival event for both events reschedule
+            if scheduledEvent._airport == event._airport and (scheduledEvent._event_type in ['Departure', 'Arrival']) and (event._event_type in ['Departure', 'Arrival']):
                 eventConflict = True
 
         if eventConflict:
