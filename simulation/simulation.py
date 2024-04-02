@@ -25,7 +25,6 @@ class Simulation:
         # Get instance of schedule singleton
         schedule = Schedule.get_instance()
         schedule.clear_schedule()
-        
 
         # Populate schedule with departure and arrival events
         schedule = Simulation.populate_schedule_from_timetable(schedule)
