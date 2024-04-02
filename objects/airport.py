@@ -7,7 +7,7 @@ __author__ = Jeremy Maas
 """
 class Airport:
     def __init__(self, id, name, abbreviation,
-    latitude, longitude, timezoneOffset, metroPopulation, totalGates, availableGates, isHub):
+    latitude, longitude, timezoneOffset, metroPopulation, totalGates, availableGates, isHub, inboundFlights):
 
         self._id = id
         self._name = name
@@ -19,6 +19,7 @@ class Airport:
         self._totalGates = totalGates
         self._availableGates = availableGates
         self._isHub = isHub
+        self._inboundFlights = inboundFlights
 
     @property
     def id(self):
@@ -71,3 +72,19 @@ class Airport:
     @property
     def is_hub(self):
         return self._isHub
+
+    @property
+    def inbound_flights(self):
+        return self._inboundFlights
+
+    def add_inbound_flight(self):
+        if self._inboundFlights < self._availableGates:
+            self._inboundFlights += 1
+        else:
+            raise ValueError("Inbound flights cannot exceed number of gates available.")
+
+    def remove_inbound_flight(self):
+        if self._inboundFlights > 0:
+            self._inboundFlights -= 1
+        else:
+            raise ValueError("Cannot remove an inbound flight from an airport with no inbound flights.")
