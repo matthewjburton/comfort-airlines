@@ -24,15 +24,21 @@ class Simulation:
     def run_simulation():
         # Get instance of schedule singleton
         schedule = Schedule.get_instance()
+        schedule.clear_schedule()
+        
 
         # Populate schedule with departure and arrival events
         schedule = Simulation.populate_schedule_from_timetable(schedule)
-
+        
         # Simulation loop: handle every event for each minute
         for minute in range(MINUTES_IN_A_DAY * NUMBER_OF_DAYS):
             currentEvents = schedule.get_events_for_minute(minute)
             for currentEvent in currentEvents:
-                print(f"{print_time(minute)}: {currentEvent.execute()}")    
+                try:
+                    print(f"{print_time(minute)}: {currentEvent.execute()}")
+                except Exception as e:
+                    print(e)
+                
 
     @staticmethod
     def populate_schedule_from_timetable(schedule):

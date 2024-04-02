@@ -20,6 +20,9 @@ class Schedule:
     def __init__(self):
         self._schedule = {}
 
+    def clear_schedule(self):
+        self._schedule = {}
+
     def add_event(self, event):
         """
         Add an event to the scheduler.

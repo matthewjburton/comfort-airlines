@@ -8,6 +8,7 @@ __author__ = Matt Burton
 from .schedule import Schedule
 from .aircraft_objects import aircrafts
 from .airport_objects import airports
+from exceptions.maintenance_exception import MaintenanceError
 
 MAINTENANCE_TIME = 1.5 # time in days
 
@@ -64,14 +65,15 @@ class StartMaintenanceEvent(ScheduledEvent):
         super().__init__('Start Maintenance', arrivalTime + 1)
         self._aircraft = aircraft
         self._airport = airport
-        Schedule.get_instance().add_event(FinishMaintenanceEvent(self._aircraft, self._airport, arrivalTime))
 
     def execute(self):
         aircraftTailNumber = self._aircraft.tailNumber
         airportAbbreviation = self._airport.abbreviation
 
         if not self._airport._isHub:
-            raise ValueError(f"Aircraft {aircraftTailNumber} can only be maintenanced at a hub airport")
+            raise MaintenanceError(f"Airport {self._airport.abbreviation} is not a hub")
+        else:
+            Schedule.get_instance().add_event(FinishMaintenanceEvent(self._aircraft, self._airport, self._time))
         
         self._aircraft.timeSinceLastMaintenance = 0
         return f"Maintenancing aircraft {aircraftTailNumber} at Airport {airportAbbreviation}"
