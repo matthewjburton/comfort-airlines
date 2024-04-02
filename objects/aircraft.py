@@ -6,7 +6,7 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton
 """
 
-REQUIRES_MAINTENANCE = 0#200 # aircraft require maintenance after 200 hours of flight
+REQUIRES_MAINTENANCE = 200 # aircraft require maintenance after 200 hours of flight
 
 class Aircraft:
     def __init__(self, id, tailNumber, name, model, maximumSpeed, maximumCapacity, maximumFuel, cargoVolume, leasingCost):
@@ -71,7 +71,7 @@ class Aircraft:
     def timeSinceLastMaintenance(self, durationOfLastFlight):
         self._timeSinceLastMaintenance += durationOfLastFlight
 
-        if self._timeSinceLastMaintenance >= (REQUIRES_MAINTENANCE * 60):
+        if self._timeSinceLastMaintenance * 2 >= (REQUIRES_MAINTENANCE * 60): # Assuming aircraft fly in a loop including a hub, they will land at a hub before doubling their time since last maintenance. This can probably be optimized but it should work to prevent aircraft going too long without maintenance
             self._requiresMaintenance = True
         else:
             self._requiresMaintenance = False
