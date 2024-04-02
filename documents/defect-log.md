@@ -156,6 +156,15 @@
 - **Date Fixed:** 4/2/24  
 - **Solution:** Added a try/except block around the event.execute() part of the simulation loop to handle raised exceptions
 
+## Bug 18
+
+- **Issue Description:** When adding an event to the schedule all events occuring at the same airport at the same time resulted in a conflict
+- **Date Found:** 4/2/24
+- **Action Plan:** Compare the event types to determine if the events are truly conflicting
+- **Assignee(s):** Matt
+- **Date Fixed:** 4/2/24  
+- **Solution:** Modified the condition to ensure that the events are either departure or arrival events at the same airport before rescheduling the new event
+
 ## Bug 15
 - **Issue Description:** The python interpreter couldn't find the module named 'utilities' when trying to import it in the 'aircraft_menu.py' script.
 - **Date Found:** 3/27/24
