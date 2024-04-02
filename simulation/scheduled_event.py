@@ -51,7 +51,7 @@ class ArrivalEvent(ScheduledEvent):
 
         # Handle aircraft maintenance
         self._aircraft.timeSinceLastMaintenance += self._flight.duration
-        if self._aircraft._requiresMaintenance:
+        if self._aircraft._requiresMaintenance and self._airport._isHub:
             Schedule.get_instance().add_event(StartMaintenanceEvent(self._aircraft, self._airport, self._flight.localArrivalTime))
 
         #self._aircraft.currentFuel -= fuel_burned_during_flight(flight)

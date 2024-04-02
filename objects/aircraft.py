@@ -6,7 +6,7 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton
 """
 
-REQUIRES_MAINTENANCE = 200 # aircraft require maintenance after 200 hours of flight
+REQUIRES_MAINTENANCE = 0#200 # aircraft require maintenance after 200 hours of flight
 
 class Aircraft:
     def __init__(self, id, tailNumber, name, model, maximumSpeed, maximumCapacity, maximumFuel, cargoVolume, leasingCost):
