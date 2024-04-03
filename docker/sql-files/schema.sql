@@ -61,12 +61,9 @@ CREATE TABLE IF NOT EXISTS flights (
     departure_airport_id INT,
     destination_airport_id INT,
     angle_of_flight FLOAT, -- angle from 0 to 360
-    flight_duration INT, -- time in minutes
-    departure_time INT,  -- time in UTC
-    arrival_time INT,  -- time in UTC
-    on_time_bin BINARY, -- 0 for on time, 1 for delayed
-    gate_departure INT,
-    gate_arrival INT,
+    duration INT, -- time in minutes
+    departure_time INT,  -- time in minutes
+    arrival_time INT,  -- time in minutes
     FOREIGN KEY (aircraft_id) REFERENCES aircraft(aircraft_id),
     FOREIGN KEY (departure_airport_id) REFERENCES airports(airport_id),
     FOREIGN KEY (destination_airport_id) REFERENCES airports(airport_id)
