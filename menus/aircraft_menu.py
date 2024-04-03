@@ -5,8 +5,8 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = McHale Trotter and Matt Burton
 """
-from utilities import display_menu
-from utilities import database
+from utilities.display_menu import display_menu
+from utilities.database import Database
 
 class AircraftMenu:
 
@@ -15,7 +15,7 @@ class AircraftMenu:
     def view_aircraft():
         print("\nExecuting view_aircraft()")
         # Initialize the Database object
-        db = database.Database()
+        db = Database()
 
         # Show all aircraft in the database for reference
         sql = "SELECT * FROM aircraft"
