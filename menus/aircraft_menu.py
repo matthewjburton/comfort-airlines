@@ -5,6 +5,7 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = McHale Trotter and Matt Burton
 """
+from utilities.database import Database
 from utilities.display_menu import display_menu
 from utilities.database import Database
 
@@ -13,6 +14,7 @@ class AircraftMenu:
     """Aircraft Options"""
     @staticmethod
     def view_aircraft():
+<<<<<<< HEAD
         print("\nExecuting view_aircraft()")
         # Initialize the Database object
         db = Database()
@@ -31,6 +33,26 @@ class AircraftMenu:
             # Disconnect from the database
             db.disconnect()
 
+=======
+        # Query the database for the aircraft table
+        db = Database()
+        query = 'SELECT * FROM aircraft'
+        aircrafts = db.execute_query_to_dataframe(query)
+
+        if not aircrafts.empty:
+            AircraftMenu.print_aircrafts_header()
+
+            for _, aircraft in aircrafts.iterrows():
+                AircraftMenu.print_aircraft(aircraft)
+
+    def print_aircrafts_header():
+        headerDisplay = '{:<12} | {:<15} | {:<10} | {:<20} | {:<20} | {:<25} | {:<15} | {:<20}'.format('Tail Number', 'Aircraft Name', 'Model', 'Maximum Speed (mph)', 'Passenger Capacity', 'Fuel Capacity (gallons)', 'Cargo Volume', 'Leasing Cost (lbs)')
+        print(headerDisplay)
+
+    def print_aircraft(aircraft):
+        aircraftDisplay = '{:<12} | {:<15} | {:<10} | {:<20,} | {:<20,} | {:<25,} | {:<15,} | {:<20,}'.format(aircraft['tail_number'], aircraft['name'], aircraft['model'], aircraft['maximum_speed'], aircraft['maximum_capacity'], aircraft['maximum_fuel'], aircraft['cargo_volume'], aircraft['leasing_cost'])
+        print(aircraftDisplay)
+>>>>>>> e594a2c (view timetable, view airports, and view aircraft)
 
     @staticmethod
     def edit_aircraft():
