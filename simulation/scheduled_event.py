@@ -22,7 +22,7 @@ class ScheduledEvent:
 
 class DepartureEvent(ScheduledEvent):
     def __init__(self, flight):
-        super().__init__('Departure', flight.localDepartureTime)
+        super().__init__('Departure', flight.departureTime)
         self._aircraft = aircrafts[flight.aircraftID]
         self._airport = airports[flight.departureAirportID]
 
@@ -39,7 +39,7 @@ class DepartureEvent(ScheduledEvent):
 
 class ArrivalEvent(ScheduledEvent):
     def __init__(self, flight):
-        super().__init__('Arrival', flight.localArrivalTime)
+        super().__init__('Arrival', flight.arrivalTime)
         self._flight = flight
         self._aircraft = aircrafts[flight.aircraftID]
         self._airport = airports[flight.destinationAirportID]
@@ -51,7 +51,7 @@ class ArrivalEvent(ScheduledEvent):
         # Handle aircraft maintenance
         self._aircraft.timeSinceLastMaintenance += self._flight.duration
         if self._aircraft._requiresMaintenance:
-            Schedule.get_instance().add_event(StartMaintenanceEvent(self._aircraft, self._airport, self._flight.localArrivalTime))
+            Schedule.get_instance().add_event(StartMaintenanceEvent(self._aircraft, self._airport, self._flight.arrivalTime))
 
         #self._aircraft.currentFuel -= fuel_burned_during_flight(flight)
         #finances.charge(landingFee)
