@@ -1,0 +1,12 @@
+{
+    "simulation": {
+        "start_time_days": 0,
+        "duration_days": 0,
+        "report_frequency": "daily",
+        "cost_fuel": 0,
+        "cost_gate": 0,
+        "cost_takeoff": 0,
+        "cost_landing": 0,
+        "cost_aircraft": 0
+    }
+}
