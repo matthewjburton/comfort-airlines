@@ -85,15 +85,15 @@ class AirportMenu:
 
         name = input("Enter airport name: ")
         abbreviation = input("Enter airport abbreviation (3 characters): ")
-        latitude = float(input("Enter latitude: "))
-        longitude = float(input("Enter longitude: "))
-        timezone_offset = int(input("Enter timezone offset (hours from UTC): "))
-        metro_population = int(input("Enter metro population: "))
-        total_gates = int(input("Enter total number of gates: "))
-        is_hub = int(input("Is this airport a hub? (1 for yes, 0 for no): "))
+        latitude = AirportMenu.get_valid_latitude()
+        longitude = AirportMenu.get_valid_longitude()
+        timezoneOffset = AirportMenu.get_valid_timezone_offset()
+        metroPopulation = AirportMenu.get_valid_metro_population()
+        isHub = AirportMenu.get_valid_is_hub()
+        totalGates = AirportMenu.get_valid_total_gates(metroPopulation, isHub)
 
         # SQL query to insert data into the airports table
-        sql = f"INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, total_gates, is_hub) VALUES ('{name}', '{abbreviation}', {latitude}, {longitude}, {timezone_offset}, {metro_population}, {total_gates}, {is_hub})"
+        sql = f"INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, total_gates, is_hub) VALUES ('{name}', '{abbreviation}', {latitude}, {longitude}, {timezoneOffset}, {metroPopulation}, {totalGates}, {isHub})"
 
         try:
             # Execute the insert query
@@ -116,12 +116,12 @@ class AirportMenu:
         db = database.Database()
 
         # User input for aircraft to be remove based on aircraft_id
-        airport_id = input("Enter airport ID number to remove: ")
+        airportID = input("Enter airport ID number to remove: ")
 
         # Check if the airport is associated with a flight before removing it
         try:
-            sql_check_flights = f"SELECT * FROM flights WHERE departure_airport_id = {airport_id} OR destination_airport_id = {airport_id}"
-            result = db.execute_query_to_dataframe(sql_check_flights)
+            sqlCheckFlights = f"SELECT * FROM flights WHERE departure_airport_id = {airportID} OR destination_airport_id = {airportID}"
+            result = db.execute_query_to_dataframe(sqlCheckFlights)
         
             # If not associated we remove it.
             if result.empty:
@@ -136,7 +136,7 @@ class AirportMenu:
                 return
 
 
-        sql = f"DELETE FROM airports WHERE airport_id = {airport_id}"
+        sql = f"DELETE FROM airports WHERE airport_id = {airportID}"
 
         try: 
             # Execute remove aircraft query
@@ -147,3 +147,73 @@ class AirportMenu:
         finally:
             # Disconnect from the database
             db.disconnect()
+
+    def get_valid_latitude():
+        while True:
+            try:
+                latitude = float(input("Enter latitude: "))
+                if -90 <= latitude <= 90:
+                    return latitude
+                else:
+                    print("Latitude must be in the range of -90 to +90 degrees.")
+            except ValueError:
+                print("Invalid input. Latitude must be a number.")
+    
+    def get_valid_longitude():
+        while True:
+            try:
+                longitude = float(input("Enter longitude: "))
+                if -180 <= longitude <= 180:
+                    return longitude
+                else:
+                    print("Longitude must be in the range of -180 to +180 degrees.")
+            except ValueError:
+                print("Invalid input. Longitude must be a number.")
+
+    def get_valid_timezone_offset():
+        while True:
+            try:
+                offset = int(input("Enter timezone offset from UTC: "))
+                if -12 <= offset <= 14:
+                    return offset
+                else:
+                    print("Timezone offset must be in the range of -12 to +14 hours.")
+            except ValueError:
+                print("Invalid input. Timezone offset must be a number.")
+
+    def get_valid_metro_population():
+        while True:
+            try:
+                population = int(input("Enter metro population: "))
+                if 0 <= population <= 1000000000:
+                    return population
+                else:
+                    print("Metro population must be in the range of 0 to 1,000,000,000 people.")
+            except ValueError:
+                print("Invalid input. Metro population must be a number.")
+
+    def get_valid_is_hub():
+        while True:
+            try:
+                isHub = str(input("Is this airport a hub? 'yes' or 'no': "))
+                if isHub.lower() == 'yes':
+                    return 1
+                elif isHub.lower() == 'no':
+                    return 0
+                else:
+                    print("Is hub must be either 'yes' or 'no'.")
+            except ValueError:
+                print("Invalid input. Is hub must be a string.")
+
+    def get_valid_total_gates(metroPopulation, isHub):
+        maximum_gates = min(int(metroPopulation / 1000000), 11 if isHub else 5)
+        while True:
+            try:
+                totalGates = int(input("Enter total number of gates: "))
+                if 0 <= totalGates <= maximum_gates:
+                    return totalGates
+                else:
+                    print(f"Total gates must be in the range of 0 to {maximum_gates} gates.")
+            except ValueError:
+                print("Invalid input. Total gates must be a number.")
+
