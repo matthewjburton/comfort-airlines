@@ -24,21 +24,7 @@ class Timetable:
             for _, flight in flights.iterrows():
                 flight['duration'] = calculate_flight_duration(aircrafts[flight['aircraft_id']], airports[flight['departure_airport_id']], airports[flight['destination_airport_id']])
                 flight['arrival_time'] = flight['departure_time'] + flight['duration']
-                """
-                # Calculate flight duration
-                flight['duration'] = calculate_flight_duration(aircrafts[flight['aircraft_id']], airports[flight['departure_airport_id']], airports[flight['destination_airport_id']])
                 
-                # Debugging: Print calculated duration
-                print(f"Flight {flight['flight_id']}: Calculated duration: {flight['duration']} minutes")
-
-                # Calculate arrival time
-                departure_time = flight['departure_time']  # Assuming departure_time is a datetime object or a numerical value representing time
-                duration = flight['duration']  # Assuming duration is in minutes
-                flight['arrival_time'] = departure_time + duration
-                
-                # Debugging: Print calculated arrival time
-                print(f"Flight {flight['flight_id']}: Calculated arrival time: {flight['arrival_time']}")
-                """
                 Timetable.print_flight(flight)
 
 
