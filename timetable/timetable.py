@@ -13,7 +13,7 @@ from utilities.clock import get_flight_time
 
 class Timetable:
     def view_timetable():
-        # Query the database for the routes table
+        # Query the database for the flights table
         db = Database()
         query = 'SELECT * FROM flights'
         flights = db.execute_query_to_dataframe(query)
@@ -29,15 +29,15 @@ class Timetable:
 
 
     def print_timetable_header():
-        flightDisplay = '{:<15} | {:<20} | {:<20} | {:<20} | {:<20} | {:<10}'.format('Flight Number', 'Departure Airport', 'Destination Airport', 'Departure Time', 'Arrival Time', 'Duration')
-        print(flightDisplay)
+        headerDisplay = '{:<15} | {:<20} | {:<20} | {:<15} | {:<15} | {:<10}'.format('Flight Number', 'Departure Airport', 'Destination Airport', 'Departure Time', 'Arrival Time', 'Duration')
+        print(headerDisplay)
 
     def print_flight(flight):
         departure_time = get_flight_time(flight['departure_time'])
         arrival_time = get_flight_time(flight['arrival_time'])
         duration = get_flight_time(flight['duration'])
 
-        flightDisplay = '{:<15} | {:<20} | {:<20} | {:<20} | {:<20} | {:<10}'.format(flight['flight_number'], airports[flight['departure_airport_id']]._abbreviation, airports[flight['destination_airport_id']]._abbreviation, departure_time, arrival_time, duration)
+        flightDisplay = '{:<15} | {:<20} | {:<20} | {:<15} | {:<15} | {:<10}'.format(flight['flight_number'], airports[flight['departure_airport_id']]._abbreviation, airports[flight['destination_airport_id']]._abbreviation, departure_time, arrival_time, duration)
         print(flightDisplay)
 
 
