@@ -66,7 +66,6 @@ class AirportMenu:
 
     @staticmethod
     def edit_airport():
-        print("\nExecuting edit_airport()")
         edit_options = {
             "Add": AirportMenu.add_airport,
             "Remove": AirportMenu.remove_airport,
@@ -81,7 +80,6 @@ class AirportMenu:
     """
     @staticmethod
     def add_airport():
-        print("\nExecuting add_airport()")
         # Initialize the Database object
         db = database.Database()
 

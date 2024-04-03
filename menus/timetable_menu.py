@@ -29,8 +29,8 @@ class TimetableMenu:
     def edit_timetable():
         print("\nExecuting edit_timetable()")
         edit_options = {
-            "Add": TimetableMenu.add_route,
-            "Remove": TimetableMenu.remove_route,
+            "Add": TimetableMenu.add_flight,
+            "Remove": TimetableMenu.remove_flight,
             "Upload": TimetableMenu.upload_timetable,
         }
         display_menu(edit_options, is_submenu=True)
@@ -58,12 +58,12 @@ class TimetableMenu:
     
     """Edit Options"""
     @staticmethod
-    def add_route():
-        print("Executing add_route()")
+    def add_flight():
+        print("Executing add_flight()")
     
     @staticmethod
-    def remove_route():
-        print("Executing remove_route()")
+    def remove_flight():
+        print("Executing remove_flight()")
     
     @staticmethod
     def upload_timetable():
