@@ -6,7 +6,7 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton, McHale Trotter
 """
 from utilities.display_menu import display_menu
-from utilities.database import atabase
+from utilities.database import Database
 
 class AirportMenu:
 
