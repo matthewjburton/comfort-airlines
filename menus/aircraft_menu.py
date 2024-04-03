@@ -117,10 +117,3 @@ class AircraftMenu:
         finally:
             # Disconnect from the database
             db.disconnect()
-
-
-# Function calls for testing
-
-# AircraftMenu.add_aircraft()
-# AircraftMenu.remove_aircraft()
-# AircraftMenu.view_aircraft()

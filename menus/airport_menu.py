@@ -117,10 +117,3 @@ class AirportMenu:
         finally:
             # Disconnect from the database
             db.disconnect()
-
-
-# Function calls for testing
-
-# AirportMenu.view_airport()
-# AirportMenu.add_airport()
-# AirportMenu.remove_airport()
