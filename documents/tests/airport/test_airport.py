@@ -10,9 +10,7 @@ How to use: Execute the following command in the terminal to run the tests:
     python3 test_airport.py
 """
 import unittest
-import sys
-sys.path.append('../../../') # provide access to modules in the comfort-airlines directory
-from airport import Airport
+from objects.airport import Airport
 
 class TestAirport(unittest.TestCase):
 

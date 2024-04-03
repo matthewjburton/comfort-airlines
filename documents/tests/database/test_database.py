@@ -11,9 +11,7 @@ To run execute the following command in the terminal:
 """
 import unittest
 from unittest.mock import patch
-import sys
-sys.path.append('../../../')
-from database import Database
+from utilities.database import Database
 
 class TestDatabase(unittest.TestCase):
     def setUp(self):
