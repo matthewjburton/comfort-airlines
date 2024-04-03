@@ -5,12 +5,12 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton, McHale Trotter
 """
-<<<<<<< HEAD:menus/airport_menu.py
 from utilities.display_menu import display_menu
-=======
 from menu import display_menu
 import database
->>>>>>> 0223c7e (Added add_airport(), view_airport(),):airport_menu.py
+from utilities.display_menu import display_menu
+from utilities.database import Database
+
 class AirportMenu:
 
     """Airport Options"""
@@ -18,7 +18,7 @@ class AirportMenu:
     def view_airport():
         print("\nExecuting view_airport()")
         # Initialize the Database object
-        db = database.Database()
+        db = Database()
 
         # Show all aircraft in the database for reference
         sql = "SELECT * FROM airports"
