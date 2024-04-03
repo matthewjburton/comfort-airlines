@@ -9,7 +9,7 @@ from utilities.display_menu import display_menu
 from menu import display_menu
 import database
 from utilities.display_menu import display_menu
-from utilities.database import Database
+from utilities.database import DDatabase
 
 class AirportMenu:
 
