@@ -189,6 +189,7 @@ class AircraftMenu:
         finally:
             # Disconnect from the database
             db.disconnect()
+<<<<<<< HEAD
 
 
 # Function calls for testing
@@ -198,3 +199,5 @@ class AircraftMenu:
 # AircraftMenu.view_aircraft()
     
 
+=======
+>>>>>>> 1b5f6a2 (mege main into this branch)
