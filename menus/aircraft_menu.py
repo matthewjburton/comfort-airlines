@@ -72,8 +72,8 @@ class AircraftMenu:
         while True:
             try:
                 # Get input from the user
-                tail_number = input("Enter tail number: ")
-                if len(tail_number) > 20:
+                tailNumber = input("Enter tail number: ")
+                if len(tailNumber) > 20:
                     raise ValueError("Tail number exceeds maximum length (20 characters)")
 
                 while True:
@@ -92,8 +92,8 @@ class AircraftMenu:
 
                 while True:
                     try:
-                        maximum_speed = int(input("Enter maximum speed (miles per hour): "))
-                        if maximum_speed < 0:
+                        maximumSpeed = int(input("Enter maximum speed (miles per hour): "))
+                        if maximumSpeed < 0:
                             raise ValueError("Maximum speed must be a non-negative integer")
                         break
                     except ValueError:
@@ -101,8 +101,8 @@ class AircraftMenu:
 
                 while True:
                     try:
-                        maximum_capacity = int(input("Enter maximum capacity (number of people): "))
-                        if maximum_capacity < 0:
+                        maximumCapacity = int(input("Enter maximum capacity (number of people): "))
+                        if maximumCapacity < 0:
                             raise ValueError("Maximum capacity must be a non-negative integer")
                         break
                     except ValueError:
@@ -110,8 +110,8 @@ class AircraftMenu:
 
                 while True:
                     try:
-                        maximum_fuel = int(input("Enter maximum fuel (amount in gallons): "))
-                        if maximum_fuel < 0:
+                        maximumFuel = int(input("Enter maximum fuel (amount in gallons): "))
+                        if maximumFuel < 0:
                             raise ValueError("Maximum fuel must be a non-negative integer")
                         break
                     except ValueError:
@@ -119,8 +119,8 @@ class AircraftMenu:
 
                 while True:
                     try:
-                        cargo_volume = int(input("Enter cargo volume (volume in cubic feet): "))
-                        if cargo_volume < 0:
+                        cargoVolume = int(input("Enter cargo volume (volume in cubic feet): "))
+                        if cargoVolume < 0:
                             raise ValueError("Cargo volume must be a non-negative integer")
                         break
                     except ValueError:
@@ -128,15 +128,15 @@ class AircraftMenu:
 
                 while True:
                     try:
-                        leasing_cost = int(input("Enter leasing cost (price in USD): "))
-                        if leasing_cost < 0:
+                        leasingCost = int(input("Enter leasing cost (price in USD): "))
+                        if leasingCost < 0:
                             raise ValueError("Leasing cost must be a non-negative integer")
                         break
                     except ValueError:
                         print("Leasing cost must be an integer")
 
                 # SQL query to insert data into the aircraft table
-                sql = f"INSERT INTO aircraft (tail_number, name, model, maximum_speed, maximum_capacity, maximum_fuel, cargo_volume, leasing_cost) VALUES ('{tail_number}', '{name}', '{model}', {maximum_speed}, {maximum_capacity}, {maximum_fuel}, {cargo_volume}, {leasing_cost})"
+                sql = f"INSERT INTO aircraft (tail_number, name, model, maximum_speed, maximum_capacity, maximum_fuel, cargo_volume, leasing_cost) VALUES ('{tailNumber}', '{name}', '{model}', {maximumSpeed}, {maximumCapacity}, {maximumFuel}, {cargoVolume}, {leasingCost})"
 
                 # Execute the insert query
                 db.execute_insert_update_delete_query(sql)
@@ -159,11 +159,11 @@ class AircraftMenu:
         db = Database()
 
         # User input for aircraft to be remove based on aircraft_id
-        aircraft_id = input("Enter aircraft ID number to remove: ")
+        aircraftID = input("Enter aircraft ID number to remove: ")
 
         # Check if the aircraft is associated with a flight before removing it
         try:
-            sql_check_flights = f"SELECT * FROM flights WHERE aircraft_id = {aircraft_id}"
+            sql_check_flights = f"SELECT * FROM flights WHERE aircraft_id = {aircraftID}"
             result = db.execute_query_to_dataframe(sql_check_flights)
         
             # If not associated we remove it.
@@ -178,7 +178,7 @@ class AircraftMenu:
                 print(f"Error checking flights: {e}")
                 return
 
-        sql = f"DELETE FROM aircraft WHERE aircraft_id = {aircraft_id}"
+        sql = f"DELETE FROM aircraft WHERE aircraft_id = {aircraftID}"
 
         try: 
             # Execute remove aircraft query
