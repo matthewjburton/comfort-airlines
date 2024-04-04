@@ -3,7 +3,7 @@ Create a list of aircraft objects used in the simulation to manage their dynamic
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
-__author__ = Matt Burton
+__author__ = Matt Burton and Jeremy Maas
 """
 from utilities.database import Database
 from objects.aircraft import Aircraft
@@ -22,4 +22,14 @@ def create_aircrafts_from_database():
 
     return aircrafts
 
+def num_of_each_aircraft():
+    db = Database()
+    query = 'SELECT model, COUNT(*) FROM aircraft GROUP BY model'
+    dataframe = db.execute_query_to_dataframe(query)
+    dataframe = dataframe.to_dict('records')
+
+    return dataframe
+
 aircrafts = create_aircrafts_from_database()
+
+models = num_of_each_aircraft()
