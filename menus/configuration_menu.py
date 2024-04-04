@@ -100,7 +100,6 @@ class ConfigurationMenu:
         print("\nExecuting configure_costs()")
         cost_options = {
                 "Fuel": CostMenu.configure_fuel_cost,
-                "Gate": CostMenu.configure_gate_cost,
                 "Takeoff": CostMenu.configure_takeoff_cost,
                 "Landing": CostMenu.configure_landing_cost,
                 "Aircraft": CostMenu.configure_aircraft_cost

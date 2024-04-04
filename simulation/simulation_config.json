@@ -3,7 +3,6 @@
     "duration": 200,
     "reportFrequency": "final",
     "fuelCost": 100.0,
-    "gateCost": 0,
     "takeoffCost": 2000,
     "landingCost": 2000,
     "aircraftCost": {

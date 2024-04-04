@@ -49,26 +49,6 @@ class CostMenu:
                 print("Fuel cost must be a number.")
 
     @staticmethod
-    def configure_gate_cost():
-        config_data = CostMenu.read_config()
-        while True:
-            try:
-                gateCost = input('Enter the gate cost (dollars per): $')
-                if not CostMenu.is_valid_dollar_value(gateCost):
-                    gateCost = float(gateCost)
-                    if 0 <= gateCost:
-                        # Update the GateCost in the config data
-                        config_data['gateCost'] = gateCost
-                        CostMenu.write_config(config_data)
-                        break
-                    else:
-                        print('Gate cost must be a positive value.')
-                else:
-                    print('Gate cost must be a dollar value with two decimal places.')
-            except ValueError:
-                print("Gate cost must be a number.")
-
-    @staticmethod
     def configure_takeoff_cost():
         config_data = CostMenu.read_config()
         while True:
