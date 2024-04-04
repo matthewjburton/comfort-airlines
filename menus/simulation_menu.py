@@ -14,12 +14,10 @@ class SimulationMenu:
     """Simulation Options"""
     @staticmethod
     def run_simulation():
-        print("\nExecuting run_simulation()")
         Simulation.run_simulation()
 
     @staticmethod
     def configure_simulation():
-        print("\nExecuting configure_simulation()")
         configure_options = { 
             "Start date": ConfigurationMenu.configure_start_date,
             "Duration": ConfigurationMenu.configure_duration,
