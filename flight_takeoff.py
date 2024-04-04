@@ -13,7 +13,7 @@ import math
 def calculate_acceleration_time(cruisingAltitude, maxSpeed):
     timeToCruiseAltitude = (cruisingAltitude - 10000) / (250 * 1.15)  # time to ascend to cruising altitude in minutes
     timeToMaxSpeed = (maxSpeed * 0.8 / 1.15 - 280) / (25 * 1.15)  # time to accelerate to 80% of max speed in minutes
-    return timeToCruiseAltitude + timeToMaxSpeed
+    return timeToCruiseAltitude + timeToMaxSpeed + 1
 
 def calculate_descent_time(distance):
     if distance >= 1500:
@@ -26,4 +26,4 @@ def calculate_descent_time(distance):
         cruisingAltitude = 20000
     timeToCruiseAltitude = (cruisingAltitude - 10000) / (250 * 1.15)  # time to descend to cruising altitude in minutes
     timeToLand = (distance * 1.151) / (200 * 1.15)  # time to descend at 200 miles per hour in minutes
-    return timeToCruiseAltitude + timeToLand
+    return timeToCruiseAltitude + timeToLand + 2
