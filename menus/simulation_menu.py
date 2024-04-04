@@ -7,6 +7,10 @@ __author__ = Jeremy Maas and Matt Burton
 """
 from utilities.display_menu import display_menu
 from simulation.simulation import Simulation
+
+import json
+import os
+
 class SimulationMenu:
 
     """Simulation Options"""
@@ -38,17 +42,79 @@ class SimulationMenu:
 
 
     """Configuration Options"""
+    CONFIG_FILE_PATH = 'simulation/simulation_config.json'
+
+    @staticmethod
+    def read_config():
+        if os.path.exists(SimulationMenu.CONFIG_FILE_PATH):
+            with open(SimulationMenu.CONFIG_FILE_PATH, 'r') as f:
+                return json.load(f)
+        else:
+            return {}
+
+    @staticmethod
+    def write_config(config_data):
+        with open(SimulationMenu.CONFIG_FILE_PATH, 'w') as f:
+            json.dump(config_data, f)
+
     @staticmethod
     def configure_start_date():
-        print("\nExecuting configure_start_date()")
+        config_data = SimulationMenu.read_config()
+        while True:
+            try:
+                startDate = int(input('Enter the start date (in days): '))
+                if 0 <= startDate <= 365:
+                    # Update the start date in the config data
+                    config_data['startDate'] = startDate
+                    SimulationMenu.write_config(config_data)
+                    break
+                else:
+                    print('Start date must be in the range of 0 to 365 days.')
+            except ValueError:
+                print("Start date must be a number.")
 
     @staticmethod    
     def configure_duration():
-        print("\nExecuting configure_duration()")
+        config_data = SimulationMenu.read_config()
+        while True:
+            try:
+                duration = int(input('Enter the duration (in days): '))
+                if 0 <= duration <= 365:
+                    # Update the duration in the config data
+                    config_data['duration'] = duration
+                    SimulationMenu.write_config(config_data)
+                    break
+                else:
+                    print('Duration must be in the range of 0 to 365 days.')
+            except ValueError:
+                print("Duration must be a number.")
 
     @staticmethod    
     def configure_report_frequency():
-        print("\nExecuting configure_report_frequency()")
+        config_data = SimulationMenu.read_config()
+
+        duration = config_data.get('duration', 0)
+        options = ['daily']
+        if duration >= 14:  # 2 weeks
+            options.append('weekly')
+        if duration >= 60:  # 2 months
+            options.append('monthly')
+        if duration >= 730:  # 2 years
+            options.append('yearly')
+        options.append('final')
+
+        while True:
+            try:
+                reportFrequency = str(input(f'Enter the report frequency\n({', '.join(options)}): '))
+                if reportFrequency.lower() in options:
+                    # Update the report frequency in the config data
+                    config_data['reportFrequency'] = reportFrequency.lower()
+                    SimulationMenu.write_config(config_data)
+                    break
+                else:
+                    print(f'Report frequency must be either {', '.join(options)}.')
+            except ValueError:
+                print("Report frequency must be a string.")
 
     @staticmethod
     def configure_costs():
