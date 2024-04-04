@@ -25,7 +25,7 @@ class AirportMenu:
                 AirportMenu.print_airport(airport)
 
     def print_airports_header():
-        headerDisplay = '{:<60} | {:<15} | {:<10} | {:<10} | {:<15} | {:<8} | {:<5}'.format('Airport Name', 'Abbreviation', 'Latitude', 'Longitude', 'Population', 'Gates', 'Hub')
+        headerDisplay = '{:<60}   {:<15}   {:<10}   {:<10}   {:<15}   {:<8}   {:<5}'.format('Airport Name', 'Abbreviation', 'Latitude', 'Longitude', 'Population', 'Gates', 'Hub')
         print(headerDisplay)
 
     def print_airport(airport):

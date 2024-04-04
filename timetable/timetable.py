@@ -29,7 +29,7 @@ class Timetable:
 
 
     def print_timetable_header():
-        headerDisplay = '{:<15} | {:<20} | {:<20} | {:<15} | {:<15} | {:<10}'.format('Flight Number', 'Departure Airport', 'Destination Airport', 'Departure Time', 'Arrival Time', 'Duration')
+        headerDisplay = '{:<15}   {:<20}   {:<20}   {:<15}   {:<15}   {:<10}'.format('Flight Number', 'Departure Airport', 'Destination Airport', 'Departure Time', 'Arrival Time', 'Duration')
         print(headerDisplay)
 
     def print_flight(flight):
