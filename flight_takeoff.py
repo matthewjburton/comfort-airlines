@@ -9,22 +9,6 @@ __author__ = Justin Chen
 """
 
 import math
-import airport
-
-"""
-def calculate_taxi_time(population, is_hub=False):
-    if is_hub:
-        if population <= 9000000:
-            taxi_time = 15
-        else:
-            taxi_time = 15 + ((population - 9000000) // 2000000)
-        return min(taxi_time, 20)
-    else:
-        taxi_time = min(13, population * 0.00075)
-        return min(taxi_time, 13)
-"""
-TAKEOFF_TIME = 1 # Each aircraft spends 1 minute on the runway in order to take-off
-LANDING_TIME = 2 # On landing, the aircraft spends 2 minutes on the runway
 
 def calculate_acceleration_time(cruisingAltitude, maxSpeed):
     timeToCruiseAltitude = (cruisingAltitude - 10000) / (250 * 1.15)  # time to ascend to cruising altitude in minutes
@@ -43,20 +27,3 @@ def calculate_descent_time(distance):
     timeToCruiseAltitude = (cruisingAltitude - 10000) / (250 * 1.15)  # time to descend to cruising altitude in minutes
     timeToLand = (distance * 1.151) / (200 * 1.15)  # time to descend at 200 miles per hour in minutes
     return timeToCruiseAltitude + timeToLand
-
-"""
-# Example usage:
-population = 5000000  # Example metro area population
-is_hub = False  # Example airport type
-distance = 1000  # Example flight distance in nautical miles
-max_speed = 600  # Example maximum speed of the aircraft in knots
-
-taxi_time = calculate_taxi_time(population, is_hub)
-takeoff_time = calculate_takeoff_time()
-landing_time = calculate_landing_time()
-acceleration_time = calculate_acceleration_time(38000, max_speed)  # Example cruising altitude for international flight
-descent_time = calculate_descent_time(distance)
-
-total_flight_time = taxi_time + takeoff_time + landing_time + acceleration_time + descent_time
-print(f"Total flight time: {total_flight_time} minutes")
-"""
