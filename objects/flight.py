@@ -7,8 +7,7 @@ __author__ = Matt Burton
 """
 class Flight:
     def __init__(self, id, number, aircraftID, departureAirportID, destinationAirportID,
-                 angleOfFlight, duration, localDepartureTime, localArrivalTime,
-                 onTimeBin, gateDeparture, gateArrival):
+                 angleOfFlight, duration, departureTime, arrivalTime):
         self._id = id
         self._number = number
         self._aircraftID = aircraftID
@@ -16,11 +15,11 @@ class Flight:
         self._destinationAirportID = destinationAirportID
         self._angleOfFlight = angleOfFlight
         self._duration = duration
-        self._localDepartureTime = localDepartureTime
-        self._localArrivalTime = localArrivalTime
-        self._onTimeBin = onTimeBin
-        self._gateDeparture = gateDeparture
-        self._gateArrival = gateArrival
+        self._departureTime = departureTime
+        self._arrivalTime = arrivalTime
+        self._onTimeBin = 1 # On time by default
+        # self._gateDeparture = gateDeparture # Set this as the flights are scheduled
+        # self._gateArrival = gateArrival # Set this as the flights are scheduled
 
     @property
     def id(self):
@@ -53,15 +52,22 @@ class Flight:
     @duration.setter
     def duration(self, duration):
         self._duration = duration
-        self._localArrivalTime = self._localDepartureTime + duration
+        self._arrivalTime = self._departureTime + duration
 
     @property
-    def localDepartureTime(self):
-        return self._localDepartureTime
+    def departureTime(self):
+        return self._departureTime
 
     @property
-    def localArrivalTime(self):
-        return self._localArrivalTime
+    def arrivalTime(self):
+        return self._arrivalTime
+    
+    @arrivalTime.setter
+    def arrivalTime(self, newArrivalTime):
+        if newArrivalTime > self._arrivalTime:
+            self._onTimeBin = 0 # flight has been delayed
+
+        self._arrivalTime = newArrivalTime
 
     @property
     def onTimeBin(self):
