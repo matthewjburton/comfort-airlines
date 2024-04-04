@@ -23,7 +23,7 @@ class SimulationMenu:
             "Duration": ConfigurationMenu.configure_duration,
             "Report frequency": ConfigurationMenu.configure_report_frequency,
             "Costs": ConfigurationMenu.configure_costs,
-            "Challenges": ConfigurationMenu.configure_challenges }
+            }
         display_menu(configure_options, is_submenu = True)
     
     @staticmethod

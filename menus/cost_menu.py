@@ -96,12 +96,3 @@ class CostMenu:
         # Regular expression to match dollar value with two decimal places
         pattern = r'^\d+\.\d{2}'
         return re.match(pattern, input_str) is not None
-
-    """Challenge Options"""
-    @staticmethod
-    def view_challenges():
-        print("\nExecuting view_challenges()")
-
-    @staticmethod
-    def edit_challenges():
-        print("\nExecuting edit_challenges()")
