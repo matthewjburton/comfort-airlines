@@ -34,7 +34,6 @@ class AircraftMenu:
 
     @staticmethod
     def edit_aircraft():
-        print("\nExecuting edit_aircraft()")
         edit_options = {
             "Add": AircraftMenu.add_aircraft,
             "Remove": AircraftMenu.remove_aircraft,
@@ -45,7 +44,6 @@ class AircraftMenu:
     """Edit Options"""
     @staticmethod
     def add_aircraft():
-        print("\nExecuting add_aircraft()")
         # Initialize the Database object
         db = Database()
 
@@ -132,7 +130,6 @@ class AircraftMenu:
 
     @staticmethod
     def remove_aircraft():
-        print("\nExecuting remove_aircraft()")
         # Print the aircraft table
         AircraftMenu.view_aircraft()
 
