@@ -6,6 +6,8 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton
 """
 
+from utilities.database import Database
+
 import re
 import json
 import os
@@ -124,7 +126,16 @@ class CostMenu:
 
     @staticmethod
     def configure_aircraft_cost():
-        print("\nExecuting configure_aircraft_cost()")
+        db = Database()
+        query = 'SELECT DISTINCT model, leasing_cost FROM aircraft'
+        dataframe = db.execute_query_to_dataframe(query)
+
+        headerDisplay = '{:<10}   {:<20}'.format('Model', 'Leasing Cost (USD)')
+        print(headerDisplay)
+
+        for _, aircraft in dataframe.iterrows():
+            aircraftDisplay = '{:<10} | {:<20,}'.format(aircraft['model'], aircraft['leasing_cost'])
+            print(aircraftDisplay)
 
     def is_valid_dollar_value(input_str):
         # Regular expression to match dollar value with two decimal places
