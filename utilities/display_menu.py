@@ -14,7 +14,7 @@ def display_menu(menu, is_submenu=False):
             print(f"{len(menu) + 1}. Back")
         else:
             print(f"{len(menu) + 1}. Exit")
-        choice = input("Enter the number of your choice: ")
+        choice = input("Enter the number of your choice: ").strip()
         
         try:
             choice = int(choice)
