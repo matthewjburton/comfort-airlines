@@ -65,7 +65,7 @@ class Simulation:
         # Create Flight objects and store them in a list
         timetable = {}
         for _, row in dataframe.iterrows():
-            flight = Flight(row['flight_id'], row['flight_number'], row['aircraft_id'], row['departure_airport_id'], row['destination_airport_id'], row['angle_of_flight'], row['flight_duration_minutes'], row['local_departure_time'], row['local_arrival_time'], row['on_time_bin'], row['gate_departure'], row['gate_arrival'])
+            flight = Flight(row['flight_id'], row['flight_number'], row['aircraft_id'], row['departure_airport_id'], row['destination_airport_id'], row['angle_of_flight'], row['duration'], row['departure_time'], row['arrival_time'])
             timetable[row['flight_id']] = flight
 
         return timetable

@@ -6,14 +6,39 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton
 """
 from utilities.database import Database
+from utilities.flight_duration import calculate_flight_duration
+from simulation.aircraft_objects import aircrafts
+from simulation.airport_objects import airports
+from utilities.clock import get_flight_time
 
 class Timetable:
     def view_timetable():
-        # Query the database for the routes table
+        # Query the database for the flights table
         db = Database()
         query = 'SELECT * FROM flights'
-        dataframe = db.execute_query_to_dataframe(query)
+        flights = db.execute_query_to_dataframe(query)
 
-        # Print the time table
-        print(dataframe)
+        if not flights.empty:
+            Timetable.print_timetable_header()
+
+            for _, flight in flights.iterrows():
+                flight['duration'] = calculate_flight_duration(aircrafts[flight['aircraft_id']], airports[flight['departure_airport_id']], airports[flight['destination_airport_id']])
+                flight['arrival_time'] = flight['departure_time'] + flight['duration']
+                
+                Timetable.print_flight(flight)
+
+
+    def print_timetable_header():
+        headerDisplay = '{:<15} | {:<20} | {:<20} | {:<15} | {:<15} | {:<10}'.format('Flight Number', 'Departure Airport', 'Destination Airport', 'Departure Time', 'Arrival Time', 'Duration')
+        print(headerDisplay)
+
+    def print_flight(flight):
+        departure_time = get_flight_time(flight['departure_time'])
+        arrival_time = get_flight_time(flight['arrival_time'])
+        duration = get_flight_time(flight['duration'])
+
+        flightDisplay = '{:<15} | {:<20} | {:<20} | {:<15} | {:<15} | {:<10}'.format(flight['flight_number'], airports[flight['departure_airport_id']]._abbreviation, airports[flight['destination_airport_id']]._abbreviation, departure_time, arrival_time, duration)
+        print(flightDisplay)
+
+
         

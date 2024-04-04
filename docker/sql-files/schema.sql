@@ -61,50 +61,48 @@ CREATE TABLE IF NOT EXISTS flights (
     departure_airport_id INT,
     destination_airport_id INT,
     angle_of_flight FLOAT, -- angle from 0 to 360
-    flight_duration_minutes INT, -- time in minutes
-    local_departure_time INT,  -- time in UTC
-    local_arrival_time INT,  -- time in UTC
-    on_time_bin BINARY, -- 0 for on time, 1 for delayed
-    gate_departure INT,
-    gate_arrival INT,
+    duration INT, -- time in minutes
+    departure_time INT,  -- time in minutes
+    arrival_time INT,  -- time in minutes
     FOREIGN KEY (aircraft_id) REFERENCES aircraft(aircraft_id),
     FOREIGN KEY (departure_airport_id) REFERENCES airports(airport_id),
     FOREIGN KEY (destination_airport_id) REFERENCES airports(airport_id)
 );
 
-CREATE TABLE IF NOT EXISTS routes (
-    route_id INT AUTO_INCREMENT PRIMARY KEY,
-    starting_airport_id INT,
-    destination_airport_id INT,
-    FOREIGN KEY (starting_airport_id) REFERENCES airports(airport_id),
-    FOREIGN KEY (destination_airport_id) REFERENCES airports(airport_id)
-);
-
-CREATE TABLE IF NOT EXISTS flights_routes (
-    route_leg_id INT AUTO_INCREMENT PRIMARY KEY,
-    route_id INT,
-    flight_id INT,
-    FOREIGN KEY (route_id) REFERENCES routes(route_id),
-    FOREIGN KEY (flight_id) REFERENCES flights(flight_id)
-);
-
--- Set delimiter to define the trigger
 DELIMITER //
-
+DROP TRIGGER IF EXISTS set_total_gates;
 --  Trigger to calculate the total number of gates at each airport
-CREATE TRIGGER IF NOT EXISTS calculate_total_gates
+CREATE TRIGGER IF NOT EXISTS set_total_gates
 BEFORE INSERT ON airports
 FOR EACH ROW
 BEGIN
-    DECLARE gates INT;
-    
-    -- Calculate total gates based on the provided formula
-    SET gates = LEAST(ROUND(NEW.metro_population / 1000000), IF(NEW.is_hub, 11, 5));
-    
-    -- Set the calculated value to the total_gates column
-    SET NEW.total_gates = gates;
+    IF NEW.total_gates IS NULL THEN        
+        -- Calculate total gates based on the provided formula
+        SET @gates = LEAST(ROUND(NEW.metro_population / 1000000), IF(NEW.is_hub, 11, 5));
+        
+        -- Set the calculated value to the total_gates column
+        SET NEW.total_gates = @gates;
+    END IF;
 END;
 //
+DELIMITER ;
 
--- Reset the delimeter
+DELIMITER //
+DROP TRIGGER IF EXISTS set_flight_angle;
+-- Trigger to calculate the flight angle based on the departure and destination airports
+CREATE TRIGGER IF NOT EXISTS set_flight_angle
+BEFORE INSERT ON flights
+FOR EACH ROW
+BEGIN
+    IF NEW.angle_of_flight IS NULL THEN
+        SET @departure_lat = (SELECT latitude FROM airports WHERE airport_id = NEW.departure_airport_id);
+        SET @departure_lon = (SELECT longitude FROM airports WHERE airport_id = NEW.departure_airport_id);
+        SET @destination_lat = (SELECT latitude FROM airports WHERE airport_id = NEW.destination_airport_id);
+        SET @destination_lon = (SELECT longitude FROM airports WHERE airport_id = NEW.destination_airport_id);
+        SET @bearing_angle = DEGREES(ATAN2(SIN(RADIANS(@destination_lon - @departure_lon)) * COS(RADIANS(@destination_lat)), COS(RADIANS(@departure_lat)) * SIN(RADIANS(@destination_lat)) - SIN(RADIANS(@departure_lat)) * COS(RADIANS(@destination_lat)) * COS(RADIANS(@destination_lon - @departure_lon))));
+        
+        SET NEW.angle_of_flight = @bearing_angle;
+    END IF;
+END;
+//
 DELIMITER ;
