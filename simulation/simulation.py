@@ -24,15 +24,20 @@ class Simulation:
     def run_simulation():
         # Get instance of schedule singleton
         schedule = Schedule.get_instance()
+        schedule.clear_schedule()
 
         # Populate schedule with departure and arrival events
         schedule = Simulation.populate_schedule_from_timetable(schedule)
-
+        
         # Simulation loop: handle every event for each minute
         for minute in range(MINUTES_IN_A_DAY * NUMBER_OF_DAYS):
             currentEvents = schedule.get_events_for_minute(minute)
             for currentEvent in currentEvents:
-                print(f"{print_time(minute)}: {currentEvent.execute()}")    
+                try:
+                    print(f"{print_time(minute)}: {currentEvent.execute()}")
+                except Exception as e:
+                    print(e)
+                
 
     @staticmethod
     def populate_schedule_from_timetable(schedule):
@@ -60,7 +65,7 @@ class Simulation:
         # Create Flight objects and store them in a list
         timetable = {}
         for _, row in dataframe.iterrows():
-            flight = Flight(row['flight_id'], row['flight_number'], row['aircraft_id'], row['departure_airport_id'], row['destination_airport_id'], row['angle_of_flight'], row['flight_duration_minutes'], row['local_departure_time'], row['local_arrival_time'], row['on_time_bin'], row['gate_departure'], row['gate_arrival'])
+            flight = Flight(row['flight_id'], row['flight_number'], row['aircraft_id'], row['departure_airport_id'], row['destination_airport_id'], row['angle_of_flight'], row['duration'], row['departure_time'], row['arrival_time'])
             timetable[row['flight_id']] = flight
 
         return timetable
