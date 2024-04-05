@@ -29,7 +29,7 @@ class Timetable:
 
 
     def print_timetable_header():
-        headerDisplay = '{:<15}   {:<20}   {:<20}   {:<15}   {:<15}   {:<10}'.format('Flight Number', 'Departure Airport', 'Destination Airport', 'Departure Time', 'Arrival Time', 'Duration')
+        headerDisplay = '{:<15} {:<20} {:<20} {:<15} {:<15} {:<10}'.format('Flight Number', 'Departure Airport', 'Destination Airport', 'Departure Time', 'Arrival Time', 'Duration')
         print(headerDisplay)
 
     def print_flight(flight):
@@ -37,7 +37,7 @@ class Timetable:
         arrival_time = get_flight_time(flight['arrival_time'])
         duration = get_flight_time(flight['duration'])
 
-        flightDisplay = '{:<15} | {:<20} | {:<20} | {:<15} | {:<15} | {:<10}'.format(flight['flight_number'], airports[flight['departure_airport_id']]._abbreviation, airports[flight['destination_airport_id']]._abbreviation, departure_time, arrival_time, duration)
+        flightDisplay = '{:<15} {:<20} {:<20} {:<15} {:<15} {:<10}'.format(flight['flight_number'], airports[flight['departure_airport_id']]._abbreviation, airports[flight['destination_airport_id']]._abbreviation, departure_time, arrival_time, duration)
         print(flightDisplay)
 
 

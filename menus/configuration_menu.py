@@ -165,6 +165,6 @@ class ConfigurationMenu:
                 "Fuel": CostMenu.configure_fuel_cost,
                 "Takeoff": CostMenu.configure_takeoff_cost,
                 "Landing": CostMenu.configure_landing_cost,
-                "Aircraft": CostMenu.configure_aircraft_cost
+                "Leasing": CostMenu.configure_leasing_costs
             }
         display_menu(cost_options, is_submenu=True)
