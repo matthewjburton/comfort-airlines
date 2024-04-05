@@ -20,6 +20,7 @@ class Airport:
         self._availableGates = availableGates
         self._isHub = isHub
         self._inboundFlights = inboundFlights
+        self._startingAircraftList = {}
 
     @property
     def id(self):
@@ -77,6 +78,21 @@ class Airport:
     def inbound_flights(self):
         return self._inboundFlights
 
+    def add_aircraft_type(self, _aircraftType):
+        if _aircraftType in self._startingAircraftList:
+            self._startingAircraftList[_aircraftType] += 1
+        else:
+            self._startingAircraftList[_aircraftType] = 1
+
+    def remove_aircraft_type(self, _aircraftType):
+        if _aircraftType in self._startingAircraftList:
+            if self._startingAircraftList[_aircraftType] > 1:
+                self._startingAircraftList[_aircraftType] -= 1
+            else:
+                del self._startingAircraftList[_aircraftType]
+        else:
+            print("Aircraft not found. Ensure that you only remove starting aircraft types.")
+    
     def add_inbound_flight(self):
         if self._inboundFlights < self._availableGates:
             self._inboundFlights += 1

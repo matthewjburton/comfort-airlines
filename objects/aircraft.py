@@ -22,10 +22,15 @@ class Aircraft:
         self._leasingCost = leasingCost
         self._timeSinceLastMaintenance = 0
         self._requiresMaintenance = False
+        self._currentAirport = "aaa"
 
     @property
     def id(self):
         return self._id
+
+    @property
+    def currentAirport(self):
+        return self._currentAirport
 
     @property
     def tailNumber(self):
@@ -75,3 +80,7 @@ class Aircraft:
             self._requiresMaintenance = True
         else:
             self._requiresMaintenance = False
+
+    @currentAirport.setter
+    def currentAirport(self, abbreviation):
+        self._currentAirport=abbreviation
