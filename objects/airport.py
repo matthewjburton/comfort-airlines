@@ -77,6 +77,10 @@ class Airport:
     @property
     def inbound_flights(self):
         return self._inboundFlights
+    
+    @property
+    def starting_aircrafts(self):
+        return self._startingAircraftList
 
     def add_aircraft_type(self, _aircraftType):
         if _aircraftType in self._startingAircraftList:

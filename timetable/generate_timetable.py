@@ -3,7 +3,7 @@ Responsible for generating timetable(currently through RNG + a few other criteri
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
-__author__ = Jeremy Maas, Ryan Hirscher, Kevin Sampson
+__author__ = Ryan Hirscher
 """
 
 import random
@@ -11,6 +11,8 @@ import sys
 sys.path.append('/Users/ryanhirscher/comfort-airlines/comfort-airlines-1')
 
 #import utilities.great_circle as GC
+from utilities.great_circle import great_circle
+from utilities.flight_duration import calculate_total_flight_duration
 from simulation.airport_objects import airports
 from simulation.aircraft_objects import aircrafts
 
@@ -71,31 +73,51 @@ def place_aircrafts():
     for x in airports:
         print(x, ":", airports[x].abbreviation, " ", airports[x].available_gates, " ")
 
-'''
+
 def generate():
 #Code to generate time table
     #Initialize
-    for aircraft in aircrafts:
+    for i in aircrafts:
         TimeToHome = 0
         CurrentTime = 0
         TimeToNextLeg = 0 # Potential Time
-        CurrentAirport = aircrafts.aircraft.airport
+        CurrentAirport = aircrafts[i].currentAirport
         while (TimeToHome + CurrentTime  < 1200): #20 hours of flying
-            print(aircraft.airport + " => ")
+            print(aircrafts[i].currentAirport + " => ")
             ChosenAirport = choose_random_airport(CurrentAirport) # Choose a random acceptable airport to fly to
-            Home = nearest_home(CurrentAirport, aircraft[i].aircraftType)
-            TimeToHome = flight_duration(CurrentAirport, Home) #Time it takes to fly home
-            TimeToNextLeg += flight_duration(CurrentAirport, ChosenAirport)
+            Home = nearest_home(CurrentAirport, aircrafts[i].model)
+
+            #Get time to home and time to next leg and compare
+            TimeToHome = calculate_total_flight_duration(aircrafts[i], CurrentAirport, Home, True) #Time it takes to fly home
+            TimeToNextLeg += calculate_total_flight_duration(aircrafts[i], CurrentAirport, ChosenAirport, True)
             if (TimeToNextLeg + CurrentTime > 1200 or TimeToHome + TimeToNextLeg + CurrentTime > 1200):
                 #fly home if next leg takes too long, so if time to home and time to next leg exceeds time in day
-                CurrentTime += TimeToHome
-                #Remove entry from airport dictionary
-                Home.remove_aircraft_type(aircrafts[i].aircraftType)
+                #take off
+                for ab in airports:
+                    if (airports[ab].abbreviation == aircrafts[i].currentAirport):
+                        airports[ab].remove_aircraft_type(aircrafts[i].model)
+                        airports[ab].add_gate()
+                aircrafts[i].currentAirport = Home
+                CurrentTime += 1200 #End the day
+                #arrive
+                for ab in airports:
+                    if (airports[ab].abbreviation == Home):
+                        airports[ab].remove_aircraft_type(aircrafts[i].model)
+                        airports[ab].remove_gate()
                 
             else:
+                aircrafts[i].currentAirport = ChosenAirport
                 CurrentAirport = ChosenAirport
+                #arrive
+                for ab in airports:
+                    if (airports[ab].abbreviation == CurrentAirport):
+                        airports[ab].remove_gate()
                 CurrentTime += 90 # 1.5 hour buffer for delays and turn around
                 CurrentTime += TimeToNextLeg
+                #take off
+                for ab in airports:
+                    if (airports[ab].abbreviation == CurrentAirport):
+                        airports[ab].add_gate()
         print("Finished at " + CurrentAirport)
 
 
@@ -106,12 +128,14 @@ def nearest_home(currentAirport, aircraftType):
     ShortestDistance = 9999999
     # Iterate through all the airports and identify the shortest direct flight to an acceptable airport
     for i in airports:
-        CurDistance = GC.great_circle(currentAirport, airports.i)
-        if CurDistance > 150 and CurDistance < ShortestDistance:
-            for aircraft_type in airports[i]._startingAircrafts:
-                if aircraft_type == aircraftType:
+        CurDistance = great_circle(currentAirport, airports[i])
+        #Home must have a distance greater than 150 or itself
+        #Then continue for all airports which will yield the shortest distance home
+        if (CurDistance > 150 and CurDistance < ShortestDistance) or CurDistance  == 0:
+            for x in airports[i].starting_aircrafts:
+                if aircraftType == airports[i].starting_aircrafts[x]:
                     ShortestDistance = CurDistance
-                    ChosenHome = airports[i]
+                    ChosenHome = airports[i].abbreviation
     return ChosenHome
 
 
@@ -119,13 +143,10 @@ def nearest_home(currentAirport, aircraftType):
 #Helper Function
 def choose_random_airport(startAirport):
 
-    randomAirport = airports[random.randint(0,30)]
-    if (GC.great_circle(startAirport, randomAirport) <= 150 or randomAirport.available_gates - randomAirport.inboundFlights <= 1):
+    randomAirport = airports[random.randint(1,31)]
+    if (great_circle(startAirport, randomAirport) <= 150 or randomAirport.available_gates < 1):
         choose_random_airport(startAirport)
     return randomAirport
 
-place_aircrafts
-generate
-'''
-print("test")
 place_aircrafts()
+generate()
