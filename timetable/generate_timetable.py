@@ -3,7 +3,7 @@ Responsible for generating timetable(currently through RNG + a few other criteri
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
-__author__ = Ryan Hirscher
+__author__ = Ryan Hirscher and Jeremy Maas
 """
 
 import random
@@ -81,7 +81,9 @@ def generate():
         TimeToHome = 0
         CurrentTime = 0
         TimeToNextLeg = 0 # Potential Time
-        CurrentAirport = aircrafts[i].currentAirport
+        for ab in airports:
+            if (airports[ab].abbreviation == aircrafts[i].currentAirport):
+                CurrentAirport = airports[ab]
         while (TimeToHome + CurrentTime  < 1200): #20 hours of flying
             print(aircrafts[i].currentAirport + " => ")
             ChosenAirport = choose_random_airport(CurrentAirport) # Choose a random acceptable airport to fly to
@@ -106,19 +108,19 @@ def generate():
                         airports[ab].remove_gate()
                 
             else:
-                aircrafts[i].currentAirport = ChosenAirport
+                aircrafts[i] = ChosenAirport
                 CurrentAirport = ChosenAirport
                 #arrive
                 for ab in airports:
-                    if (airports[ab].abbreviation == CurrentAirport):
+                    if (airports[ab].abbreviation == CurrentAirport.abbreviation):
                         airports[ab].remove_gate()
                 CurrentTime += 90 # 1.5 hour buffer for delays and turn around
                 CurrentTime += TimeToNextLeg
                 #take off
                 for ab in airports:
-                    if (airports[ab].abbreviation == CurrentAirport):
+                    if (airports[ab].abbreviation == CurrentAirport.abbreviation):
                         airports[ab].add_gate()
-        print("Finished at " + CurrentAirport)
+        print("Finished at " + CurrentAirport.abbreviation)
 
 
 #Helper Function
@@ -135,8 +137,9 @@ def nearest_home(currentAirport, aircraftType):
             for x in airports[i].starting_aircrafts:
                 if aircraftType == airports[i].starting_aircrafts[x]:
                     ShortestDistance = CurDistance
-                    ChosenHome = airports[i].abbreviation
-    return ChosenHome
+                    ChosenHome = airports[i]
+                    return ChosenHome
+    return currentAirport #What to do if it cannot find a home?
 
 
 
