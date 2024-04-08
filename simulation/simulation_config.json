@@ -1,1 +1,1 @@
-{"startDate": 0, "duration": 7, "reportFrequency": "daily", "fuelCost": 6.19, "takeoffCost": 2000, "landingCost": 2000, "leasingCost": {"737-600": 245000, "737-800": 270000, "A200-100": 192000, "A220-300": 228000, " ": 1000}}
+{"startDate": 0, "duration": 7, "reportFrequency": "final", "fuelCost": 6.19, "takeoffCost": 2000, "landingCost": 2000, "leasingCost": {"737-600": 245000, "737-800": 270000, "A200-100": 192000, "A220-300": 228000, " ": 500.0}}

@@ -35,7 +35,7 @@ class ConfigurationMenu:
         config = ConfigurationMenu.read_config()
 
         # Configuration information for start date
-        print(f"\nConfigure Start Date\n====================\nSet the day that the simulation starts on\nCurrent start date: day {config.get('startDate', 'N/A')}\n")
+        print(f"\nConfigure Start Date\n====================\nSet the day that the simulation starts on\nCurrent start date: day {config.get('startDate', 'N/A'):,}\n")
         
         while True:
             try:
@@ -47,24 +47,27 @@ class ConfigurationMenu:
                     print('Input canceled.\n')
                     break
                 
+                # Remove commas from startDate
+                startDate = startDate.replace(',', '')
+
                 # Validate input
                 startDate = int(startDate)
-                if 0 <= startDate <= 365:
+                if startDate >= 0:
                     # Update the startDate in the config data
                     config['startDate'] = startDate
                     ConfigurationMenu.write_config(config)
                     break
                 else:
-                    print('Start date must be in the range of 0 to 365 days.\n')
+                    print('Start date must be greater than or equal to day zero.\n')
             except ValueError:
-                print("Start date must be a number.\n")
+                print("Start date must be an integer.\n")
 
     @staticmethod    
     def configure_duration():
         config = ConfigurationMenu.read_config()
 
         # Configuration information for duration
-        print(f"\nConfigure Duration\n==================\nSet the duration of the simulation in days\nCurrent duration: {config.get('duration', 'N/A')} days\n")
+        print(f"\nConfigure Duration\n==================\nSet the duration of the simulation in days\nCurrent duration: {config.get('duration', 'N/A'):,} {'day' if config.get('duration', 'N/A') == 1 else 'days'}\n")
 
         while True:
             try:
@@ -76,9 +79,12 @@ class ConfigurationMenu:
                     print('Input canceled.\n')
                     break
                 
+                # Remove commas from duration
+                duration = duration.replace(',', '')
+
                 # Validate input
                 duration = int(duration)
-                if 0 <= duration <= 730:
+                if duration >= 1:
                     # Update the duration in the config data
                     config['duration'] = duration
 
@@ -88,9 +94,9 @@ class ConfigurationMenu:
                     ConfigurationMenu.write_config(config)
                     break
                 else:
-                    print('Duration must be in the range of 0 to 730 days.\n')
+                    print('Duration must be greater than or equal to one day.\n')
             except ValueError:
-                print("Duration must be a number.\n")
+                print("Duration must be an integer.\n")
 
     @staticmethod    
     def configure_report_frequency():
@@ -99,9 +105,10 @@ class ConfigurationMenu:
         # Determine the report frequency options based on the duration of the simulation
         duration = config.get('duration', 0)
         options = ConfigurationMenu.get_report_frequency_options(duration)
+        formatted_options = ConfigurationMenu.format_options_for_print(options)
 
         # Configuration information for report frequency
-        print(f"\nConfigure Report Frequency\n==========================\nSet the frequency for generating statistic reports\nCurrent report frequency: {config.get('reportFrequency', 'N/A')}\nThe options are {options}\n")
+        print(f"\nConfigure Report Frequency\n==========================\nSet the frequency for generating statistic reports\nCurrent report frequency: {config.get('reportFrequency', 'N/A')}\nThe options are {formatted_options}\n")
 
         while True:
             try:
@@ -115,33 +122,43 @@ class ConfigurationMenu:
                 
                 # Validate input
                 reportFrequency = reportFrequency.strip().lower()  # Convert to lowercase and remove leading/trailing spaces
-                if reportFrequency in [option.strip().strip("'") for option in options.split(',')]:
+                if reportFrequency in [option for option in options]:
                     # Update the report frequency in the config data
                     config['reportFrequency'] = reportFrequency
                     ConfigurationMenu.write_config(config)
                     break
                 else:
-                    print(f'Report frequency must be one of the following options: {options}.\n')
+                    print(f'Report frequency must be one of the following options: {formatted_options}.\n')
             except ValueError:
                 print("Report frequency must be a string.\n")
 
     def get_report_frequency_options(duration):
-        options = ["'daily'"]
+        options = ["daily"]
 
         if duration >= 14:  # 2 weeks
-            options.append("'weekly'")
+            options.append("weekly")
         if duration >= 61:  # 2 months
-            options.append("'monthly'")
+            options.append("monthly")
         if duration >= 730:  # 2 years
-            options.append("'yearly'")
-        options.append("'final'")
+            options.append("yearly")
+        options.append("final")
+
+        return options
+    
+    def format_options_for_print(options):
+        # Add single quotes around each option
+        options = [f"'{option}'" for option in options]
 
         # If there are more than two options, add a comma after each option except for the last two
         if len(options) > 2:
             for i in range(len(options) - 2):
                 options[i] += ','
+        
         # Add 'or' before the last option
-        options[-2] += ', or'
+        if len(options) > 2:
+            options[-2] += ', or'
+        else: 
+            options[-2] += ' or'
         # Join the options with spaces
         options = ' '.join(options)
 

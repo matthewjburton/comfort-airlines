@@ -135,7 +135,31 @@ class CostMenu:
 
     @staticmethod
     def configure_leasing_costs():
-        # Get all distinct aircraft models and their current leasing cost
+        while True:
+            dataframe = CostMenu.retrieve_aircraft_models_and_costs()
+            CostMenu.display_aircraft_models_and_costs(dataframe)
+
+            # Store models and leasing costs in a dictionary
+            leasingCosts = {}
+            for _, aircraft in dataframe.iterrows():
+                leasingCosts[aircraft['model']] = aircraft['leasing_cost']
+
+            model = CostMenu.handle_model_input(leasingCosts)
+            
+            # Handle user quitting
+            if model == 'q':
+                break
+
+            # Update the leasingCosts in the config data
+            config = CostMenu.read_config()
+            config['leasingCost'] = leasingCosts
+            CostMenu.write_config(config)
+
+            CostMenu.handle_leasing_cost_input(model, leasingCosts, config)
+
+            CostMenu.update_leasing_costs_in_database(leasingCosts)
+
+        """# Get all distinct aircraft models and their current leasing cost
         db = Database()
         query = 'SELECT DISTINCT model, leasing_cost FROM aircraft'
         dataframe = db.execute_query_to_dataframe(query)
@@ -182,14 +206,15 @@ class CostMenu:
                     print(f"\nCurrent leasing cost for {model}: ${leasingCosts[model]:,} per month\n")
 
                     # Handle leasing cost input
-                    while True:
+                    configureAnotherAircraft = True
+                    while configureAnotherAircraft:
                         try:
                             cost = input("Enter the new leasing cost or 'q' to quit: $")
 
                             # Handle user canceling
                             if cost.lower() == 'q':
                                 print('Input canceled.\n')
-                                break
+                                configureAnotherAircraft = False
                             
                             # Validate input
                             if CostMenu.is_valid_dollar_value(cost):
@@ -197,19 +222,18 @@ class CostMenu:
                                 cost = cost.replace(',', '')
 
                                 cost = float(cost)
-                                if 0 <= cost:
+                                if cost >= 0:
                                     # Update the cost in the config data
                                     leasingCosts[model] = cost
                                     config['leasingCost'] = leasingCosts
                                     CostMenu.write_config(config)
-                                    break
+                                    configureAnotherAircraft = False
                                 else:
                                     print('Leasing cost must be a positive value.\n')
                             else:
                                 print('Leasing cost must be a valid dollar value.\n')
                         except ValueError:
                             print("Leasing cost must be a number.\n")
-                    break
                 else:
                     print(f"Model '{model}'' not found.\n")
             except ValueError:
@@ -221,8 +245,74 @@ class CostMenu:
             query += f"WHEN model = '{model}' THEN {cost} "
         query += "ELSE leasing_cost END"
 
-        db.execute_insert_update_delete_query(query)
+        db.execute_insert_update_delete_query(query)"""
 
+    @staticmethod
+    def retrieve_aircraft_models_and_costs():
+        db = Database()
+        query = 'SELECT DISTINCT model, leasing_cost FROM aircraft'
+        dataframe = db.execute_query_to_dataframe(query)
+        return dataframe
+    
+    @staticmethod
+    def display_aircraft_models_and_costs(dataframe):
+        print(f"\nCurrent leasing costs for each model per month:\n")
+        headerDisplay = '{:<10}   {:<20}'.format('Model', 'Leasing Cost (USD)')
+        print(headerDisplay)
+        for i, aircraft in dataframe.iterrows():
+            aircraftDisplay = '{:<10} | ${:<20,}'.format(aircraft['model'], aircraft['leasing_cost'])
+            print(aircraftDisplay)
+            if i == len(dataframe) - 1:
+                print('')
+
+    @staticmethod
+    def handle_model_input(leasingCosts):
+        while True:
+            try:
+                model = input("Enter an aircraft model or 'q' to quit: ")
+                if model.lower() == 'q':
+                    print('Input canceled.\n')
+                    return model
+                if model.upper() in leasingCosts.keys():
+                    return model
+                else:
+                    print(f"Model '{model}' not found.\n")
+            except ValueError:
+                print("Model must be a string.\n")
+
+    @staticmethod
+    def handle_leasing_cost_input(model, leasingCosts, config):
+        while True:
+            try:
+                cost = input(f"Enter the new leasing cost for {model} or 'q' to quit: $")
+                if cost.lower() == 'q':
+                    print('Input canceled.\n')
+                    break
+                if CostMenu.is_valid_dollar_value(cost):
+                    cost = float(cost.replace(',', ''))
+                    if cost >= 0:
+                        leasingCosts[model] = cost
+                        config['leasingCost'] = leasingCosts
+                        CostMenu.write_config(config)
+                        break
+                    else:
+                        print('Leasing cost must be a positive value.\n')
+                else:
+                    print('Leasing cost must be a valid dollar value.\n')
+            except ValueError:
+                print("Leasing cost must be a number.\n")
+
+    @staticmethod
+    def update_leasing_costs_in_database(leasingCosts):
+        db = Database()
+
+        query = "UPDATE aircraft SET leasing_cost = CASE "
+        for model, cost in leasingCosts.items():
+            query += f"WHEN model = '{model}' THEN {cost} "
+        query += "ELSE leasing_cost END"
+
+        db.execute_insert_update_delete_query(query)
+        
     def is_valid_dollar_value(input_str):
         # Regular expression to match dollar value
         pattern = r'^(?:\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?|\d+(?:\.\d{1,2})?)$'
