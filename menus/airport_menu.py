@@ -25,12 +25,11 @@ class AirportMenu:
                 AirportMenu.print_airport(airport)
 
     def print_airports_header():
-        headerDisplay = '{:<60} {:<15} {:<10} {:<10} {:<15} {:<8} {:<5}'.format('Airport Name', 'Abbreviation', 'Latitude', 'Longitude', 'Population', 'Gates', 'Hub')
-        headerDisplay += '\n'
+        headerDisplay = f"{'Airport Name':<60} {'Abbreviation':<15} {'Latitude':<10} {'Longitude':<10} {'Population':<15} {'Gates':<8} {'Hub':<5}\n"
         print(headerDisplay)
 
     def print_airport(airport):
-        airportDisplay = '{:<60} {:<15} {:<10} {:<10} {:<15,} {:<8} {:<5}'.format(airport['name'], airport['abbreviation'], airport['latitude'], airport['longitude'], airport['metro_population'], airport['total_gates'], airport['is_hub'])
+        airportDisplay = f"{airport['name']:<60} {airport['abbreviation']:<15} {airport['latitude']:<10} {airport['longitude']:<10} {airport['metro_population']:<15,} {airport['total_gates']:<8} {airport['is_hub']:<5}"
         print(airportDisplay)
 
     @staticmethod

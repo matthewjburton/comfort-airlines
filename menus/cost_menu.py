@@ -257,10 +257,11 @@ class CostMenu:
     @staticmethod
     def display_aircraft_models_and_costs(dataframe):
         print(f"\nCurrent leasing costs for each model per month:\n")
-        headerDisplay = '{:<10}   {:<20}'.format('Model', 'Leasing Cost (USD)')
+        headerDisplay = f"{'Model':<10} {'Leasing Cost':<20}\n"
+        headerDisplay += f"{'':<10} {'(USD per month)':<20}\n"
         print(headerDisplay)
         for i, aircraft in dataframe.iterrows():
-            aircraftDisplay = '{:<10} | ${:<20,}'.format(aircraft['model'], aircraft['leasing_cost'])
+            aircraftDisplay = f"{aircraft['model']:<10} | ${aircraft['leasing_cost']:<20,.2f}"
             print(aircraftDisplay)
             if i == len(dataframe) - 1:
                 print('')

@@ -26,13 +26,12 @@ class AircraftMenu:
                 AircraftMenu.print_aircraft(aircraft)
 
     def print_aircrafts_header():
-        headerDisplay = '{:<12} {:<15} {:<10} {:<15} {:<10} {:<15} {:<15} {:<16}'.format('Tail Number', 'Aircraft Name', 'Model', 'Maximum Speed', 'Capacity', 'Fuel Capacity', 'Cargo Volume', 'Leasing Cost')
-        unitsDisplay = '{:<12} {:<15} {:<10} {:<15} {:<10} {:<15} {:<15} {:<16}'.format('','','','(mph)','(people)','(gallons)','(cubic feet)','(USD per month)')
-        headerDisplay += '\n' + unitsDisplay + '\n'
+        headerDisplay = f"{'Tail Number':<12} {'Aircraft Name':<15} {'Model':<10} {'Maximum Speed':<15} {'Capacity':<10} {'Fuel Capacity':<15} {'Cargo Volume':<15} {'Leasing Cost':<16}\n"
+        headerDisplay += f"{'':<12} {'':<15} {'':<10} {'(mph)':<15} {'(people)':<10} {'(gallons)':<15} {'(cubic feet)':<15} {'(USD per month)':<16}\n"
         print(headerDisplay)
 
     def print_aircraft(aircraft):
-        aircraftDisplay = '{:<12} {:<15} {:<10} {:<15,} {:<10,} {:<15,} {:<15,} ${:<16,}'.format(aircraft['tail_number'], aircraft['name'], aircraft['model'], aircraft['maximum_speed'], aircraft['maximum_capacity'], aircraft['maximum_fuel'], aircraft['cargo_volume'], aircraft['leasing_cost'])
+        aircraftDisplay = f"{aircraft['tail_number']:<12} {aircraft['name']:<15} {aircraft['model']:<10} {aircraft['maximum_speed']:<15,} {aircraft['maximum_capacity']:<10,} {aircraft['maximum_fuel']:<15,} {aircraft['cargo_volume']:<15,} ${aircraft['leasing_cost']:<16,}"
         print(aircraftDisplay)
 
     @staticmethod
