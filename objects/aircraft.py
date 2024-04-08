@@ -23,6 +23,7 @@ class Aircraft:
         self._timeSinceLastMaintenance = 0
         self._requiresMaintenance = False
         self._currentAirport = "aaa"
+        self._hasHubbed = False
 
     @property
     def id(self):
@@ -35,6 +36,10 @@ class Aircraft:
     @property
     def tailNumber(self):
         return self._tailNumber
+    
+    @property
+    def hasHubbed(self):
+        return self._hasHubbed
 
     @property
     def name(self):
@@ -84,3 +89,7 @@ class Aircraft:
     @currentAirport.setter
     def currentAirport(self, abbreviation):
         self._currentAirport=abbreviation
+    
+    @hasHubbed.setter
+    def hasHubbed(self, value):
+        self._hasHubbed=value

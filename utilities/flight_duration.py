@@ -39,7 +39,7 @@ def calculate_flight_duration(aircraft, departureAirport, destinationAirport):
     return flightDurationInMinutes
 
 def calculate_total_flight_duration(aircraft, departureAirport, destinationAirport, refueling = False):
-    takeOffTime = take_off_time()
+    takeOffTime = 0#take_off_time()
     flightDuration = calculate_flight_duration(aircraft, departureAirport, destinationAirport)
     turnAroundTime = turn_around_time(refueling)
 
