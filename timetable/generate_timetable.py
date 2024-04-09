@@ -105,10 +105,11 @@ def generate():
             TimeToHome = calculate_total_flight_duration(aircrafts[i], ChosenAirport, Home, True) #Time it takes to fly home
             TimeToNextLeg = calculate_total_flight_duration(aircrafts[i], CurrentAirport, ChosenAirport, True)
             TimeToNextHome = calculate_total_flight_duration(aircrafts[i], ChosenAirport, NextHome, True)
-            if TimeToNextHome + TimeToNextLeg + CurrentTime > 1200:
-                #fly home if next leg and next home time exceeds current time
+            if TimeToNextHome + TimeToNextLeg + CurrentTime > 1200 or TimeToNextLeg + CurrentTime > 1200:
+                #fly home if next leg and next home time exceeds current time or if the time to the next leg + current time exceeds 1200
                 #take off
-                if CurrentAirport == Home:
+                print("CHECKING: ", CurrentAirport.abbreviation, Home.abbreviation)
+                if CurrentAirport.abbreviation == Home.abbreviation: #Is it actually flying to home or can it stay
                     Staying = True
                 for ab in airports:
                     if airports[ab].abbreviation == aircrafts[i].currentAirport:
@@ -122,14 +123,18 @@ def generate():
                 aircrafts[i].currentAirport = CurrentAirport.abbreviation
                 #arrive
                 for ab in airports:
-                    if airports[ab].abbreviation == aircrafts[i].abbreviation:
+                    if airports[ab].abbreviation == aircrafts[i].currentAirport:
                         airports[ab].remove_aircraft_type(aircrafts[i].model)
                         if not Staying:
                             airports[ab].remove_gate()
                         if airports[ab].is_hub:
                             aircrafts[i].hasHubbed = True
                 
+                print("final leg count: ", LegNumber)
+                
             else: #take off to next leg
+                #update timeToHome
+                TimeToHome = TimeToNextHome
                 for ab in airports:
                     if airports[ab].abbreviation == CurrentAirport.abbreviation:
                         airports[ab].add_gate()
@@ -165,7 +170,7 @@ def nearest_home(currentAirport, aircraftType):
         if CurDistance == 0:
             if aircraftType in airports[i].starting_aircrafts:
                 return currentAirport
-        elif CurDistance > 150 and CurDistance < ShortestDistance and i != 31:
+        elif CurDistance > 150 and CurDistance < ShortestDistance and i != 31 and airports[i].available_gates > 0:
             if aircraftType in airports[i].starting_aircrafts:
                 #print("Found a match when looking for a home: ", aircraftType, " and ", airports[i].starting_aircrafts, " at ", airports[i].abbreviation)
                 ShortestDistance = CurDistance
@@ -182,7 +187,7 @@ def choose_random_airport(startAirport, HubLeg, CountToHub, aircraft):
         HubNum = random.choice(Hubs)
         return airports[HubNum]
     randomAirport = airports[random.randint(1,30)]
-    while randomAirport == startAirport or randomAirport.is_hub or randomAirport.available_gates == 0 or aircraft.isInHistory(randomAirport):
+    while randomAirport.abbreviation == startAirport.abbreviation or randomAirport.is_hub or randomAirport.available_gates == 0 or aircraft.isInHistory(randomAirport):
         randomAirport = airports[random.randint(1,30)]
     if great_circle(startAirport, randomAirport) <= 150 or randomAirport.available_gates == 0:
         choose_random_airport(startAirport, HubLeg, CountToHub, aircraft)
