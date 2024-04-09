@@ -52,6 +52,7 @@ class AirportMenu:
         # Initialize the Database object
         db = Database()
 
+        # Handle and validate user input
         name = AirportMenu.get_valid_name()
         if name == 'quit': return
         abbreviation = AirportMenu.get_valid_abbreviation()
@@ -66,8 +67,13 @@ class AirportMenu:
         if metroPopulation == 'quit': return
         isHub = AirportMenu.get_valid_is_hub()
         if isHub == 'quit': return
-        totalGates = AirportMenu.get_valid_total_gates(metroPopulation, isHub)
-        if totalGates == 'quit': return
+
+        totalGates = 0
+        if metroPopulation < 1000000: # Prevent airports with zero gates, and skip user input if there is no decision to be made
+            totalGates = 1
+        else:
+            totalGates = AirportMenu.get_valid_total_gates(metroPopulation, isHub)
+            if totalGates == 'quit': return
 
         # SQL query to insert data into the airports table
         sql = f"INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, total_gates, is_hub) VALUES ('{name}', '{abbreviation}', {latitude}, {longitude}, {timezoneOffset}, {metroPopulation}, {totalGates}, {isHub})"
@@ -124,14 +130,25 @@ class AirportMenu:
             db.disconnect()
 
     def get_valid_name():
+        db = Database()
+        query = 'SELECT * FROM airports'
+        airports = db.execute_query_to_dataframe(query)
+    
         while True:
             try:
                 name = input("Enter airport name or 'q' to quit: ")
 
+                # Handle user canceling input
                 if name.lower() == 'q':
                     return 'quit'
                 
                 name = str(name)
+
+                # Check if the name already exists in the 'name' column of the DataFrame
+                if name in airports['name'].values:
+                    print("Airport name already exists. Please enter a different name.")
+                    continue
+
                 if len(name) <= 255:
                     return name
                 else:
@@ -140,15 +157,25 @@ class AirportMenu:
                 print("Airport name must be a string.")
 
     def get_valid_abbreviation():
+        db = Database()
+        query = 'SELECT * FROM airports'
+        airports = db.execute_query_to_dataframe(query)
+    
         while True:
             try:
                 abbreviation = input("Enter airport abbreviation or 'q' to quit: ")
 
+                # Handle user canceling input
                 if abbreviation.lower() == 'q':
                     return 'quit'
                 
                 # Remove leading/trailing whitespace and convert to uppercase
                 abbreviation = abbreviation.strip().upper()
+
+                # Check if the name already exists in the 'abbreviation' column of the DataFrame
+                if abbreviation in airports['abbreviation'].values:
+                    print("Airport abbreviation already exists. Please enter a different abbreviation.")
+                    continue
                 
                 # Check if the abbreviation contains only letters and has a length of 3
                 if re.match(r'^[A-Z]{3}$', abbreviation):
@@ -163,6 +190,7 @@ class AirportMenu:
             try:
                 latitude = input("Enter latitude or 'q' to quit: ")
 
+                # Handle user canceling input
                 if latitude.lower() == 'q':
                     return 'quit'
                 
@@ -179,6 +207,7 @@ class AirportMenu:
             try:
                 longitude = input("Enter longitude or 'q' to quit: ")
 
+                # Handle user canceling input
                 if longitude.lower() == 'q':
                     return 'quit'
                 
@@ -195,6 +224,7 @@ class AirportMenu:
             try:
                 offset = input("Enter timezone offset from UTC or 'q' to quit: ")
 
+                # Handle user canceling input
                 if offset.lower() == 'q':
                     return 'quit'
                 
@@ -211,6 +241,7 @@ class AirportMenu:
             try:
                 population = input("Enter metro population or 'q' to quit: ")
 
+                # Handle user canceling input
                 if population.lower() == 'q':
                     return 'quit'
                 
@@ -228,6 +259,7 @@ class AirportMenu:
             try:
                 isHub = input("Is this airport a hub? 'yes' or 'no' or 'q' to quit: ")
 
+                # Handle user canceling input
                 if isHub.lower() == 'q':
                     return 'quit'
                 
@@ -248,6 +280,7 @@ class AirportMenu:
             try:
                 totalGates = input("Enter total number of gates or 'q' to quit: ")
 
+                # Handle user canceling input
                 if totalGates.lower() == 'q':
                     return 'quit'
                 
