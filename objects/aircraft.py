@@ -24,6 +24,7 @@ class Aircraft:
         self._requiresMaintenance = False
         self._currentAirport = "aaa"
         self._hasHubbed = False
+        self._history = []
 
     @property
     def id(self):
@@ -32,6 +33,10 @@ class Aircraft:
     @property
     def currentAirport(self):
         return self._currentAirport
+    
+    @property
+    def history(self):
+        return self._history
 
     @property
     def tailNumber(self):
@@ -76,6 +81,18 @@ class Aircraft:
     @property
     def timeSinceLastMaintenance(self):
         return self._timeSinceLastMaintenance
+    
+    def isInHistory(self, abbreviation):
+        if abbreviation in self._history:
+            return True
+        else:
+            return False
+    
+    def addHistory(self, abbreviation):
+        if abbreviation not in self._history:
+            self._history.append(abbreviation)
+        else:
+            print("Airport is already in the flight path's history!")
     
     @timeSinceLastMaintenance.setter
     def timeSinceLastMaintenance(self, durationOfLastFlight):
