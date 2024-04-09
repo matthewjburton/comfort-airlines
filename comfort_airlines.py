@@ -25,7 +25,7 @@ menu_options = {
         "Analyze": SimulationMenu.analyze_simulation
     },
     "Airports": {
-        "View": AirportMenu.view_airport,
+        "View": AirportMenu.view_airports,
         "Edit": AirportMenu.edit_airport
     },
     "Aircraft": {
