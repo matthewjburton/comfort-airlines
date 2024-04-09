@@ -22,7 +22,7 @@ class Aircraft:
         self._leasingCost = leasingCost
         self._timeSinceLastMaintenance = 0
         self._requiresMaintenance = False
-        self._currentAirport = "aaa"
+        self._currentAirport = None
         self._hasHubbed = False
 
     @property
