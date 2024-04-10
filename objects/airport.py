@@ -102,14 +102,14 @@ class Airport:
 
     def is_gate_available(self, chosenArrivalTime, chosenDepartureTime):
         # Iterate through the timeline and get a count of how many gates are available, return true if there is at least one gate available
-        excludeGateCount = 1
+        excludeGateCount = 0
         for i in range(1,self._gatei):
             # If the query time window overlaps with a reserved time, exclude 1 gate
             startReserved, endReserved = self._reservedTimeline[i]
-            if (chosenArrivalTime > startReserved and chosenArrivalTime < endReserved) or (chosenDepartureTime < endReserved and chosenDepartureTime > startReserved):
+            if (chosenArrivalTime >= startReserved and chosenArrivalTime <= endReserved) or (chosenDepartureTime <= endReserved and chosenDepartureTime >= startReserved):
                 excludeGateCount += 1
         #If there is an available gate during the chosen time window, we can land
-        if excludeGateCount - self._totalGates > 0:
+        if self._totalGates - excludeGateCount > 0:
             return True
         else:
             return False

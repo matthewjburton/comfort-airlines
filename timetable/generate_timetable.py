@@ -26,7 +26,6 @@ def place_aircrafts():
     for ab in airports:
         if (airports[ab].abbreviation == "EWR"):
             airports[ab].add_aircraft_type(aircrafts[1].model)
-            #airports[ab].remove_gate()
             airports[ab].reserve_gate(0,0)
             aircrafts[1].addHistory(airports[ab])
         aircrafts[1].currentAirport = "EWR"
@@ -35,7 +34,6 @@ def place_aircrafts():
     for ab in airports:
         if (airports[ab].abbreviation == "LAX"):
             airports[ab].add_aircraft_type(aircrafts[2].model)
-            #airports[ab].remove_gate()
             airports[ab].reserve_gate(0,0)
             aircrafts[2].addHistory(airports[ab])
         aircrafts[2].currentAirport = "LAX"
@@ -44,7 +42,6 @@ def place_aircrafts():
     for ab in airports:
         if (airports[ab].abbreviation == "DFW"):
             airports[ab].add_aircraft_type(aircrafts[3].model)
-            #airports[ab].remove_gate()
             airports[ab].reserve_gate(0,0)
             aircrafts[3].addHistory(airports[ab])
         aircrafts[3].currentAirport = "DFW"
@@ -53,7 +50,6 @@ def place_aircrafts():
     for ab in airports:
         if (airports[ab].abbreviation == "MDW"):
             airports[ab].add_aircraft_type(aircrafts[4].model)
-            #airports[ab].remove_gate()
             airports[ab].reserve_gate(0,0)
             aircrafts[4].addHistory(airports[ab])
         aircrafts[4].currentAirport = "MDW"
@@ -66,20 +62,19 @@ def place_aircrafts():
         # Abbreviations in aircrafts are initialized to aaa.
         # Generate a random starting airprot until conditions are met
         while aircrafts[i].currentAirport == "aaa":
-            ChoiceAirport = airports[random.randint(1,30)]
-            if ChoiceAirport.is_hub and ChoiceAirport.available_gates >= 4:
+            ChoiceAirport = airports[random.randint(1,30)] #randomAirport.is_gate_available(arrivalTimeAtNew, departureTimeAtNew)
+            if ChoiceAirport.is_hub and ChoiceAirport.is_gate_available(0,0):
                 # Where airports abbreviation is the choiceAirport add to dictionary of airport
                 for ab in airports:
                     if (airports[ab].abbreviation == ChoiceAirport.abbreviation):
                         airports[ab].add_aircraft_type(aircrafts[i].model)
-                        #airports[ab].remove_gate()
                         airports[ab].reserve_gate(0,0)
                         aircrafts[i].addHistory(airports[ab])
                         #print("is_hub: ", airports[ab].is_hub)
                         #print("Before removing hub gate at ", airports[ab].abbreviation, " gates before: ", airports[ab].available_gates)
                         #print("After removing hub gate at ", airports[ab].abbreviation, " gates after: ", airports[ab].available_gates)
                 aircrafts[i].currentAirport = ChoiceAirport.abbreviation
-            elif not ChoiceAirport.is_hub and ChoiceAirport.available_gates >= 1:
+            elif not ChoiceAirport.is_hub and ChoiceAirport.is_gate_available(0,0):
                 for ab in airports:
                     if (airports[ab].abbreviation == ChoiceAirport.abbreviation):
                         airports[ab].add_aircraft_type(aircrafts[i].model)
@@ -209,7 +204,7 @@ def choose_random_airport(startAirport, HubLeg, CountToHub, aircraft, CurrentTim
     randomAirport = airports[random.randint(1,30)]
     arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, randomAirport, True) + CurrentTime #Time it arrives at new airport
     departureTimeAtNew = arrivalTimeAtNew + turn_around_time(True) + WAITBUFFER #Time it leaves from new airport
-    while (randomAirport.abbreviation == startAirport.abbreviation or randomAirport.is_hub or randomAirport.available_gates == 0 or aircraft.isInHistory(randomAirport.abbreviation) or great_circle(startAirport, randomAirport) <= 150) and not randomAirport.is_gate_available(arrivalTimeAtNew, departureTimeAtNew):
+    while (randomAirport.abbreviation == startAirport.abbreviation or randomAirport.is_hub or aircraft.isInHistory(randomAirport.abbreviation) or great_circle(startAirport, randomAirport) <= 150) and not randomAirport.is_gate_available(arrivalTimeAtNew, departureTimeAtNew):
         randomAirport = airports[random.randint(1,30)]
         arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, randomAirport, True) + CurrentTime #Time it arrives at new airport
         departureTimeAtNew = arrivalTimeAtNew +  turn_around_time(True) + WAITBUFFER #Time it leaves from new airport
