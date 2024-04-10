@@ -18,7 +18,7 @@ class Report:
     @staticmethod
     def handle_report(config, minutes):
         try:
-            if minutes <= 0:
+            if minutes < 0:
                 raise ValueError("Minutes must be a positive value")
             if Report.should_generate_report(config, minutes):
                 Report.generate_report()
