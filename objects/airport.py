@@ -21,6 +21,8 @@ class Airport:
         self._isHub = isHub
         self._inboundFlights = inboundFlights
         self._startingAircraftList = {}
+        self._reservedTimeline = {}
+        self._gatei = 1
 
     @property
     def id(self):
@@ -81,6 +83,37 @@ class Airport:
     @property
     def starting_aircrafts(self):
         return self._startingAircraftList
+    
+    @property
+    def gatei(self):
+        return self._gatei
+    
+    #while not airport[i].is_gate_available(arrival to departure):
+    #   choose new airport
+    #reserve_gate() 
+    def reserve_gate(self, startTime, endTime):
+        self._reservedTimeline[self._gatei] = (startTime, endTime)
+        print( self._reservedTimeline)
+        self._gatei += 1
+    
+    @gatei.setter
+    def gatei(self, gateNum):
+        self.gatei = gateNum
+
+    def is_gate_available(self, chosenArrivalTime, chosenDepartureTime):
+        # Iterate through the timeline and get a count of how many gates are available, return true if there is at least one gate available
+        excludeGateCount = 1
+        for i in range(1,self._gatei):
+            # If the query time window overlaps with a reserved time, exclude 1 gate
+            startReserved, endReserved = self._reservedTimeline[i]
+            if (chosenArrivalTime > startReserved and chosenArrivalTime < endReserved) or (chosenDepartureTime < endReserved and chosenDepartureTime > startReserved):
+                excludeGateCount += 1
+        #If there is an available gate during the chosen time window, we can land
+        if excludeGateCount - self._totalGates > 0:
+            return True
+        else:
+            return False
+
 
     def add_aircraft_type(self, _aircraftType):
         if _aircraftType in self._startingAircraftList:
