@@ -142,8 +142,19 @@ class AircraftMenu:
         db = Database()
 
         # User input for aircraft to be remove based on aircraft_id
-        aircraftID = input("Enter aircraft ID number to remove: ")
+        tailNum = input("Enter aircraft tail number to remove: ")
 
+        sql_check_aircraft = f"SELECT aircraft_id FROM aircraft WHERE tail_number = {tailNum}"
+        aircraftID_df = db.execute_query_to_dataframe(sql_check_aircraft)
+
+        # Check if the aircraft exists in the database
+        if aircraftID_df.empty:
+            print("Aircraft not found.")
+            return
+        
+        # Extract the aircraft ID from the DataFrame
+        aircraftID = aircraftID_df.iloc[0]['aircraft_id']
+        
         # Check if the aircraft is associated with a flight before removing it
         try:
             sql_check_flights = f"SELECT * FROM flights WHERE aircraft_id = {aircraftID}"
