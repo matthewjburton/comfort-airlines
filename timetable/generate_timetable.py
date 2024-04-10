@@ -62,6 +62,7 @@ def place_aircrafts():
     i = 5
     #Place the rest of the aircrafts at airports where a hub is filled up to 7 and the rest are placed randomly up to 4
     for i in aircrafts:
+        #print("PLACING AIRCRAFT ", i)
         # Abbreviations in aircrafts are initialized to aaa.
         # Generate a random starting airprot until conditions are met
         while aircrafts[i].currentAirport == "aaa":
@@ -206,7 +207,7 @@ def choose_random_airport(startAirport, HubLeg, CountToHub, aircraft, CurrentTim
     randomAirport = airports[random.randint(1,30)]
     arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, randomAirport, True) + CurrentTime #Time it arrives at new airport
     departureTimeAtNew = arrivalTimeAtNew + turn_around_time(True) + WAITBUFFER #Time it leaves from new airport
-    while randomAirport.abbreviation == startAirport.abbreviation or randomAirport.is_hub or randomAirport.available_gates == 0 or aircraft.isInHistory(randomAirport.abbreviation) or great_circle(startAirport, randomAirport) <= 150 or not randomAirport.is_gate_available(arrivalTimeAtNew, departureTimeAtNew):
+    while (randomAirport.abbreviation == startAirport.abbreviation or randomAirport.is_hub or randomAirport.available_gates == 0 or aircraft.isInHistory(randomAirport.abbreviation) or great_circle(startAirport, randomAirport) <= 150) and not randomAirport.is_gate_available(arrivalTimeAtNew, departureTimeAtNew):
         randomAirport = airports[random.randint(1,30)]
         arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, randomAirport, True) + CurrentTime #Time it arrives at new airport
         departureTimeAtNew = arrivalTimeAtNew +  turn_around_time(True) + WAITBUFFER #Time it leaves from new airport

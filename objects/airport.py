@@ -93,7 +93,7 @@ class Airport:
     #reserve_gate() 
     def reserve_gate(self, startTime, endTime):
         self._reservedTimeline[self._gatei] = (startTime, endTime)
-        print( self._reservedTimeline)
+        #print( self._reservedTimeline)
         self._gatei += 1
     
     @gatei.setter
