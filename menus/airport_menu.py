@@ -55,7 +55,7 @@ class AirportMenu:
         # Handle and validate user input
         name = AirportMenu.get_valid_name()
         if name == 'quit': return
-        abbreviation = AirportMenu.get_valid_abbreviation()
+        abbreviation = AirportMenu.get_valid_abbreviation(False)
         if abbreviation == 'quit': return
         latitude = AirportMenu.get_valid_latitude()
         if latitude == 'quit': return
@@ -76,11 +76,12 @@ class AirportMenu:
             if totalGates == 'quit': return
 
         # SQL query to insert data into the airports table
-        sql = f"INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, total_gates, is_hub) VALUES ('{name}', '{abbreviation}', {latitude}, {longitude}, {timezoneOffset}, {metroPopulation}, {totalGates}, {isHub})"
+        sql = "INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, total_gates, is_hub) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (name, abbreviation, latitude, longitude, timezoneOffset, metroPopulation, totalGates, isHub)
 
         try:
-            # Execute the insert query
-            db.execute_insert_update_delete_query(sql)
+            # Execute the insert query with placeholders
+            db.execute_insert_update_delete_query(sql, values)
             print("Airport added successfully!")
         except Exception as e:
             print(f"Error adding airport: {e}")
@@ -95,7 +96,7 @@ class AirportMenu:
         AirportMenu.view_airports()
         print('')
 
-        abbreviation = AirportMenu.get_valid_abbreviation()
+        abbreviation = AirportMenu.get_valid_abbreviation(True)
         if abbreviation == 'quit':
             return
 
@@ -156,7 +157,7 @@ class AirportMenu:
             except ValueError:
                 print("Airport name must be a string.")
 
-    def get_valid_abbreviation():
+    def get_valid_abbreviation(removingAirport):
         db = Database()
         query = 'SELECT * FROM airports'
         airports = db.execute_query_to_dataframe(query)
@@ -172,10 +173,17 @@ class AirportMenu:
                 # Remove leading/trailing whitespace and convert to uppercase
                 abbreviation = abbreviation.strip().upper()
 
-                # Check if the name already exists in the 'abbreviation' column of the DataFrame
-                if abbreviation in airports['abbreviation'].values:
-                    print("Airport abbreviation already exists. Please enter a different abbreviation.")
-                    continue
+                
+                if removingAirport:
+                    # Check if the name does not exist in the 'abbreviation' column of the DataFrame
+                    if abbreviation not in airports['abbreviation'].values:
+                        print("Airport abbreviation does not exist. Please enter a different abbreviation.")
+                        continue
+                else:
+                    # Check if the name already exists in the 'abbreviation' column of the DataFrame
+                    if abbreviation in airports['abbreviation'].values:
+                        print("Airport abbreviation already exists. Please enter a different abbreviation.")
+                        continue
                 
                 # Check if the abbreviation contains only letters and has a length of 3
                 if re.match(r'^[A-Z]{3}$', abbreviation):
@@ -275,6 +283,7 @@ class AirportMenu:
 
     def get_valid_total_gates(metroPopulation, isHub):
         maximumGates = min(int(metroPopulation / 1000000), 11 if isHub else 5)
+        print(f"The valid range of gates for the new airport is 1 to {maximumGates}")
 
         while True:
             try:
