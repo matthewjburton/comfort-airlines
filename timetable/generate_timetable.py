@@ -153,10 +153,12 @@ def generate():
                     if airports[ab].abbreviation == CurrentAirport.abbreviation:
                         airports[ab].reserve_gate(CurrentTime + TimeToNextLeg, CurrentTime + TimeToNextLeg + turn_around_time(True) + WAITBUFFER)
                         #airports[ab].add_gate()
-                    
+
+                aircrafts[i].currentAirport = ChosenAirport.abbreviation     
+                CurrentAirport = ChosenAirport               
                 aircrafts[i].addHistory(CurrentAirport.abbreviation)
-                aircrafts[i].currentAirport = ChosenAirport.abbreviation
-                CurrentAirport = ChosenAirport
+ 
+
                 LegNumber+=1
                 CurrentTime += turn_around_time(True) + WAITBUFFER
                 CurrentTime += TimeToNextLeg
