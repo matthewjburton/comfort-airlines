@@ -53,11 +53,25 @@ class AircraftMenu:
         db = Database()
 
         while True:
-            try:
-                # Get input from the user
-                tailNumber = input("Enter tail number: ")
-                if len(tailNumber) > 20:
-                    raise ValueError("Tail number exceeds maximum length (20 characters)")
+            try:     
+                while True:
+                    try:
+                        # Get input from the user
+                        tailNumber = input("Enter tail number: ")
+                    
+                        sql_check_aircraft = f"SELECT * FROM aircraft WHERE tail_number = {tailNumber}"
+                        result = db.execute_query_to_dataframe(sql_check_aircraft)
+                    
+                        if len(tailNumber) > 20:
+                            raise ValueError("Tail number exceeds maximum length (20 characters)")
+                        # If tail number is not already present not associated we remove it.
+                        elif not result.empty:
+                            print("Cannot add aircraft. Tail numbers must be unique.")
+                        # If associated print an error and return.
+                        else: 
+                            break
+                    except ValueError:
+                        print("Tail number must be less than or equal to 20 characters")
 
                 while True:
                     name = input("Enter name: ")
