@@ -7,7 +7,7 @@ __author__ = Jeremy Maas
 """
 class Airport:
     def __init__(self, id, name, abbreviation,
-    latitude, longitude, timezoneOffset, metroPopulation, totalGates, availableGates, isHub, inboundFlights):
+    latitude, longitude, timezoneOffset, metroPopulation, totalGates, availableGates, isHub):
 
         self._id = id
         self._name = name
@@ -19,8 +19,11 @@ class Airport:
         self._totalGates = totalGates
         self._availableGates = availableGates
         self._isHub = isHub
-        self._inboundFlights = inboundFlights
+        self._inboundFlights = {}
         self._startingAircraftList = {}
+        self._currentAircraftList = []
+        self._lastTakeoff = -1
+        self._lastLanding = -1
 
     @property
     def id(self):
@@ -97,14 +100,28 @@ class Airport:
         else:
             print("Aircraft not found. Ensure that you only remove starting aircraft types.")
     
-    def add_inbound_flight(self):
-        if self._inboundFlights < self._availableGates:
-            self._inboundFlights += 1
+    def add_inbound_flight(self, aircraftName, arrivalTime):
+        if len(self._inboundFlights) < self._availableGates:
+            self._inboundFlights.update({arrivalTime: aircraftName})
         else:
             raise ValueError("Inbound flights cannot exceed number of gates available.")
 
-    def remove_inbound_flight(self):
-        if self._inboundFlights > 0:
-            self._inboundFlights -= 1
+    def remove_inbound_flight(self, aircraftName, arrivalTime):
+        if len(self._inboundFlights) > 0:
+            self._inboundFlights.pop(arrivalTime)
         else:
             raise ValueError("Cannot remove an inbound flight from an airport with no inbound flights.")
+        
+    def add_aircraft(self, _aircraft):
+        if _aircraft not in self._currentAircraftList:
+            self._currentAircraftList.append(_aircraft)
+        else:
+            raise ValueError("Aircraft already in airport. Can't be added")
+
+    def remove_aircraft(self, _aircraft):
+        if _aircraft in self._currentAircraftList:
+            self._currentAircraftList.remove(_aircraft)
+        else:
+            raise ValueError("Aircraft not in airport, cannot be removed")
+        
+        
