@@ -5,7 +5,7 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = McHale Trotter and Matt Burton
 """
-from utilities.database import Database
+import re
 from utilities.display_menu import display_menu
 from utilities.database import Database
 
@@ -53,86 +53,43 @@ class AircraftMenu:
         # Initialize the Database object
         db = Database()
 
-        while True:
-            try:
-                # Get input from the user
-                tailNumber = input("Enter tail number: ")
-                if len(tailNumber) > 20:
-                    raise ValueError("Tail number exceeds maximum length (20 characters)")
+        tailNumber = AircraftMenu.get_valid_tail_number()
+        if tailNumber == 'quit': return
 
-                while True:
-                    name = input("Enter name: ")
-                    if len(name) > 255:
-                        print("Name exceeds maximum length (255 characters)")
-                    else:
-                        break
+        name = AircraftMenu.get_valid_name_or_model("name")
+        if name == 'quit': return
 
-                while True:
-                    model = input("Enter model: ")
-                    if len(model) > 255:
-                        print("Model exceeds maximum length (255 characters)")
-                    else:
-                        break
+        model = AircraftMenu.get_valid_name_or_model("model")
+        if model == 'quit': return
 
-                while True:
-                    try:
-                        maximumSpeed = int(input("Enter maximum speed (miles per hour): "))
-                        if maximumSpeed < 0:
-                            raise ValueError("Maximum speed must be a non-negative integer")
-                        break
-                    except ValueError:
-                        print("Maximum speed must be an integer")
+        maximumSpeed = AircraftMenu.get_int_value("maximum speed (MPH)")
+        if maximumSpeed == 'quit': return
 
-                while True:
-                    try:
-                        maximumCapacity = int(input("Enter maximum capacity (number of people): "))
-                        if maximumCapacity < 0:
-                            raise ValueError("Maximum capacity must be a non-negative integer")
-                        break
-                    except ValueError:
-                        print("Maximum capacity must be an integer")
+        maximumCapacity = AircraftMenu.get_int_value("maximum capacity (number of people)")
+        if maximumCapacity == 'quit': return
 
-                while True:
-                    try:
-                        maximumFuel = int(input("Enter maximum fuel (amount in gallons): "))
-                        if maximumFuel < 0:
-                            raise ValueError("Maximum fuel must be a non-negative integer")
-                        break
-                    except ValueError:
-                        print("Maximum fuel must be an integer")
+        maximumFuel = AircraftMenu.get_int_value("maximum fuel (gallons)")
+        if maximumFuel == 'quit': return
 
-                while True:
-                    try:
-                        cargoVolume = int(input("Enter cargo volume (volume in cubic feet): "))
-                        if cargoVolume < 0:
-                            raise ValueError("Cargo volume must be a non-negative integer")
-                        break
-                    except ValueError:
-                        print("Cargo volume must be an integer")
+        cargoVolume = AircraftMenu.get_int_value("cargo volume (cubic feet)")
+        if cargoVolume == 'quit': return
 
-                while True:
-                    try:
-                        leasingCost = int(input("Enter leasing cost (price in USD): "))
-                        if leasingCost < 0:
-                            raise ValueError("Leasing cost must be a non-negative integer")
-                        break
-                    except ValueError:
-                        print("Leasing cost must be an integer")
+        leasingCost = AircraftMenu.get_int_value("leasing cost (USD)")
+        if leasingCost == 'quit': return
 
-                # SQL query to insert data into the aircraft table
-                sql = f"INSERT INTO aircraft (tail_number, name, model, maximum_speed, maximum_capacity, maximum_fuel, cargo_volume, leasing_cost) VALUES ('{tailNumber}', '{name}', '{model}', {maximumSpeed}, {maximumCapacity}, {maximumFuel}, {cargoVolume}, {leasingCost})"
-
-                # Execute the insert query
-                db.execute_insert_update_delete_query(sql)
-                print("Aircraft added successfully!")
-                break  # Exit the loop if aircraft is successfully added
-
-            except Exception as e:
-                print(f"Error adding aircraft: {e}")
-                print("Please try again.")
-
-        # Disconnect from the database
-        db.disconnect()
+        # SQL query to insert data into the aircraft table
+        sql = "INSERT INTO aircraft (tail_number, name, model, maximum_speed, maximum_capacity, maximum_fuel, cargo_volume, leasing_cost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (tailNumber, name, model, maximumSpeed, maximumCapacity, maximumFuel, cargoVolume, leasingCost)
+        
+        try:
+            # Execute the insert query
+            db.execute_insert_update_delete_query(sql, values)
+            print("Aircraft added successfully!")
+        except Exception as e:
+            print(f"Error adding aircraft: {e}")
+        finally:
+            # Disconnect from the database
+            db.disconnect()
 
     @staticmethod
     def remove_aircraft():
@@ -143,8 +100,21 @@ class AircraftMenu:
         db = Database()
 
         # User input for aircraft to be remove based on aircraft_id
-        aircraftID = input("Enter aircraft ID number to remove: ")
+        tailNum = input("Enter aircraft tail number to remove or 'q' to quit: ")
+        if tailNum == 'q':
+            return
 
+        sql_check_aircraft = f"SELECT aircraft_id FROM aircraft WHERE tail_number = {tailNum}"
+        aircraftID_df = db.execute_query_to_dataframe(sql_check_aircraft)
+
+        # Check if the aircraft exists in the database
+        if aircraftID_df.empty:
+            print("Aircraft not found.")
+            return
+        
+        # Extract the aircraft ID from the DataFrame
+        aircraftID = aircraftID_df.iloc[0]['aircraft_id']
+        
         # Check if the aircraft is associated with a flight before removing it
         try:
             sql_check_flights = f"SELECT * FROM flights WHERE aircraft_id = {aircraftID}"
@@ -173,3 +143,62 @@ class AircraftMenu:
         finally:
             # Disconnect from the database
             db.disconnect()
+
+    def get_valid_tail_number():
+        db = Database()
+        query = 'SELECT * FROM aircraft'
+        aircraft = db.execute_query_to_dataframe(query)
+
+        while True:
+            try:
+                # Get input from the user
+                tailNumber = input("Enter tail number or 'q' to quit: ")
+            
+                if tailNumber.lower() == 'q':
+                    return 'quit'
+                
+                tailNumber = str(tailNumber)
+
+                if tailNumber in aircraft['tail_number'].values:
+                    print("Aircraft tail number already exists. Please enter a different tail number.")
+                    continue
+                
+                if len(tailNumber) <= 20:
+                    return tailNumber
+                else:
+                    print("Aircraft tail number cannot exceed 20 characters.")
+            except ValueError:
+                print("Tail number must be a string.")
+
+
+    def get_valid_name_or_model(input_type):
+        while True:
+                try:
+                    user_input = input(f"Enter aircraft {input_type} or 'q' to quit: ")
+
+                    if user_input.lower() == 'q':
+                        return 'quit'
+
+                    if len(user_input) <= 255:
+                        return user_input
+                    else:
+                        print(f"Aircraft {input_type} cannot exceed 255 characters.")
+                except ValueError:
+                    print(f"Aircraft {input_type} must be a string.")
+
+    def get_int_value(input_type):
+        while True:
+            try:
+                user_input = input(f"Enter {input_type} or 'q' to quit: ")
+
+                if user_input.lower() == 'q':
+                    return 'quit'
+                
+                user_input = int(user_input)
+
+                if user_input >= 0:
+                    return user_input
+                else:
+                    print(f"Aircraft {input_type} must be a non-negative integer.")
+            except ValueError:
+                print(f"Aircraft {input_type} must be an integer.")
