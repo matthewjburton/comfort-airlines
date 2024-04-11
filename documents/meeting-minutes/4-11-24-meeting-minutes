@@ -3,8 +3,8 @@
 ## Meeting Information
 
 **Date:** 4/11/24  
-**Start Time:**  
-**End Time:**  
+**Start Time:** 1:35pm  
+**End Time:** 2:57pm  
 **Team Name:** Cloud Nine  
 **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher  
 **Present Attendees:** Matt Burton, McHale Trotter, Kevin Sampson, Ryan Hirscher, Jeremy Mass, Justin Chen  
@@ -56,11 +56,11 @@
 - [X] Assign members to finalize documents
 - [X] Finalize timetable
 - [X] Handle outstanding pull requests
-- [ ] Decide presentation practice times
-- [ ] Assign presenation roles
-- [ ] Get Jira up to date
-- [ ] Create new Jira issues
-- [ ] Start new Jira sprint
+- [X] Decide presentation practice times
+- [X] Assign presenation roles
+- [X] Get Jira up to date
+- [X] Create new Jira issues
+- [X] Start new Jira sprint
 
 ## Synopsis and Discussion
 
@@ -74,6 +74,17 @@
 - Functional specification needs to list all of the interfaces to classes, their functions, and their parameters
 - Jeremy is going to turn the timetable output into an sql file input
 - McHale is going to make the main executable file into an sql file
+- Merged in the simulation configuration functionality
+- Merged in the airport and aircraft functionality
+- First pressenatation practice tuesday afternoon 3pm
+- Second presentation practice thursday at 1:35pm
+- Project presentation
+  - Justin - intro
+  - McHale - tools
+  - Kevin - strengths
+  - Ryan - timetable
+  - Matt - demo
+  - Jeremy - future plans
 
 ## Action Items
 
@@ -86,3 +97,4 @@ Ryan | Test plan | Monday
 Matt | Functional specification | Tuesday
 Jeremy | Create timetable insertion sql file | Tuesday
 McHale | turn the program into an executable file | Monday
+All members | prepare for practice presentation | Tuesday
