@@ -69,10 +69,10 @@ def place_aircrafts():
                         airports[ab].reserve_gate(0,0) #Take gate at 0 and take off
                         aircrafts[i].addHistory(airports[ab]) #Add to history of flight path to avoid flying back here unless its a home
                 aircrafts[i].currentAirport = ChoiceAirport.abbreviation
-    for x in aircrafts:
-        print(x, ":", aircrafts[x].currentAirport, " ")
-    for x in airports:
-        print(x, ":", airports[x].abbreviation, " ", airports[x].available_gates, " ")
+    #for x in aircrafts:
+    #    print(x, ":", aircrafts[x].currentAirport, " ")
+    #for x in airports:
+    #    print(x, ":", airports[x].abbreviation, " ", airports[x].available_gates, " ")
 
 # This code generates an aircrafts flight path for the entire day reserving gates for arrival and departure building a knowledge base
 # The first aircrafts will have priority in choosing their flight path while the following aircrafts beome more and more limited
@@ -113,7 +113,7 @@ def generate():
                 # Flying Home does NOT need to check for gate availability, it can wait on the tarmac until available.
                 # It is logically impossible to choose a home that will not have a gate available. The number of aicrafts will always equal the number of models at the end of the day
 
-                print("CHECKING: ", CurrentAirport.abbreviation, Home.abbreviation)
+                #print("CHECKING: ", CurrentAirport.abbreviation, Home.abbreviation)
                 
                 # Arrive at Home
                 CurrentTime += TimeToHome # TimeToHome can be zero if staying
@@ -148,9 +148,9 @@ def generate():
                     if airports[ab].abbreviation == CurrentAirport.abbreviation and airports[ab].is_hub:
                         aircrafts[i].hasHubbed = True
         if (CurrentTime <= 1200):
-            print("Finished at ", CurrentAirport.abbreviation, " at ", CurrentTime)
+            print(CurrentAirport.abbreviation, "Done.", CurrentTime)
         else:
-            print("Finished at ", CurrentAirport.abbreviation, " at ", CurrentTime, " LANDING LATE!!!")
+            print(CurrentAirport.abbreviation, "Done.", CurrentTime, " LANDING LATE!!!")
 
 # At the end of the day an airport must land at an acceptable starting airport
 # We must have the next day start with the same type of aircraft at each airport
