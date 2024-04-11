@@ -1,0 +1,88 @@
+# Meeting Minutes
+
+## Meeting Information
+
+**Date:** 4/11/24  
+**Start Time:**  
+**End Time:**  
+**Team Name:** Cloud Nine  
+**Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher  
+**Present Attendees:** Matt Burton, McHale Trotter, Kevin Sampson, Ryan Hirscher, Jeremy Mass, Justin Chen  
+**Absent Attendees:**  
+**Scribe:** Matt  
+
+## Sprint Recap
+
+**Matt:**
+
+- Simplified the database schema to remove routes and flights_routes tables
+- Removed dynamic attributes from the flights table and moved them to the flight class
+- Validate user input for simulation config options: start time, duration, report frequency, costs: fuel, gates, takeoff, landing, leasing
+- Validate input and updated add and remove airport
+- Created custom table outputs for timetable, airport, and aircraft tables
+- Started finance calcuations for the simulation
+
+**Ryan:**
+
+- Place aircrafts function
+- Algorithm to generate flight paths for all the aircrafts
+- Function to find the nearest home airports
+- Ensured all flight paths visit a hub
+- Flights reserve gates at airports to prevent conflicts
+
+**Kevin:**
+
+- Finished the presentation
+
+**Justin:**
+
+- n/a
+
+**McHale:**
+
+- Changed remove aircraft to remove based on tail number
+- Enforce unique tail number
+- Cancel options for aircraft inputs
+
+**Jeremy:**
+
+- Bounced ideas for the algorithm with ryan
+
+## Agenda
+
+- [ ] Ask Oudshoorn final questions
+- [X] Fill in sprint recap
+- [X] Figure out where the meeting minutes are that Ryan took
+- [X] Assign members to finalize documents
+- [X] Finalize timetable
+- [X] Handle outstanding pull requests
+- [ ] Decide presentation practice times
+- [ ] Assign presenation roles
+- [ ] Get Jira up to date
+- [ ] Create new Jira issues
+- [ ] Start new Jira sprint
+
+## Synopsis and Discussion
+
+- Group decided to stop working on any new features and finalize documentation and presentation in this final week
+- Ryan found the meeting minutes from last week
+- All the documents have been given someone to finalize them
+- Requirements needs specific outputs and to outline the things we didnt get to finish
+- Readme needs to direct the user to the executable file, and all types of users to relevant documents
+- User manual needs to instruct the user how to interact with the menu, two sections for timetable and simulation
+- Test plan needs to describe what working functionality is for each module
+- Functional specification needs to list all of the interfaces to classes, their functions, and their parameters
+- Jeremy is going to turn the timetable output into an sql file input
+- McHale is going to make the main executable file into an sql file
+
+## Action Items
+
+| **Assignee**        | **Task**                                          | **Due Date**  |
+|---------------------|---------------------------------------------------|---------------|
+Jeremy | Requirement doc | Monday
+McHale | README | Monday
+Kevin | User manual | Monday
+Ryan | Test plan | Monday
+Matt | Functional specification | Tuesday
+Jeremy | Create timetable insertion sql file | Tuesday
+McHale | turn the program into an executable file | Monday
