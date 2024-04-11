@@ -54,124 +54,106 @@ def place_aircrafts():
             aircrafts[4].addHistory(airports[ab])
         aircrafts[4].currentAirport = "MDW"
         aircrafts[4].hasHubbed = True
-    #aircrafts[?].currentAirport = "going to paris"
+    #aircrafts[?].currentAirport = "going to paris" NEED TO IMPLEMENT
     i = 5
     #Place the rest of the aircrafts at airports where a hub is filled up to 7 and the rest are placed randomly up to 4
     for i in aircrafts:
-        #print("PLACING AIRCRAFT ", i)
         # Abbreviations in aircrafts are initialized to aaa.
-        # Generate a random starting airprot until conditions are met
+        # Generate a random starting airprot until it finds an available gate
         while aircrafts[i].currentAirport == "aaa":
             ChoiceAirport = airports[random.randint(1,30)] #randomAirport.is_gate_available(arrivalTimeAtNew, departureTimeAtNew)
-            if ChoiceAirport.is_hub and ChoiceAirport.is_gate_available(0,0):
-                # Where airports abbreviation is the choiceAirport add to dictionary of airport
+            if ChoiceAirport.is_gate_available(0,0):
                 for ab in airports:
                     if (airports[ab].abbreviation == ChoiceAirport.abbreviation):
-                        airports[ab].add_aircraft_type(aircrafts[i].model)
-                        airports[ab].reserve_gate(0,0)
-                        aircrafts[i].addHistory(airports[ab])
-                        #print("is_hub: ", airports[ab].is_hub)
-                        #print("Before removing hub gate at ", airports[ab].abbreviation, " gates before: ", airports[ab].available_gates)
-                        #print("After removing hub gate at ", airports[ab].abbreviation, " gates after: ", airports[ab].available_gates)
-                aircrafts[i].currentAirport = ChoiceAirport.abbreviation
-            elif not ChoiceAirport.is_hub and ChoiceAirport.is_gate_available(0,0):
-                for ab in airports:
-                    if (airports[ab].abbreviation == ChoiceAirport.abbreviation):
-                        airports[ab].add_aircraft_type(aircrafts[i].model)
-                        #airports[ab].remove_gate()
-                        airports[ab].reserve_gate(0,0)
-                        aircrafts[i].addHistory(airports[ab])
+                        airports[ab].add_aircraft_type(aircrafts[i].model) #Add Starting Model type
+                        airports[ab].reserve_gate(0,0) #Take gate at 0 and take off
+                        aircrafts[i].addHistory(airports[ab]) #Add to history of flight path to avoid flying back here unless its a home
                 aircrafts[i].currentAirport = ChoiceAirport.abbreviation
     for x in aircrafts:
         print(x, ":", aircrafts[x].currentAirport, " ")
     for x in airports:
         print(x, ":", airports[x].abbreviation, " ", airports[x].available_gates, " ")
 
-
+# This code generates an aircrafts flight path for the entire day reserving gates for arrival and departure building a knowledge base
+# The first aircrafts will have priority in choosing their flight path while the following aircrafts beome more and more limited
+# This is the main driver of the timetable and assumes that aircrafts are placed at airports
 def generate():
-#Code to generate time table
-    #Initialize
     for i in aircrafts:
         print("\n", aircrafts[i].tailNumber, "starting")
+        # Initialize for each aircraft
         isHome = False
-        Staying = False
-        TimeToHome = 0
-        CurrentTime = 0
+        CurrentTime = 0 # Clock
         TimeToNextLeg = 0 # Potential Time
-        HubLeg = random.randint(0,2)
+        TimeToHome = 0 # Potential Time
         LegNumber = 0
+        aircrafts[i].hubLeg = random.randint(0,2) # Choose the leg that will force an aicraft to go to a hub if it does not have one in its path already
         for ab in airports:
             if airports[ab].abbreviation == aircrafts[i].currentAirport:
-                CurrentAirport = airports[ab]
-        while not isHome and TimeToNextLeg + CurrentTime  < 1000: #20 hours of flying
+                CurrentAirport = airports[ab] #Keep track of CurrentAirport
+        while not isHome and TimeToNextLeg + CurrentTime  < 1000: #20 hours of flying is 1200, but we want to end the day early for delays
             for ab in airports:
                 if airports[ab].abbreviation == aircrafts[i].currentAirport:
                     hab = airports[ab].is_hub
             print(aircrafts[i].currentAirport, hab, " => ", end='')
-            ChosenAirport = choose_random_airport(CurrentAirport, HubLeg, LegNumber, aircrafts[i], CurrentTime) # Choose a random acceptable airport to fly to
+
+            # Choose the next leg in the airport, the nearest home, and the nearst home from the next airport
+            # Return the airport object of the chosen
+            ChosenAirport = choose_random_airport(CurrentAirport, LegNumber, aircrafts[i], CurrentTime) # Choose a random acceptable airport to fly to
             Home = nearest_home(CurrentAirport, aircrafts[i].model)
             NextHome = nearest_home(ChosenAirport, aircrafts[i].model)
 
-            #Get time to home and time to next leg and compare
+            # Get time to home from current airport, time to home from next airport, and time to the next chosen airport
+            # Return the minutes it takes
             TimeToHome = calculate_total_flight_duration(aircrafts[i], ChosenAirport, Home, True) #Time it takes to fly home
             TimeToNextLeg = calculate_total_flight_duration(aircrafts[i], CurrentAirport, ChosenAirport, True)
             TimeToNextHome = calculate_total_flight_duration(aircrafts[i], ChosenAirport, NextHome, True)
             if TimeToNextHome + TimeToNextLeg + CurrentTime > 1000 or TimeToNextLeg + CurrentTime > 1000 or TimeToNextHome + CurrentTime > 1000:
-                #fly home if next leg and next home time exceeds current time or if the time to the next leg + current time exceeds 1200
-                #take off
+                # Fly home if next leg and next home time exceeds current time or if the time to the next leg + current time exceeds 1200
+                # This section is for either "Flying Home" or "Staying where it is"
+                # Flying Home does NOT need to check for gate availability, it can wait on the tarmac until available.
+                # It is logically impossible to choose a home that will not have a gate available. The number of aicrafts will always equal the number of models at the end of the day
+
                 print("CHECKING: ", CurrentAirport.abbreviation, Home.abbreviation)
-                if CurrentAirport.abbreviation == Home.abbreviation: #Is it actually flying to home or can it stay
-                    Staying = True
-                #for ab in airports:
-                #    if airports[ab].abbreviation == aircrafts[i].currentAirport:
-                        #if not Staying:
-                            #airports[ab].add_gate()
                 
-                CurrentTime += TimeToHome
-                isHome = True
-                CurrentAirport = Home
+                # Arrive at Home
+                CurrentTime += TimeToHome # TimeToHome can be zero if staying
+                CurrentAirport = Home # Home may already equal CurrentAirport
                 LegNumber+=1
                 aircrafts[i].currentAirport = CurrentAirport.abbreviation
-                #arrive
+                isHome = True
+                # Check if home can be hubbed and delete model type from airport
                 for ab in airports:
                     if airports[ab].abbreviation == aircrafts[i].currentAirport:
                         airports[ab].remove_aircraft_type(aircrafts[i].model)
-                        #if not Staying:
-                            #airports[ab].remove_gate()
                         if airports[ab].is_hub:
                             aircrafts[i].hasHubbed = True
                 
-            else: #take off to next leg
-                #update timeToHome
-                TimeToHome = TimeToNextHome
+            else:
+                # Take off to the next leg in the flight path
+                TimeToHome = TimeToNextHome #TimeToHome is already chosen
+
+                # Reserve the gate for the already validated time
                 for ab in airports:
                     if airports[ab].abbreviation == CurrentAirport.abbreviation:
                         airports[ab].reserve_gate(CurrentTime + TimeToNextLeg, CurrentTime + TimeToNextLeg + turn_around_time(True) + WAITBUFFER)
-                        #airports[ab].add_gate()
 
+                # Arrive at next leg airport
                 aircrafts[i].currentAirport = ChosenAirport.abbreviation     
                 CurrentAirport = ChosenAirport               
-                aircrafts[i].addHistory(CurrentAirport.abbreviation)
- 
-
+                aircrafts[i].addHistory(CurrentAirport.abbreviation) # Since placing the aircraft adds the first airport we add the new airport to history
                 LegNumber+=1
                 CurrentTime += turn_around_time(True) + WAITBUFFER
                 CurrentTime += TimeToNextLeg
-                #arrive at next leg
                 for ab in airports:
                     if airports[ab].abbreviation == CurrentAirport.abbreviation and airports[ab].is_hub:
                         aircrafts[i].hasHubbed = True
         if (CurrentTime <= 1200):
             print("Finished at ", CurrentAirport.abbreviation, " at ", CurrentTime)
         else:
-            rest = True
-            #print("LATE RESTARTING")
-            #generate()
             print("Finished at ", CurrentAirport.abbreviation, " at ", CurrentTime, " LANDING LATE!!!")
 
-#Helper Function
-#At the end of the day an airport must land at an acceptable starting airport
-#We must have the next day start with the same type of aircraft at each airport
+# At the end of the day an airport must land at an acceptable starting airport
+# We must have the next day start with the same type of aircraft at each airport
 def nearest_home(currentAirport, aircraftType):
     ShortestDistance = 9999999
     ChosenHome = currentAirport #Just in case the algorithm fails
@@ -190,24 +172,43 @@ def nearest_home(currentAirport, aircraftType):
                 ChosenHome = airports[i]
     return ChosenHome
 
-#Helper Function
-def choose_random_airport(startAirport, HubLeg, CountToHub, aircraft, CurrentTime):
-    if HubLeg == CountToHub and not aircraft.hasHubbed:
+# Choose a random airport that meets the criteria:
+    # airport must not be itself, or in flight path history
+    # airport must not be a hub - Have at most one aicraft fly through one hub? Or should we change this?
+    # airport must have an available gate when it lands to when it takes off
+    # airport must be greater than 150 miles
+    # if it is the aircrafts hub leg, it must fly to one of the 4 hubs, if all the gates at all hubs are taken, skip the hub and choose a random airport and increment hub leg
+def choose_random_airport(startAirport, CountToHub, aircraft, CurrentTime):
+    if aircraft.hubLeg == CountToHub and not aircraft.hasHubbed:
         Hubs = [2, 4, 6, 7] #Numbers of hubs
-        #while (airports[HubNum].is_gate_available()):
-        HubNum = random.choice(Hubs)
-        return airports[HubNum]
-    #airport must not be itself, or in flight path history
-    #airport must not be a hub - Have at most one aicraft fly through one hub? Or should we change this?
-    #airport must have an available gate when it LANDS!! (not implemented yet)
-    #airport must be greater than 150 miles
+        for i in range(0,4):
+            # Generate time window from start airport to hub
+            arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, airports[Hubs[i]], True) + CurrentTime #Time it arrives at Hub
+            departureTimeAtNew = arrivalTimeAtNew +  turn_around_time(True) + WAITBUFFER #Time it leaves from Hub
+
+            # Check gate availability
+            if (airports[Hubs[i]].is_gate_available(arrivalTimeAtNew, departureTimeAtNew)):
+                return airports[Hubs[i]] # If available, take the flight
+
+        # If no gates available, increment and then choose a random airport
+        aircraft.hubLeg += 1
+
+    # Choose an airprot and generate time window from start airport to new chosen airport
     randomAirport = airports[random.randint(1,30)]
     arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, randomAirport, True) + CurrentTime #Time it arrives at new airport
     departureTimeAtNew = arrivalTimeAtNew + turn_around_time(True) + WAITBUFFER #Time it leaves from new airport
-    while (randomAirport.abbreviation == startAirport.abbreviation or randomAirport.is_hub or aircraft.isInHistory(randomAirport.abbreviation) or great_circle(startAirport, randomAirport) <= 150) and not randomAirport.is_gate_available(arrivalTimeAtNew, departureTimeAtNew):
+
+    # While not meeting criteria, generate new airport
+        #if no gate is available
+        #if the random airport is the starting airport
+        #if the random airport is a hub (which is not the hub leg)
+        #if the random airport is in the history of the flight path of the aircraft
+        #if the random airport distance is within 150 miles
+    while not randomAirport.is_gate_available(arrivalTimeAtNew, departureTimeAtNew) or randomAirport.abbreviation == startAirport.abbreviation or randomAirport.is_hub or aircraft.isInHistory(randomAirport.abbreviation) or great_circle(startAirport, randomAirport) <= 150:
         randomAirport = airports[random.randint(1,30)]
         arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, randomAirport, True) + CurrentTime #Time it arrives at new airport
         departureTimeAtNew = arrivalTimeAtNew +  turn_around_time(True) + WAITBUFFER #Time it leaves from new airport
+
     return randomAirport
 
 place_aircrafts()

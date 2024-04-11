@@ -23,6 +23,7 @@ class Aircraft:
         self._timeSinceLastMaintenance = 0
         self._requiresMaintenance = False
         self._currentAirport = "aaa"
+        self._hubLeg = 0
         self._hasHubbed = False
         self._history = []
 
@@ -82,6 +83,10 @@ class Aircraft:
     def timeSinceLastMaintenance(self):
         return self._timeSinceLastMaintenance
     
+    @property
+    def hubLeg(self):
+        return self._hubLeg
+    
     def isInHistory(self, abbreviation):
         if abbreviation in self._history:
             return True
@@ -110,3 +115,7 @@ class Aircraft:
     @hasHubbed.setter
     def hasHubbed(self, value):
         self._hasHubbed=value
+
+    @hubLeg.setter
+    def hubLeg(self, value):
+        self._hubLeg=value
