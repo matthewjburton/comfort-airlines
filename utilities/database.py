@@ -10,7 +10,7 @@ Example usage:
 
     db = Database()
     query = 'SELECT * FROM airports'
-    result_df = db.execute_query_to_dataframe(query)
+    result_df = db.execute_query_to_dataframe(query, params)
 """
 
 import mysql.connector
@@ -65,11 +65,11 @@ class Database:
             print(f"Error executing query: {e}")
 
     """Executes the given SQL query and returns results as a pandas DataFrame."""
-    def execute_query_to_dataframe(self, query):
+    def execute_query_to_dataframe(self, query, params=None):
         try:
             if not self.connection:
                 self.connect()
-            cursor = self.execute_query(query)
+            cursor = self.execute_query(query, params)
             data = cursor.fetchall()
             columns = [col[0] for col in cursor.description]
             dataframe = pd.DataFrame(data, columns=columns)
