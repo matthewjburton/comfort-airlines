@@ -164,3 +164,12 @@
 - **Assignee(s):** Matt
 - **Date Fixed:** 4/2/24  
 - **Solution:** Modified the condition to ensure that the events are either departure or arrival events at the same airport before rescheduling the new event
+
+## Bug 19
+
+- **Issue Description:** When starting the simulation on a later date the simulation doesnt run any flight
+- **Date Found:** 4/11/24
+- **Action Plan:** Loop the timetable every day
+- **Assignee(s):** Matt
+- **Date Fixed:**  
+- **Solution:**  
