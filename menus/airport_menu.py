@@ -5,13 +5,14 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton, McHale Trotter
 """
+import re
 from utilities.display_menu import display_menu
 from utilities.database import Database
 class AirportMenu:
 
     """Airport Options"""
     @staticmethod
-    def view_airport():
+    def view_airports():
         # Query the database for the airports table
         db = Database()
         query = 'SELECT * FROM airports'
@@ -51,21 +52,36 @@ class AirportMenu:
         # Initialize the Database object
         db = Database()
 
-        name = input("Enter airport name: ")
-        abbreviation = input("Enter airport abbreviation (3 characters): ")
+        # Handle and validate user input
+        name = AirportMenu.get_valid_name()
+        if name == 'quit': return
+        abbreviation = AirportMenu.get_valid_abbreviation(False)
+        if abbreviation == 'quit': return
         latitude = AirportMenu.get_valid_latitude()
+        if latitude == 'quit': return
         longitude = AirportMenu.get_valid_longitude()
+        if longitude == 'quit': return
         timezoneOffset = AirportMenu.get_valid_timezone_offset()
+        if timezoneOffset == 'quit': return
         metroPopulation = AirportMenu.get_valid_metro_population()
+        if metroPopulation == 'quit': return
         isHub = AirportMenu.get_valid_is_hub()
-        totalGates = AirportMenu.get_valid_total_gates(metroPopulation, isHub)
+        if isHub == 'quit': return
+
+        totalGates = 0
+        if metroPopulation < 1000000: # Prevent airports with zero gates, and skip user input if there is no decision to be made
+            totalGates = 1
+        else:
+            totalGates = AirportMenu.get_valid_total_gates(metroPopulation, isHub)
+            if totalGates == 'quit': return
 
         # SQL query to insert data into the airports table
-        sql = f"INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, total_gates, is_hub) VALUES ('{name}', '{abbreviation}', {latitude}, {longitude}, {timezoneOffset}, {metroPopulation}, {totalGates}, {isHub})"
+        sql = "INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, total_gates, is_hub) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (name, abbreviation, latitude, longitude, timezoneOffset, metroPopulation, totalGates, isHub)
 
         try:
-            # Execute the insert query
-            db.execute_insert_update_delete_query(sql)
+            # Execute the insert query with placeholders
+            db.execute_insert_update_delete_query(sql, values)
             print("Airport added successfully!")
         except Exception as e:
             print(f"Error adding airport: {e}")
@@ -76,50 +92,117 @@ class AirportMenu:
 
     @staticmethod
     def remove_airport():
-        print("\nExecuting remove_airport()")
-        # Print the aircraft table
-        AirportMenu.view_airport()
+        # Print the airport table
+        AirportMenu.view_airports()
+        print('')
 
-        # Initialize the Database object
+        abbreviation = AirportMenu.get_valid_abbreviation(True)
+        if abbreviation == 'quit':
+            return
+
         db = Database()
-
-        # User input for aircraft to be remove based on aircraft_id
-        airportID = input("Enter airport ID number to remove: ")
-
         # Check if the airport is associated with a flight before removing it
         try:
-            sqlCheckFlights = f"SELECT * FROM flights WHERE departure_airport_id = {airportID} OR destination_airport_id = {airportID}"
-            result = db.execute_query_to_dataframe(sqlCheckFlights)
-        
-            # If not associated we remove it.
-            if result.empty:
-                pass
+            # Get the airport entity
+            query = f"SELECT * FROM airports WHERE abbreviation = %s LIMIT 1"
+            airport = db.execute_query_to_dataframe(query, (abbreviation,))
+
+            if airport.empty:
+                print(f"No airport found with the abbreviation {abbreviation}")
+                return
             
-            # If associated print an error and return.
-            else:
-                print("Cannot remove airport. It is associated with flights.")
+            # Extracting airport ID and converting to regular Python integer
+            airportID = int(airport['airport_id'].iloc[0])
+
+            sqlCheckFlights = "SELECT * FROM flights WHERE departure_airport_id = %s OR destination_airport_id = %s"
+            result = db.execute_query_to_dataframe(sqlCheckFlights, (airportID, airportID))
+            
+            if not result.empty:
+                print("Cannot remove airport. Airport is used in the current timetable.")
                 return
-        except Exception as e:
-                print(f"Error checking flights: {e}")
-                return
 
+            sql = "DELETE FROM airports WHERE abbreviation = %s"
+            db.execute_insert_update_delete_query(sql, (abbreviation,))
+            print('Airport removed successfully!')
 
-        sql = f"DELETE FROM airports WHERE airport_id = {airportID}"
-
-        try: 
-            # Execute remove aircraft query
-            db.execute_insert_update_delete_query(sql)
-            print("Airport removed successfully!")
         except Exception as e:
             print(f"Error removing airport: {e}")
         finally:
-            # Disconnect from the database
             db.disconnect()
+
+    def get_valid_name():
+        db = Database()
+        query = 'SELECT * FROM airports'
+        airports = db.execute_query_to_dataframe(query)
+    
+        while True:
+            try:
+                name = input("Enter airport name or 'q' to quit: ")
+
+                # Handle user canceling input
+                if name.lower() == 'q':
+                    return 'quit'
+                
+                name = str(name)
+
+                # Check if the name already exists in the 'name' column of the DataFrame
+                if name in airports['name'].values:
+                    print("Airport name already exists. Please enter a different name.")
+                    continue
+
+                if len(name) <= 255:
+                    return name
+                else:
+                    print("Airport name cannot exceed 255 characters.")
+            except ValueError:
+                print("Airport name must be a string.")
+
+    def get_valid_abbreviation(removingAirport):
+        db = Database()
+        query = 'SELECT * FROM airports'
+        airports = db.execute_query_to_dataframe(query)
+    
+        while True:
+            try:
+                abbreviation = input("Enter airport abbreviation or 'q' to quit: ")
+
+                # Handle user canceling input
+                if abbreviation.lower() == 'q':
+                    return 'quit'
+                
+                # Remove leading/trailing whitespace and convert to uppercase
+                abbreviation = abbreviation.strip().upper()
+
+                
+                if removingAirport:
+                    # Check if the name does not exist in the 'abbreviation' column of the DataFrame
+                    if abbreviation not in airports['abbreviation'].values:
+                        print("Airport abbreviation does not exist. Please enter a different abbreviation.")
+                        continue
+                else:
+                    # Check if the name already exists in the 'abbreviation' column of the DataFrame
+                    if abbreviation in airports['abbreviation'].values:
+                        print("Airport abbreviation already exists. Please enter a different abbreviation.")
+                        continue
+                
+                # Check if the abbreviation contains only letters and has a length of 3
+                if re.match(r'^[A-Z]{3}$', abbreviation):
+                    return abbreviation
+                else:
+                    print("Airport abbreviation must be exactly 3 characters long.")
+            except ValueError:
+                print("Airport abbreviation must be a string.")
 
     def get_valid_latitude():
         while True:
             try:
-                latitude = float(input("Enter latitude: "))
+                latitude = input("Enter latitude or 'q' to quit: ")
+
+                # Handle user canceling input
+                if latitude.lower() == 'q':
+                    return 'quit'
+                
+                latitude = float(latitude)
                 if -90 <= latitude <= 90:
                     return latitude
                 else:
@@ -130,7 +213,13 @@ class AirportMenu:
     def get_valid_longitude():
         while True:
             try:
-                longitude = float(input("Enter longitude: "))
+                longitude = input("Enter longitude or 'q' to quit: ")
+
+                # Handle user canceling input
+                if longitude.lower() == 'q':
+                    return 'quit'
+                
+                longitude = float(longitude)
                 if -180 <= longitude <= 180:
                     return longitude
                 else:
@@ -141,7 +230,13 @@ class AirportMenu:
     def get_valid_timezone_offset():
         while True:
             try:
-                offset = int(input("Enter timezone offset from UTC: "))
+                offset = input("Enter timezone offset from UTC or 'q' to quit: ")
+
+                # Handle user canceling input
+                if offset.lower() == 'q':
+                    return 'quit'
+                
+                offset = int(offset)
                 if -12 <= offset <= 14:
                     return offset
                 else:
@@ -152,21 +247,34 @@ class AirportMenu:
     def get_valid_metro_population():
         while True:
             try:
-                population = int(input("Enter metro population: "))
-                if 0 <= population <= 1000000000:
+                population = input("Enter metro population or 'q' to quit: ")
+
+                # Handle user canceling input
+                if population.lower() == 'q':
+                    return 'quit'
+                
+                population = population.replace(',','')
+                population = int(population)
+                if 0 <= population:
                     return population
                 else:
-                    print("Metro population must be in the range of 0 to 1,000,000,000 people.")
+                    print("Metro population must be a positive number of people.")
             except ValueError:
-                print("Invalid input. Metro population must be a number.")
+                print("Invalid input. Metro population must be an integer.")
 
     def get_valid_is_hub():
         while True:
             try:
-                isHub = str(input("Is this airport a hub? 'yes' or 'no': "))
-                if isHub.lower() == 'yes':
+                isHub = input("Is this airport a hub? 'yes' or 'no' or 'q' to quit: ")
+
+                # Handle user canceling input
+                if isHub.lower() == 'q':
+                    return 'quit'
+                
+                isHub = str(isHub).lower()
+                if isHub == 'yes':
                     return 1
-                elif isHub.lower() == 'no':
+                elif isHub == 'no':
                     return 0
                 else:
                     print("Is hub must be either 'yes' or 'no'.")
@@ -174,14 +282,22 @@ class AirportMenu:
                 print("Invalid input. Is hub must be a string.")
 
     def get_valid_total_gates(metroPopulation, isHub):
-        maximum_gates = min(int(metroPopulation / 1000000), 11 if isHub else 5)
+        maximumGates = min(int(metroPopulation / 1000000), 11 if isHub else 5)
+        print(f"The valid range of gates for the new airport is 1 to {maximumGates}")
+
         while True:
             try:
-                totalGates = int(input("Enter total number of gates: "))
-                if 0 <= totalGates <= maximum_gates:
+                totalGates = input("Enter total number of gates or 'q' to quit: ")
+
+                # Handle user canceling input
+                if totalGates.lower() == 'q':
+                    return 'quit'
+                
+                totalGates = int(totalGates)
+                if 1 <= totalGates <= maximumGates:
                     return totalGates
                 else:
-                    print(f"Total gates must be in the range of 0 to {maximum_gates} gates.")
+                    print(f"Total gates must be in the range of 1 to {maximumGates} gates.")
             except ValueError:
-                print("Invalid input. Total gates must be a number.")
+                print("Invalid input. Total gates must be an integer.")
 

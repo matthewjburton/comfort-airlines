@@ -10,7 +10,7 @@ Example usage:
 
     db = Database()
     query = 'SELECT * FROM airports'
-    result_df = db.execute_query_to_dataframe(query)
+    result_df = db.execute_query_to_dataframe(query, params)
 """
 
 import mysql.connector
@@ -55,21 +55,21 @@ class Database:
             self.connection = None
 
     """Executes the given SQL query."""
-    def execute_query(self, query):
+    def execute_query(self, query, params=None):
         try:
             if not self.connection:
                 self.connect()
-            self.cursor.execute(query)
+            self.cursor.execute(query, params)
             return self.cursor
         except mysql.connector.Error as e:
             print(f"Error executing query: {e}")
 
     """Executes the given SQL query and returns results as a pandas DataFrame."""
-    def execute_query_to_dataframe(self, query):
+    def execute_query_to_dataframe(self, query, params=None):
         try:
             if not self.connection:
                 self.connect()
-            cursor = self.execute_query(query)
+            cursor = self.execute_query(query, params)
             data = cursor.fetchall()
             columns = [col[0] for col in cursor.description]
             dataframe = pd.DataFrame(data, columns=columns)
@@ -79,11 +79,11 @@ class Database:
             print(f"Error executing query: {e}")
 
     """Executes INSERT, UPDATE, or DELETE SQL query."""
-    def execute_insert_update_delete_query(self, query):
+    def execute_insert_update_delete_query(self, query, params=None):
         try:
             if not self.connection:
                 self.connect()
-            self.execute_query(query)
+            self.execute_query(query, params)
             self.connection.commit()
             self.cursor = self.connection.cursor()
         except mysql.connector.Error as e:
