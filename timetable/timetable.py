@@ -27,18 +27,14 @@ class Timetable:
                 
                 Timetable.print_flight(flight)
 
-
     def print_timetable_header():
-        headerDisplay = '{:<15} | {:<20} | {:<20} | {:<15} | {:<15} | {:<10}'.format('Flight Number', 'Departure Airport', 'Destination Airport', 'Departure Time', 'Arrival Time', 'Duration')
+        headerDisplay = f"{'Flight Number':<15} {'Departure Airport':<20} {'Destination Airport':<20} {'Departure Time':<15} {'Arrival Time':<15} {'Duration':<10}"
         print(headerDisplay)
 
     def print_flight(flight):
-        departure_time = get_flight_time(flight['departure_time'])
-        arrival_time = get_flight_time(flight['arrival_time'])
+        departureTime = get_flight_time(flight['departure_time'])
+        arrivalTime = get_flight_time(flight['arrival_time'])
         duration = get_flight_time(flight['duration'])
 
-        flightDisplay = '{:<15} | {:<20} | {:<20} | {:<15} | {:<15} | {:<10}'.format(flight['flight_number'], airports[flight['departure_airport_id']]._abbreviation, airports[flight['destination_airport_id']]._abbreviation, departure_time, arrival_time, duration)
+        flightDisplay = f"{flight['flight_number']:<15} {airports[flight['departure_airport_id']]._abbreviation:<20} {airports[flight['destination_airport_id']]._abbreviation:<20} {departureTime:<15} {arrivalTime:<15} {duration:<10}"
         print(flightDisplay)
-
-
-        

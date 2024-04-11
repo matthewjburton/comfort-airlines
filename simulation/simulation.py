@@ -11,26 +11,38 @@ from utilities.flight_duration import calculate_flight_duration
 
 from objects.flight import Flight
 
+from .report import Report
 from .schedule import Schedule
 from .scheduled_event import DepartureEvent, ArrivalEvent
 from .aircraft_objects import aircrafts
 from .airport_objects import airports
 
-MINUTES_IN_A_DAY = 1400
-NUMBER_OF_DAYS = 3
+import os
+import json
+
+MINUTES_IN_A_DAY = 1440
+CONFIG_FILE_PATH = 'simulation/simulation_config.json'
 
 class Simulation:
     @staticmethod
     def run_simulation():
+        # load the simulation configuration dictionary
+        config = Simulation.get_simulation_configuration()
+
         # Get instance of schedule singleton
         schedule = Schedule.get_instance()
         schedule.clear_schedule()
 
         # Populate schedule with departure and arrival events
         schedule = Simulation.populate_schedule_from_timetable(schedule)
-        
-        # Simulation loop: handle every event for each minute
-        for minute in range(MINUTES_IN_A_DAY * NUMBER_OF_DAYS):
+
+        # Set simulation start and end times form the simulation config
+        startTime = MINUTES_IN_A_DAY * config['startDate']
+        endTime = startTime + MINUTES_IN_A_DAY * config['duration']
+
+        # MAIN SIMULATION LOOP, process each minute
+        for minute in range(startTime, endTime):
+            # Handle all events for this minute
             currentEvents = schedule.get_events_for_minute(minute)
             for currentEvent in currentEvents:
                 try:
@@ -38,6 +50,8 @@ class Simulation:
                 except Exception as e:
                     print(e)
                 
+            # Handle report
+            Report.handle_report(config, minute)
 
     @staticmethod
     def populate_schedule_from_timetable(schedule):
@@ -69,3 +83,10 @@ class Simulation:
             timetable[row['flight_id']] = flight
 
         return timetable
+    
+    def get_simulation_configuration():
+        if os.path.exists(CONFIG_FILE_PATH):
+            with open(CONFIG_FILE_PATH, 'r') as f:
+                return json.load(f)
+        else:
+            return {}
