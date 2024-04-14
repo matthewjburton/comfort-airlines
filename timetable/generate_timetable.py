@@ -13,6 +13,7 @@ sys.path.append('/Users/ryanhirscher/comfort-airlines/comfort-airlines-1')
 from utilities.great_circle import great_circle
 from utilities.flight_duration import calculate_total_flight_duration
 from utilities.turn_around_time import turn_around_time
+from utilities.flight_angle import calculate_percentage
 from simulation.airport_objects import airports
 from simulation.aircraft_objects import aircrafts
 
@@ -80,8 +81,9 @@ def place_aircrafts():
 # The first aircrafts will have priority in choosing their flight path while the following aircrafts beome more and more limited
 # This is the main driver of the timetable and assumes that aircrafts are placed at airports
 def generate():
+    flightnum = 123
     for i in aircrafts:
-        print("\n", aircrafts[i].tailNumber, "starting")
+        #print("\n", aircrafts[i].tailNumber, "starting")
         # Initialize for each aircraft
         isHome = False
         CurrentTime = 0 # Clock
@@ -96,7 +98,7 @@ def generate():
             for ab in airports:
                 if airports[ab].abbreviation == aircrafts[i].currentAirport:
                     hab = airports[ab].is_hub
-            print(aircrafts[i].currentAirport, hab, " => ", end='')
+            #print(aircrafts[i].currentAirport, hab, " => ", end='')
 
             # Choose the next leg in the airport, the nearest home, and the nearst home from the next airport
             # Return the airport object of the chosen
@@ -138,6 +140,11 @@ def generate():
                     if airports[ab].abbreviation == CurrentAirport.abbreviation:
                         airports[ab].reserve_gate(CurrentTime + TimeToNextLeg, CurrentTime + TimeToNextLeg + turn_around_time(True) + WAITBUFFER)
 
+                out = "C9" + str(flightnum)
+                print(out, ",", aircrafts[i].id, ",", CurrentAirport.abbreviation, ",", ChosenAirport.abbreviation, ",", calculate_percentage(CurrentAirport, ChosenAirport), ",", TimeToNextLeg, ",", CurrentTime, ",", CurrentTime+TimeToNextLeg, ",", 1, ",", CurrentAirport.gatei%CurrentAirport._totalGates, ",", ChosenAirport.gatei%ChosenAirport._totalGates)
+                flightnum += 1
+                
+
                 # Arrive at next leg airport
                 aircrafts[i].currentAirport = ChosenAirport.abbreviation     
                 CurrentAirport = ChosenAirport               
@@ -147,10 +154,10 @@ def generate():
                 for ab in airports:
                     if airports[ab].abbreviation == CurrentAirport.abbreviation and airports[ab].is_hub:
                         aircrafts[i].hasHubbed = True
-        if (CurrentTime <= 1200):
-            print(CurrentAirport.abbreviation, CurrentAirport.is_hub, "Done.", CurrentTime)
-        else:
-            print(CurrentAirport.abbreviation, "Done.", CurrentTime, " LANDING LATE!!!")
+        #if (CurrentTime <= 1200):
+        #    print(CurrentAirport.abbreviation, CurrentAirport.is_hub, "Done.", CurrentTime)
+        #else:
+        #   print(CurrentAirport.abbreviation, "Done.", CurrentTime, " LANDING LATE!!!")
 
 # At the end of the day an airport must land at an acceptable starting airport
 # We must have the next day start with the same type of aircraft at each airport
