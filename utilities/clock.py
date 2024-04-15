@@ -21,7 +21,7 @@ def get_time(minutes):
 def print_time(minutes):
     minutes += MINUTES_IN_A_DAY # Used to visually change the first day from 0 to 1
     days, hours, minutes = get_time(minutes)
-    return f"Day: {days}, Time: {hours:02}:{minutes:02}"
+    return f"Time: {hours:02}:{minutes:02}"
 
 def get_flight_time(minutes):
     _, hours, minutes = get_time(minutes)

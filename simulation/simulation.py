@@ -31,10 +31,6 @@ class Simulation:
 
         # Get instance of schedule singleton
         schedule = Schedule.get_instance()
-        schedule.clear_schedule()
-
-        # Populate schedule with departure and arrival events
-        schedule = Simulation.populate_schedule_from_timetable(schedule)
 
         # Set simulation start and end times form the simulation config
         startTime = MINUTES_IN_A_DAY * config['startDate']
@@ -42,29 +38,49 @@ class Simulation:
 
         # MAIN SIMULATION LOOP, process each minute
         for minute in range(startTime, endTime):
-            # Handle all events for this minute
-            currentEvents = schedule.get_events_for_minute(minute)
+            # At the start of each day
+            isStartOfDay = minute % MINUTES_IN_A_DAY == 0
+            if isStartOfDay:
+                # Print a daily header
+                dayNumber = int(minute / MINUTES_IN_A_DAY) + 1
+                print(f"\nEvents for Day {dayNumber}\n")
+
+                # Reset schedule for today's events
+                schedule = Simulation.populate_schedule_from_timetable(schedule)
+
+            # Get all events for this minute
+            minutesIntoToday = minute % MINUTES_IN_A_DAY
+            currentEvents = schedule.get_events_for_minute(minutesIntoToday)
+
+            # Execute all events for this minute
             for currentEvent in currentEvents:
                 try:
                     print(f"{print_time(minute)}: {currentEvent.execute()}")
                 except Exception as e:
                     print(e)
                 
-            # Handle report
+            # Handle generating reports
             Report.handle_report(config, minute)
 
     @staticmethod
     def populate_schedule_from_timetable(schedule):
+        # Clear existing events
+        schedule.clear_schedule()
+
+        # Retrieve the list of flights
         timetable = Simulation.create_timetable_from_database()
 
         # Populate the schedule queue with events based on the timetable
         for flightKey in timetable:
             flight = timetable[flightKey]
 
+            # Create departure events
             schedule.add_event(DepartureEvent(flight))
 
+            # Calculate flight durations
             flight.duration = calculate_flight_duration(aircrafts[flight.aircraftID], airports[flight.departureAirportID], airports[flight.destinationAirportID])
 
+            # Create arrival events
             schedule.add_event(ArrivalEvent(flight))
 
         return schedule
