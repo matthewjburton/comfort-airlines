@@ -173,3 +173,59 @@
 - **Assignee(s):** Matt
 - **Date Fixed:**  
 - **Solution:**  
+
+## Bug 20
+
+- **Issue Description:** Timetable generation exceeds the length of the day because the home is too far and we choose to go home at the wrong itme
+- **Date Found:** 4/9/24
+- **Action Plan:** Must determine when an aircraft should fly to the nearest home
+- **Assignee(s):** Ryan
+- **Date Fixed:**  4/9/24
+- **Solution:**  Created a dictionary on airport objects that tracks where each plane starts and thus where each model should end. Nearest_home function finds the shortest distance among the 30 airports that accepts the same model type and then removes one entry of that type from the destination airport. Lowered the limit to 1100 ensuring that aircrafts arrive on time more frequently.
+
+## Bug 21
+
+- **Issue Description:** Condition error when checking when to fly home
+- **Date Found:** 4/9/24
+- **Action Plan:** There should be 2 major sections: flying to the next leg or flying home. Decide the conditions on when to do which.
+- **Assignee(s):** Ryan
+- **Date Fixed:** 4/9/24
+- **Solution:**  If the time to the next leg and the time to the next home exceed the time in the day, then fly to the current nearest home instead. 
+
+## Bug 22
+
+- **Issue Description:** While iterating through the aircrafts, a simple decrement and increment of gates does not let other aircrafts know when a gate becomes unavailable making it possible for aircrafts to land at the same time at the same gate.
+- **Date Found:** 4/12/24
+- **Action Plan:** Create a way to timestamp gates for when they should not be available, count the number of gates to exclude and compare with the the total number of gates
+- **Assignee(s):** Ryan
+- **Date Fixed:**  4/13/24
+- **Solution:**  Created a funciton of airport class to reserve a gate which creates an entry in a dictionary of a time window of when a plane reserves to land and takeoff. A second function checks the availability of gates at an airport where it counts the number of overlaps that a plane is trying to reserve a time slot for. This prevents aircrafts from exceeding the gate limit.
+
+## Bug 23
+
+- **Issue Description:** Each aircraft should visit a hub at least once, which it is not.
+- **Date Found:** 4/11/24
+- **Action Plan:** Choose a leg of the flight path to fly to a hub
+- **Assignee(s):** Ryan
+- **Date Fixed:**  4/11/24
+- **Solution:**  Added a leg counter and randomly choose between the first leg and second leg to go to a hub, if all the gates are unavailable at the hubs, then keep trying after each flight
+
+## Bug 24
+
+- **Issue Description:** Paris aircraft must only fly between JFK and paris. Meaning, JFK should be a hub. Changing the hub introduced some hardcoding errors
+- **Date Found:** 4/15/24
+- **Action Plan:** Change the way that the hubs are indexed in choose_airport so that we can make adjustments to the database without changing code
+- **Assignee(s):** Ryan
+- **Date Fixed:**  4/15/24
+- **Solution:**  (quick fix to fix the hardcoding), refactored the code
+
+## Bug 25
+
+- **Issue Description:** Aircrafts often visit their previous airports, this should not happen. However, this will lead to infinite recursion if the last flight must fly to a home that is in the flight history
+- **Date Found:** 4/13/24
+- **Action Plan:** Add a list flight_history to keep track of the previous airports. Choosing a home to fly to should ignore the flight history restraint
+- **Assignee(s):** Ryan
+- **Date Fixed:**  4/13/24
+- **Solution:**  Created a property of flight objects which tracks the list of airports it has been to. Added a method to flights object that searches the history list for the airport in question. This prevents the aircraft from choosing an airport in its history as long as it is not on its last flight home.
+
+
