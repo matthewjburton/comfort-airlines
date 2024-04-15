@@ -1,9 +1,16 @@
-# comfort-airlines
-
 ## Software Engineering Capstone Project
 
 - **Team Name:** Cloud Nine  
 - **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+
+# Purpose
+An airline software project created for Comfort Airlines by Cloud Nine. This program allows the user to perform operations on a time table of flights as well as run a simulation over a specified duration of time.
+
+# Description
+When this program is run it will give you key options for editing or viewing the timetable, running or configuring the simulation, as well as viewing or editing aircraft and airport tables. You can simply input the number corresponding to your choice or select 'back' to go back to the previous menu.
+
+# How to use
+
 
 ### Comment Example for Methods  
 
@@ -76,7 +83,7 @@ source /docker-entrypoint-initdb.d/populate-flights-table.sql
 ### Dependencies
 
 This project relies on certain dependencies to be installed on your local machine to execute the programs involved.  
-To download these dependencies all at once first naviagte to the /documents directory then run the following command in your terminal:
+To download these dependencies all at once first navigate to the /documents directory then run the following command in your terminal:
 
 ```bash
 pip install -r dependencies.txt
