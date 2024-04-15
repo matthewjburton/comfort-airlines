@@ -106,9 +106,11 @@ class Airport:
         for i in range(1,self._gatei):
             # If the query time window overlaps with a reserved time, exclude 1 gate
             startReserved, endReserved = self._reservedTimeline[i]
+            #print("comparing", chosenArrivalTime, chosenDepartureTime, "and",startReserved, endReserved)
             if (chosenArrivalTime >= startReserved and chosenArrivalTime <= endReserved) or (chosenDepartureTime <= endReserved and chosenDepartureTime >= startReserved):
                 excludeGateCount += 1
         #If there is an available gate during the chosen time window, we can land
+       # print("total gates", self._totalGates, "how many to exclude", excludeGateCount)
         if self._totalGates - excludeGateCount > 0:
             return True
         else:

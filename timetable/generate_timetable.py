@@ -13,50 +13,50 @@ sys.path.append('/Users/ryanhirscher/comfort-airlines/comfort-airlines-1')
 from utilities.great_circle import great_circle
 from utilities.flight_duration import calculate_total_flight_duration
 from utilities.turn_around_time import turn_around_time
-from utilities.flight_angle import calculate_percentage
 from simulation.airport_objects import airports
 from simulation.aircraft_objects import aircrafts
 
 WAITBUFFER = 45
 
-# Place an aircraft
-# TO DO: Set aside a plane to Paris
 def place_aircrafts():
-    #Place reserve aircrafts
-    aircrafts[1].currentAirport = "EWR"
+    #Paris aircraft
+    aircrafts[1].currentAirport = "JFK"
     for ab in airports:
-        if (airports[ab].abbreviation == "EWR"):
+        if (airports[ab].abbreviation == "JFK"):
             airports[ab].add_aircraft_type(aircrafts[1].model)
             airports[ab].reserve_gate(0,0)
             aircrafts[1].addHistory(airports[ab])
-        aircrafts[1].currentAirport = "EWR"
         aircrafts[1].hasHubbed = True
-    aircrafts[2].currentAirport = "LAX"
+    #Place reserve aircrafts
+    aircrafts[2].currentAirport = "JFK"
     for ab in airports:
-        if (airports[ab].abbreviation == "LAX"):
+        if (airports[ab].abbreviation == "JFK"):
             airports[ab].add_aircraft_type(aircrafts[2].model)
             airports[ab].reserve_gate(0,0)
             aircrafts[2].addHistory(airports[ab])
-        aircrafts[2].currentAirport = "LAX"
-        aircrafts[2].hasHubbed = True 
-    aircrafts[3].currentAirport = "DFW"
+        aircrafts[2].hasHubbed = True
+    aircrafts[3].currentAirport = "LAX"
     for ab in airports:
-        if (airports[ab].abbreviation == "DFW"):
+        if (airports[ab].abbreviation == "LAX"):
             airports[ab].add_aircraft_type(aircrafts[3].model)
             airports[ab].reserve_gate(0,0)
             aircrafts[3].addHistory(airports[ab])
-        aircrafts[3].currentAirport = "DFW"
-        aircrafts[3].hasHubbed = True    
-    aircrafts[4].currentAirport = "MDW"
+        aircrafts[3].hasHubbed = True 
+    aircrafts[4].currentAirport = "DFW"
     for ab in airports:
-        if (airports[ab].abbreviation == "MDW"):
+        if (airports[ab].abbreviation == "DFW"):
             airports[ab].add_aircraft_type(aircrafts[4].model)
             airports[ab].reserve_gate(0,0)
             aircrafts[4].addHistory(airports[ab])
-        aircrafts[4].currentAirport = "MDW"
-        aircrafts[4].hasHubbed = True
-    #aircrafts[?].currentAirport = "going to paris" NEED TO IMPLEMENT
-    i = 5
+        aircrafts[4].hasHubbed = True    
+    aircrafts[5].currentAirport = "MDW"
+    for ab in airports:
+        if (airports[ab].abbreviation == "MDW"):
+            airports[ab].add_aircraft_type(aircrafts[5].model)
+            airports[ab].reserve_gate(0,0)
+            aircrafts[4].addHistory(airports[ab])
+        aircrafts[5].hasHubbed = True
+    i = 6
     #Place the rest of the aircrafts at airports where a hub is filled up to 7 and the rest are placed randomly up to 4
     for i in aircrafts:
         # Abbreviations in aircrafts are initialized to aaa.
@@ -141,7 +141,7 @@ def generate():
                         airports[ab].reserve_gate(CurrentTime + TimeToNextLeg, CurrentTime + TimeToNextLeg + turn_around_time(True) + WAITBUFFER)
 
                 out = "C9" + str(flightnum)
-                print(out, ",", aircrafts[i].id, ",", CurrentAirport.abbreviation, ",", ChosenAirport.abbreviation, ",", calculate_percentage(CurrentAirport, ChosenAirport), ",", TimeToNextLeg, ",", CurrentTime, ",", CurrentTime+TimeToNextLeg, ",", 1, ",", CurrentAirport.gatei%CurrentAirport._totalGates, ",", ChosenAirport.gatei%ChosenAirport._totalGates)
+                print("(", '"', out, '"', ",", aircrafts[i].id, ",", CurrentAirport.id, ",", ChosenAirport.id, ",", CurrentTime, "),")
                 flightnum += 1
                 
 
@@ -156,6 +156,7 @@ def generate():
                         aircrafts[i].hasHubbed = True
         #if (CurrentTime <= 1200):
         #    print(CurrentAirport.abbreviation, CurrentAirport.is_hub, "Done.", CurrentTime)
+        #    print("hubbed?:", aircrafts[i].hasHubbed)
         #else:
         #   print(CurrentAirport.abbreviation, "Done.", CurrentTime, " LANDING LATE!!!")
 
@@ -186,8 +187,18 @@ def nearest_home(currentAirport, aircraftType):
     # airport must be greater than 150 miles
     # if it is the aircrafts hub leg, it must fly to one of the 4 hubs, if all the gates at all hubs are taken, skip the hub and choose a random airport and increment hub leg
 def choose_random_airport(startAirport, CountToHub, aircraft, CurrentTime):
+    #Paris aircraft
+    if aircraft.model == "747-400" and aircraft.currentAirport == "JFK":
+        for ab in airports:
+            if airports[ab].abbreviation == "CDG":
+                return airports[ab]
+    elif aircraft.model == "747-400" and aircraft.currentAirport == "CDG":
+        for ab in airports:
+            if airports[ab].abbreviation == "JFK":
+                return airports[ab]
+
     if aircraft.hubLeg == CountToHub and not aircraft.hasHubbed:
-        Hubs = [2, 4, 6, 7] #Numbers of hubs
+        Hubs = [1, 4, 6, 7] #Numbers of hubs
         for i in range(0,4):
             # Generate time window from start airport to hub
             arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, airports[Hubs[i]], True) + CurrentTime #Time it arrives at Hub
