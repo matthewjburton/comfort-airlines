@@ -15,23 +15,15 @@ Example usage:
 
 import mysql.connector
 import pandas as pd
-import os
-from dotenv import load_dotenv
 
 class Database:
     """Constructor"""
     def __init__(self):
-        # Specify the path to the .env file
-        dotenv_path = "./docker/.env"
-
-        # Load variables from the specified .env file
-        load_dotenv(dotenv_path)
-
         # Initialize database credentials
         self.host = "localhost"
-        self.user = os.environ.get("DB_USER")
-        self.password = os.environ.get("DB_PASS")
-        self.database = os.environ.get("DB_NAME")
+        self.user = 'admin'
+        self.password = 'Cloud9'
+        self.database = 'cloudnine'
         self.connection = None
         self.cursor = None
         
