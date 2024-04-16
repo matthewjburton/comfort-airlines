@@ -8,7 +8,7 @@ __author__ = Ryan Hirscher and Jeremy Maas
 
 import random
 import sys
-sys.path.append('/Users/ryanhirscher/comfort-airlines/comfort-airlines-1')
+sys.path.append('/Users/matt/Documents/GitHub/college-classes/csc4710/comfort-airlines')
 
 from utilities.great_circle import great_circle
 from utilities.flight_duration import calculate_total_flight_duration
