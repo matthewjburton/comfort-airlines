@@ -171,6 +171,8 @@
 - **Date Found:** 4/11/24
 - **Action Plan:** Loop the timetable every day
 - **Assignee(s):** Matt
+- **Date Fixed:** 4/15/24  
+- **Solution:** Clear and repopulate the schedule at the start of every day. Handle events for each minute into the day not total minutes into the simulation.  
 - **Date Fixed:**  
 - **Solution:**  
 
@@ -190,7 +192,7 @@
 - **Action Plan:** There should be 2 major sections: flying to the next leg or flying home. Decide the conditions on when to do which.
 - **Assignee(s):** Ryan
 - **Date Fixed:** 4/9/24
-- **Solution:**  If the time to the next leg and the time to the next home exceed the time in the day, then fly to the current nearest home instead. 
+- **Solution:**  If the time to the next leg and the time to the next home exceed the time in the day, then fly to the current nearest home instead.
 
 ## Bug 22
 
@@ -227,5 +229,3 @@
 - **Assignee(s):** Ryan
 - **Date Fixed:**  4/13/24
 - **Solution:**  Created a property of flight objects which tracks the list of airports it has been to. Added a method to flights object that searches the history list for the airport in question. This prevents the aircraft from choosing an airport in its history as long as it is not on its last flight home.
-
-
