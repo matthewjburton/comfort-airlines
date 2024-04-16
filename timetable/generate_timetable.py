@@ -83,7 +83,7 @@ def place_aircrafts():
 def generate():
     flightnum = 123
     for i in aircrafts:
-        #print("\n", aircrafts[i].tailNumber, "starting")
+        print("\n", aircrafts[i].tailNumber, "starting")
         # Initialize for each aircraft
         isHome = False
         CurrentTime = 0 # Clock
@@ -98,7 +98,7 @@ def generate():
             for ab in airports:
                 if airports[ab].abbreviation == aircrafts[i].currentAirport:
                     hab = airports[ab].is_hub
-            #print(aircrafts[i].currentAirport, hab, " => ", end='')
+            print(aircrafts[i].currentAirport, hab, " => ", end='')
 
             # Choose the next leg in the airport, the nearest home, and the nearst home from the next airport
             # Return the airport object of the chosen
@@ -141,7 +141,7 @@ def generate():
                         airports[ab].reserve_gate(CurrentTime + TimeToNextLeg, CurrentTime + TimeToNextLeg + turn_around_time(True) + WAITBUFFER)
 
                 out = "C9" + str(flightnum)
-                print("(", '"', out, '"', ",", aircrafts[i].id, ",", CurrentAirport.id, ",", ChosenAirport.id, ",", CurrentTime, "),")
+                #print("(", '"', out, '"', ",", aircrafts[i].id, ",", CurrentAirport.id, ",", ChosenAirport.id, ",", CurrentTime, "),")
                 flightnum += 1
                 
 
@@ -154,8 +154,8 @@ def generate():
                 for ab in airports:
                     if airports[ab].abbreviation == CurrentAirport.abbreviation and airports[ab].is_hub:
                         aircrafts[i].hasHubbed = True
-        #if (CurrentTime <= 1200):
-        #    print(CurrentAirport.abbreviation, CurrentAirport.is_hub, "Done.", CurrentTime)
+        if (CurrentTime <= 1200):
+            print(CurrentAirport.abbreviation, CurrentAirport.is_hub, "Done.", CurrentTime)
         #    print("hubbed?:", aircrafts[i].hasHubbed)
         #else:
         #   print(CurrentAirport.abbreviation, "Done.", CurrentTime, " LANDING LATE!!!")

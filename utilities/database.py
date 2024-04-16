@@ -29,9 +29,9 @@ class Database:
 
         # Initialize database credentials
         self.host = "localhost"
-        self.user = os.environ.get("DB_USER")
-        self.password = os.environ.get("DB_PASS")
-        self.database = os.environ.get("DB_NAME")
+        self.user = 'admin'
+        self.password = 'Cloud9'
+        self.database = 'cloudnine'
         self.connection = None
         self.cursor = None
         

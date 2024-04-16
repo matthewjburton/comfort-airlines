@@ -97,7 +97,8 @@ class Aircraft:
         if abbreviation not in self._history:
             self._history.append(abbreviation)
         else:
-            print("Airport is already in the flight path's history!")
+            #print("Airport is already in the flight path's history!")
+            pass
     
     @timeSinceLastMaintenance.setter
     def timeSinceLastMaintenance(self, durationOfLastFlight):
