@@ -204,7 +204,7 @@ def choose_random_airport(startAirport, CountToHub, aircraft, CurrentTime):
             arrivalTimeAtNew = calculate_total_flight_duration(aircraft, startAirport, airports[Hubs[i]], True) + CurrentTime #Time it arrives at Hub
             departureTimeAtNew = arrivalTimeAtNew +  turn_around_time(True) + WAITBUFFER #Time it leaves from Hub
             # Check gate availability
-            if (airports[Hubs[i]].is_gate_available(arrivalTimeAtNew, departureTimeAtNew)):
+            if (airports[Hubs[i]].is_gate_available(arrivalTimeAtNew, departureTimeAtNew) and great_circle(startAirport, airports[Hubs[i]]) > 150):
                 return airports[Hubs[i]] # If available, take the flight
 
         # If no gates available, increment and then choose a random airport
