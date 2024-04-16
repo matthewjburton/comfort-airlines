@@ -21,8 +21,8 @@ DELETE FROM airports;
 -- Insert airport entries into the table
 INSERT INTO airports (name, abbreviation, latitude, longitude, timezone_offset, metro_population, is_hub)
 VALUES
-    ('John F. Kennedy International Airport', 'JFK', 40.641766, -73.780968, -5, 19034000, 0),
-    ('Newark Liberty International Airport', 'EWR', 40.6895314, -74.1744624, -5, 19034000, 1),
+    ('John F. Kennedy International Airport', 'JFK', 40.641766, -73.780968, -5, 19034000, 1),
+    ('Newark Liberty International Airport', 'EWR', 40.6895314, -74.1744624, -5, 19034000, 0),
     ('LaGuardia Airport', 'LGA', 40.7769, -73.874, -5, 19034000, 0),
     ('Los Angeles International Airport', 'LAX', 33.9416, -118.4085, -8, 12598000, 1),
     ('O''Hare International Airport', 'ORD', 41.978611, -87.904724, -6, 8984000, 0),
