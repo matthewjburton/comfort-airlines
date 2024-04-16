@@ -10,7 +10,10 @@ from .aircraft_objects import aircrafts
 from .airport_objects import airports
 from exceptions.maintenance_exception import MaintenanceError
 
+"""
+Comment out maintenance events since its not working as intended and we dont have time to fix it
 MAINTENANCE_TIME = 1.5 # time in days
+"""
 
 class ScheduledEvent:
     def __init__(self, eventType, time):
@@ -49,17 +52,21 @@ class ArrivalEvent(ScheduledEvent):
         aircraftTailNumber = self._aircraft.tailNumber
         airportAbbreviation = self._airport.abbreviation
 
+        """
+        Comment out maintenance events since its not working as intended and we dont have time to fix it
         # Handle aircraft maintenance
         self._aircraft.timeSinceLastMaintenance += self._flight.duration
         if self._aircraft._requiresMaintenance and self._airport._isHub:
             Schedule.get_instance().add_event(StartMaintenanceEvent(self._aircraft, self._airport, self._flight.arrivalTime))
+        """
 
         #self._aircraft.currentFuel -= fuel_burned_during_flight(flight)
         #finances.charge(landingFee)
         return f"Aircraft {aircraftTailNumber} arriving at Airport {airportAbbreviation}"
     
 
-
+"""
+Comment out maintenance events since its not working as intended and we dont have time to fix it
 class StartMaintenanceEvent(ScheduledEvent):
     def __init__(self, aircraft, airport, arrivalTime):
         super().__init__('Start Maintenance', arrivalTime + 1)
@@ -74,7 +81,6 @@ class StartMaintenanceEvent(ScheduledEvent):
             raise MaintenanceError(f"Airport {self._airport.abbreviation} is not a hub")
         else:
             Schedule.get_instance().add_event(FinishMaintenanceEvent(self._aircraft, self._airport, self._time))
-        
         self._aircraft.timeSinceLastMaintenance = 0
         return f"Maintenancing aircraft {aircraftTailNumber} at Airport {airportAbbreviation}"
     
@@ -93,7 +99,7 @@ class FinishMaintenanceEvent(ScheduledEvent):
         
         self._aircraft.timeSinceLastMaintenance = 0
         return f"Finished maintenancing aircraft {aircraftTailNumber} at Airport {airportAbbreviation}"
-    
+"""
 
 
 
