@@ -173,8 +173,6 @@
 - **Assignee(s):** Matt
 - **Date Fixed:** 4/15/24  
 - **Solution:** Clear and repopulate the schedule at the start of every day. Handle events for each minute into the day not total minutes into the simulation.  
-- **Date Fixed:**  
-- **Solution:**  
 
 ## Bug 20
 
