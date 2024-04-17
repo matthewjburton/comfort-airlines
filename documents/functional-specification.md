@@ -30,6 +30,9 @@
   - [report.py](#reportpy)
   - [schedule.py](#schedulepy)
   - [scheduled_event.py](#scheduled_eventpy)
+    - [ScheduledEvent](#scheduled-event-class)
+    - [DepartureEvent](#departure-event-class)
+    - [ArrivalEvent](#arrival-event-class)
   - [simulation_config.json](#simulation_configjson)
   - [simulation.py](#simulationpy)
 
@@ -125,7 +128,7 @@ source /docker-entrypoint-initdb.d/schema.sql
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
 | `view_aircraft()` | Prints the aircraft entities from the aircraft table | None | None |
-| `print_aircrafts_header()` | Formats and prints the column headers for all aircraft attributes | None | None |
+| `print_aircrafts_header()` | Formats and prints the column headers for aircraft attributes | None | None |
 | `print_aircraft(aircraft)` | Formats and prints the information of the aircraft object passed in | `aircraft`: dataframe row | None |
 | `edit_aircraft()` | Displays the list of editing options | None | None |
 | `add_aircraft()` | Adds an aircraft to the database from user input | None | None |
@@ -142,7 +145,7 @@ source /docker-entrypoint-initdb.d/schema.sql
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
 | `view_airports()` | Queries the database for the airports table and prints the entities | None | None |
-| `print_airports_header()` | Formats and prints the column headers for all airport attributes | None | None |
+| `print_airports_header()` | Formats and prints the column headers for airport attributes | None | None |
 | `print_airport(airport)` | Formats and prints the information of the airport object passed in| `airport`: dataframe row| None  |
 | `edit_airport()` | Displays the list of editing options | None | None |
 | `add_airport()` | Adds an airport to the database from user input | None | None |
@@ -163,7 +166,7 @@ source /docker-entrypoint-initdb.d/schema.sql
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
-| `read_config()` | Reads the simulation configuration from the JSON file | None | `dict` |
+| `read_config()` | Returns the simulation configuration from the JSON file | None | `dict` |
 | `write_config(config)` | Writes the simulation configuration to the JSON file| `config`: dict | None |
 | `configure_start_date()` | Configures the start date of the simulation | None | None |
 | `configure_duration()` | Configures the duration of the simulation| None | None |
@@ -180,7 +183,7 @@ source /docker-entrypoint-initdb.d/schema.sql
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
-| `read_config()` | Reads the simulation configuration from the JSON file | None | `dict` |
+| `read_config()` | Returns the simulation configuration from the JSON file | None | `dict` |
 | `write_config(config)` | Writes the simulation configuration to the JSON file| `config`: dict | None |
 | `configure_fuel_cost()`| Configures the fuel cost for the simulation | None | None |
 | `configure_takeoff_cost()` | Configures the takeoff cost for the simulation | None | None |
@@ -341,55 +344,105 @@ source /docker-entrypoint-initdb.d/schema.sql
 | `clear_schedule(self)` | Removes all events from the schedule | `self`: Schedule | None |
 | `add_event(self, event)` | Appends an event to the schedule at the time of the event | `self`: Schedule, `event`: ScheduledEvent | None |
 | `get_events_for_minute(self, minute)` | Returns the list of events at a given time | `self`: Schedule, `minute`: int | `list` |
-| `reschedule_conflicts(self, minute, event)` | Schedules new events a few minutes later to avoid event conflicts | `self`: Schedule, `minute`: int, `event`: ScheduledEvent | None |
 
 ### scheduled_event.py
 
 **Location:** comfort-airlines/simulation/scheduled_event.py  
-**Purpose:**  
+**Purpose:** Handle various event types, storing references to the associated information  
+
+#### Scheduled Event Class
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `__init__(self, eventType, time)` | Event constructor | `self`: ScheduledEvent, `eventType`: string, `time`: int | None |
+| `execute(self)` | Does nothing by default. Override for each event | `self`: ScheduledEvent | None |
+
+#### Departure Event Class
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `__init__(self, flight)` | Creates the ScheduledEvent, and stores references to aircraft and airport involved in departure | `self`: DepartureEvent, `flight`: Flight | None |
+| `execute(self)` | Returns an event string stating which aircraft departs from which airport | `self`: DepartureEvent | `string` |
+
+#### Arrival Event Class
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `__init__(self, flight)` | Creates the ScheduledEvent, and stores references to aircraft and airport involved in arrival | `self`: ArrivalEvent, `flight`: Flight | None |
+| `execute(self)` | Returns an event string stating which aircraft arrives at which airport | `self`: ArrivalEvent | `string` |
 
 ### simulation_config.json
 
 **Location:** comfort-airlines/simulation/simulation_config.json  
-**Purpose:**  
+**Purpose:** JSON Dictionary to store the data relating to the simulation configuration options accessible to the user  
 
-| Method Name | Purpose | Parameters | Return Values |
-|-------------|---------|------------|---------------|
+| Value Name | Use | Default Value |
+|------------|-----|---------------|
+| `startDate` | Sets the day that the simulation begins | `0` |
+| `reportFrequency` | Sets the interval that reports are generated | `final` |
+| `fuelCost` | Sets the price of fuel per gallon | `6.19` |
+| `takeoffCost` | Sets the price per each aircraft takeoff | `2000` |
+| `landingCost` | Sets the price for each aircraft landing | `2000` |
+| `leasingCost` | Sets the leasing cost of each aircraft model type per month | `737-600`: 245000, `737-800`: 270000, `A200-100`: 192000, `A220-300`: 228000 |
 
 ### simulation.py
 
 **Location:** comfort-airlines/simulation/simulation.py  
-**Purpose:**  
+**Purpose:** Implements the funcitonality of the user options from the Simulation section of the main menu  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `run_simulation()` | Runs the main simulation loop and executes events for each minute of the simulation's duration | None | None |
+| `populate_schedule_from_timetable(schedule)` | Resets the event schedule with departure and arrival events based on the flights in the timetable | `schedule`: Schedule | `Schedule` |
+| `create_timetable_from_database()` | Returns a dictionary containing every flight from the flights table in the database | None | `dict` |
+| `get_simulation_configuration()` | Returns the simulation configuration from the JSON file | None | `dict` |
+
+### generate-timetable.py
+
+**Location:** comfort-airlines/timetable/generate-timetable.py  
+**Purpose:** Produce a list of flights abiding by gate constraints which fly through at least one hub each day  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `place_aircrafts()` | Allocates all aircraft to an airport | None | None |
+| `generate()` | Generates an aircraft's flight path for the entire day | None | None |
+| `nearest_home()` | Finds the nearest airport that requires more aircraft of this model | None | `Airport` |
+| `choose_random_airport(startAirport, CountToHub, aircraft, CurrentTime)` | Returns a random suitable airport | `startAirport`: Airport, `CountToHub`: int, `aircraft`: Aircraft, `CurrentTIme`: int | `Airport` |
 
 ### timetable.py
 
 **Location:** comfort-airlines/timetable/timetable.py  
-**Purpose:**  
+**Purpose:** Implements the funcitonality of the user options from the Timetable section of the main menu  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `view_timetable()` | Prints the table of all flights from the database | None | None |
+| `print_timetable_header()` | Formats and prints the column headers for flight attributes | None | None |
+| `print_flight(flight)` | Formats and prints the information of the flight object passed in | `flight`: dataframe row | None |
 
 ### clock.py
 
 **Location:** comfort-airlines/utilities/clock.py  
-**Purpose:**  
+**Purpose:** Print the simulation time in various formats  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `get_time(minutes)` | Converts minutes to days, hours, and minutes | `minutes`: int | `days`: int, `hours`: int, `minutes`: int |
+| `print_time(minutes)` | Returns minutes in a human readable format of day and time | `minutes`: int | `string` |
+| `get_flight_time(minutes)` | Used in view_timetable() and returns just the hours and minutes in human readable format | `minutes`: int | `string` |
 
 ### database.py
 
 **Location:** comfort-airlines/utilities/database.py  
-**Purpose:**  
+**Purpose:** API for interfacing with the database  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `connect(self)` | Establishes a connection to the database | `self`: Database | None |
+| `disconnect(self)` | Closes the database connection | `self`: Database | None |
+| `execute_query(self, query, params=None)` | Executes the given SQL query | `self`: Database, `query`: string, `params`: sequence | `cursor` |
+| `execute_query_to_dataframe(self, query, params=None)` | Executes the given SQL query and returns results as a pandas DataFrame | `self`: Database, `query`: string, `params`: sequence | `dataframe` |
+| `execute_insert_update_delete_query(self, query, params=None)` | Executes INSERT, UPDATE, or DELETE SQL query | `self`: Database, `query`: string, `params`: sequence | None |
 
 ### display_menu.py
 
