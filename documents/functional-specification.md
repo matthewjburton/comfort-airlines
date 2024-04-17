@@ -203,8 +203,8 @@ source /docker-entrypoint-initdb.d/schema.sql
 | `run_simulation()` | Runs the simulation | None | None |
 | `configure_simulation()` | Displays the menu for configuring simulation options | None | None |
 | `analyze_simulation()` | Displays the analyze simulation submenu | None | None |
-| `analyze_follow_aircraft()` | Prints 'executing analyze_follow_aircraft()' | None | None |
-| `analyze_download_reports()` | Prints 'executing analyze_download_reports()' | None | None |
+| `analyze_follow_aircraft()` | Prints 'Executing analyze_follow_aircraft()' | None | None |
+| `analyze_download_reports()` | Prints 'Executing analyze_download_reports()' | None | None |
 
 ### timetable_menu.py
 
@@ -214,15 +214,15 @@ source /docker-entrypoint-initdb.d/schema.sql
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
 | `view_timetable()` | Displays the timetable | None | None |
-| `search_routes()` | Prints 'executing search_routes()' | None | None |
+| `search_routes()` | Prints 'Executing search_routes()' | None | None |
 | `edit_timetable()` | Displays the edit timetable submenu | None | None |
-| `download_timetable()` | Prints 'executing download_timetable()' | None | None |
-| `sort_by_cost()` | Prints 'executing sort_by_cost()' | None | None |
-| `sort_by_number_of_stops()` | Prints 'executing sort_by_number_of_stops()' | None | None |
-| `sort_by_departure_time()` | Prints 'executing sort_by_departure_time()' | None | None |
-| `add_flight()` | Prints 'executing add_flight()' | None | None |
-| `remove_flight()` | Prints 'executing remove_flight()' | None | None |
-| `upload_timetable()` | Prints 'executing upload_timetable()' | None | None |
+| `download_timetable()` | Prints 'Executing download_timetable()' | None | None |
+| `sort_by_cost()` | Prints 'Executing sort_by_cost()' | None | None |
+| `sort_by_number_of_stops()` | Prints 'Executing sort_by_number_of_stops()' | None | None |
+| `sort_by_departure_time()` | Prints 'Executing sort_by_departure_time()' | None | None |
+| `add_flight()` | Prints 'Executing add_flight()' | None | None |
+| `remove_flight()` | Prints 'Executing remove_flight()' | None | None |
+| `upload_timetable()` | Prints 'Executing upload_timetable()' | None | None |
 
 ### aircraft.py
 
@@ -297,34 +297,51 @@ source /docker-entrypoint-initdb.d/schema.sql
 ### aircraft_objects.py
 
 **Location:** comfort-airlines/simulation/aircraft_objects.py  
-**Purpose:**  
+**Purpose:** Create and store a dictionary of aircraft objects used in the simulation to manage their dynamic information  
+**Global Variables:** aircrafts: dictionary containing all of the aircraft objects in the simulation  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| create_aircrafts_from_database() | Returns the aircraft entities from the database in a dictionary | None | `dict` |
 
 ### airport_objects.py
 
 **Location:** comfort-airlines/simulation/airport_objects.py  
-**Purpose:**  
+**Purpose:** Create and store a dictionary of airport objects used in the simulation to manage their dynamic information  
+**Global Variables:** airports: dictionary containing all of the airport objects in the simulation  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| create_airports_from_database() | Returns the airport entities from the database in a dictionary | None | `dict` |
 
 ### report.py
 
 **Location:** comfort-airlines/simulation/report.py  
-**Purpose:**  
+**Purpose:** Generates reports about the simulation  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `handle_report(config, minutes)` | Handles report errors and calls the generate_report() function | `config`: dict, `minutes`: int| None |
+| `should_generate_report(config, minutes)` | Returns true if the simulation time and report frequency align to generate a report | `config`: dict, `minutes`: int | `bool` |
+| `generate_report()` | Prints 'Executing generate_report()' | None | None |
+| `is_start_of_day(minutes)` | Returns true if minutes is the start of a day | `minutes`: int | `bool` |
+| `is_start_of_week(minutes)` | Returns true if minutes is the start of a week | `minutes`: int | `bool` |
+| `is_start_of_month(minutes)` | Returns true if minutes is the start of a month | `minutes`: int | `bool` |
+| `is_start_of_year(minutes)` | Returns true if minutes is the start of a year | `minutes`: int | `bool` |
+| `is_end_of_simulation(config, minutes)` | Returns true if minutes is the end of the simulation | `config`: dict, `minutes`: int | `bool` |
 
 ### schedule.py
 
 **Location:** comfort-airlines/simulation/schedule.py  
-**Purpose:**  
+**Purpose:** Stores a singleton list of all simulation events and at what times they occur
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `get_instance(cls)` | Used for retrieving the singleton instance of the schedule | `cls`: Schedule | `Schedule` |
+| `clear_schedule(self)` | Removes all events from the schedule | `self`: Schedule | None |
+| `add_event(self, event)` | Appends an event to the schedule at the time of the event | `self`: Schedule, `event`: ScheduledEvent | None |
+| `get_events_for_minute(self, minute)` | Returns the list of events at a given time | `self`: Schedule, `minute`: int | `list` |
+| `reschedule_conflicts(self, minute, event)` | Schedules new events a few minutes later to avoid event conflicts | `self`: Schedule, `minute`: int, `event`: ScheduledEvent | None |
 
 ### scheduled_event.py
 
@@ -484,7 +501,7 @@ individual_demand(JFK, LAX)
 
 ```python
 # Author/Editors: Matt
-# Purpose: Return the amount of time in minutes that an aircraft must wait before take off
+# Purpose: Return the amount of time in minutes that an airport must wait before take off
 # Returns: Total minimum turn around time for an aircraft
 # Parameters: Refueling binary value
 # Precondition: A plane is at the gate
@@ -640,7 +657,7 @@ great_circle(JFK, LAX)
 
 - Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
 - Author:  Justin Chen and Matt Burton
-- Precondition: Aircrafts table is created but unpopulated or populated with old data
+- Precondition: airports table is created but unpopulated or populated with old data
 - Postcondition: Aircrafts table is populated with new data
 - Test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
 - Execute:
