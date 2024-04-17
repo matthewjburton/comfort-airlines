@@ -51,7 +51,7 @@ python3 comfort_airlines.py
 # Other Guides (located in documents folder) ###
 
 ### Comfort Airlines
-requirements.md - The requirements document is a list of features that we intend to implement/already have implemented for Comfort Airlines. Each feature also contains a breif description.
+requirements.md - The requirements document is a list of features that we intend to implement/already have implemented for Comfort Airlines. Each feature also contains a brief description.
 
 ### Developers
 functional-specification.md - The functional specification documents is a detailed introduction to the codebase highlighting the purpose and use of files, functions, schemas, and conditions involved in each. This file is intended to help acquaint new team members with our codebase.
