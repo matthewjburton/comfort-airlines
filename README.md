@@ -1,7 +1,7 @@
-## Software Engineering Capstone Project
+### Software Engineering Capstone Project ###
 
-- **Team Name:** Cloud Nine  
-- **Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
+**Team Name:** Cloud Nine  
+**Team Members:** Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 
 # Purpose
 An airline software project created for Comfort Airlines by Cloud Nine. This program allows the user to perform operations on a time table of flights as well as run a simulation over a specified duration of time.
@@ -9,70 +9,25 @@ An airline software project created for Comfort Airlines by Cloud Nine. This pro
 # Description
 When this program is run it will give you key options for editing or viewing the timetable, running or configuring the simulation, as well as viewing or editing aircraft and airport tables. You can simply input the number corresponding to your choice or select 'back' to go back to the previous menu.
 
-# How to use
-
-
-### Comment Example for Methods  
-
-```python
-# XYZ Function - will perform xyz task 
-# Takes `abc` as input and transforms it into `123`
-def XYZ(abc):
-    return 123 # Single line comment explaining code if necessary
-```
-
-## Docker
-
+# How to run the program (Visual Studio Code)
+1. Docker startup
 Make sure you have the Docker daemon running. (Open the Docker Desktop app on your local machine)
 
-### Create a shell in the Docker
+2. Move to the docker directory
+cd .\docker\
 
-To open a new shell within the docker, run the following command in the terminal:
-
+3. Compose the docker container
 ```bash
-#docker exec -it <container name> <shell>
-docker exec -it mariadb-container sh
+docker-compose up -d
 ```
 
-To exit the Docker container, use the *exit* keyword
-
-### How to enter the MariaDB container
-
-Make sure you are already within the docker by creating a shell as described above. To enter the MariaDB container, execute the following command:
-
+4. Enter the database
 ```bash
-# mariadb -u <username> -p
-mariadb -u admin -p
-```
-
-### How to enter the cloudnine database
-
-Make sure you are already within the MariaDB container as described above. To enter the cloudnine database, execute the following sql command:
-
-```bash
-# USE <database name>;
-USE cloudnine;
-```
-
-### How to directly enter the Database
-
-To jump straight into the "cloudnine" database, execute the following command:
-
-```bash
-#docker exec -it <container name> mariadb -u <username> -p <database name>
 docker exec -it mariadb-container mariadb -u admin -p cloudnine
 ```
 
-### How to execute .sql files
-
-.sql files are linked to the database using a docker volume. The /docker/sql-files directory is the volume designated for .sql files that will be run when the docker is initialized. Any .sql files in this folder are also accessible within the docker through the /docker-entrypoint-initdb.d directory. You can execute .sql files using the source command and the file path as follows:
-
-```bash
-#source /docker-entrypoint-initdb.d/<file_name.sql>
-```
-
-If you want to reset the schema, repopulate the airport table, or the aircraft table, run the following command(s) in the cloudnine database:
-
+5. Populate the database
+To reset the schema, repopulate the airport table, and repopulate the aircraft table, run the following commands in the cloudnine database:
 ```bash
 source /docker-entrypoint-initdb.d/schema.sql
 source /docker-entrypoint-initdb.d/populate-airports-table.sql
@@ -80,11 +35,25 @@ source /docker-entrypoint-initdb.d/populate-aircraft-table.sql
 source /docker-entrypoint-initdb.d/populate-flights-table.sql
 ```
 
-### Dependencies
-
-This project relies on certain dependencies to be installed on your local machine to execute the programs involved.  
+6. Exit the database and install dependencies
 To download these dependencies all at once first navigate to the /documents directory then run the following command in your terminal:
-
 ```bash
 pip install -r dependencies.txt
 ```
+
+7. Run the program
+```bash
+python3 comfort_airlines.py
+```
+
+### Other Guides (located in documents folder) ###
+
+# Comfort Airlines
+requirements.md - The requirements document is a list of features that we intend to implement/already have implemented for Comfort Airlines. Each feature also contains a breif description.
+
+# Developers
+functional-specification.md - The functional specification documents is a detailed introduction to the codebase highlighting the purpose and use of files, functions, schemas, and conditions involved in each. This file is intended to help acquaint new team members with our codebase.
+
+test-plan.md - A detailed description of Cloud Nine's testing process. Our test plan is designed to reduce the overall number of bugs entered into the main codebase while maximizing time for developing new features.
+
+defect-log.md - The defect log tracks bugs that our developers have encountered. Bugs are logged in hopes that if someone else has an error that has been logged already they will know how to handle it. This file also provides clarity for team members that are new to the codebase.
