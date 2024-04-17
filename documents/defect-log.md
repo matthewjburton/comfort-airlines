@@ -227,3 +227,12 @@
 - **Assignee(s):** Ryan
 - **Date Fixed:**  4/13/24
 - **Solution:**  Created a property of flight objects which tracks the list of airports it has been to. Added a method to flights object that searches the history list for the airport in question. This prevents the aircraft from choosing an airport in its history as long as it is not on its last flight home.
+
+## Bug 26
+
+- **Issue Description:** Python path does not recognize imports and cannot find utlities folder to import the needed functions or objects
+- **Date Found:** 4/8/24
+- **Action Plan:** Find a way to run files individually
+- **Assignee(s):** Ryan
+- **Date Fixed:**  4/8/24
+- **Solution:**  Quick fix: appended the path with sys and applied a direct path to the comfort airlines folder
