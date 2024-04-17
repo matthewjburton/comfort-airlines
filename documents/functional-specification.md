@@ -8,28 +8,46 @@
 - [Introduction](#introduction)
 - [Naming Conventions](#naming-conventions)
 - [Module Information](#module-information)
-  - [populate-aircraft-table.sql](#populate-aircraft-table.sql)
-  - [populate-airport-table.sql](#populate-airport-table.sql)
-  - [populate-flights-table.sql](#populate-flights-table.sql)
-  - [schema.sql](#schema.sql)
+  - [populate-aircraft-table.sql](#populate-aircraft-tablesql)
+  - [populate-airports-table.sql](#populate-airports-tablesql)
+  - [populate-flights-table.sql](#populate-flights-tablesql)
+  - [schema.sql](#schemasql)
 
-  - [airport](#airportpy)
-  - [flight_duration](#flight_durationpy)
-  - [flight_demand](#flight_demandpy)
-  - [turn_around_time](#turn_around_timepy)
-  - [flight_angle](#flight_anglepy)
-  - [clock](#clockpy)
-- [SQL Template](#sql-template)
-  - [schema](#schemasql)
-  - [populate_airports_table](#populate_airports_tablesql)
-  - [populate_aircraft_table](#populate_aircraft_tablesql)
-- [Database Template](#database-template)
-  - [tables](#tables)
-  - [aircraft](#aircraft---55-rows---protected---hardcoded)
-  - [airport](#airports---31-rows---protected---hardcoded)
-  - [flights](#flights---100-rows---protected---softcoded-and-updateable)
-  - [flights_routes](#flights_routes---100-rows---protected---softcoded-and-updateable)
-  - [routes](#routes---100-rows---protected---softcoded-and-updateable)
+  - [maintenance_exception.py](#maintenance_exceptionpy)
+  - [aircraft_menu.py](#aircraft_menupy)
+  - [airport_menu.py](#airport_menupy)
+  - [configuration_menu.py](#configuration_menupy)
+  - [cost_menu.py](#cost_menupy)
+  - [simulation_menu.py](#simulation_menupy)
+  - [timetable_menu.py](#timetable_menupy)
+
+  - [aircraft.py](#aircraftpy)
+  - [airport.py](#airportpy)
+  - [flight.py](#flightpy)
+
+  - [aircraft_objects.py](#aircraft_objectspy)
+  - [airport_objects.py](#airport_objectspy)
+  - [report.py](#reportpy)
+  - [schedule.py](#schedulepy)
+  - [scheduled_event.py](#scheduled_eventpy)
+  - [simulation_config.json](#simulation_configjson)
+  - [simulation.py](#simulationpy)
+
+  - [timetable.py](#timetablepy)
+
+  - [clock.py](#clockpy)
+  - [database.py](#databasepy)
+  - [display_menu.py](#display_menupy)
+  - [flight_angle.py](#flight_anglepy)
+  - [flight_demand.py](#flight_demandpy)
+  - [flight_duration.py](#flight_durationpy)
+  - [flight_takeoff.py](#flight_takeoffpy)
+  - [great_circle.py](#great_circlepy)
+  - [turn_around_time.py](#turn_around_timepy)
+
+  - [comfort_airlines.py](#comfort_airlinespy)
+
+- [Directory Structure](#directory-structure)
 - [Docker Template](#docker-template)
 - [User Manual Template](#user-manual-template)
 - [Simulation Template](#simulation-template)
@@ -54,78 +72,325 @@
 
 ## Module Information
 
-### docker/sql-files/
-
-This directory is a volume connected to the docker so users can execute these files in the cloudnine database. These files are copied in into the *docker-entrypoint-initdb.d/* directory within the docker.
-
 ### populate-aircraft-table.sql
 
-**Purpose:** When executed, this file replaces the entities in the aircraft table with the hardcoded list of aircraft in this file.  
+**Location:** comfort-airlines/docker/sql-files/populate-aircraft-table.sql  
+**Purpose:** Replaces the entities in the aircraft table with the hardcoded list of aircraft in this file.  
 **Execution:** Once inside the cloudnine database, ensure that the schema has been initialized, then run:  
 
 ```sql
 source /docker-entrypoint-initdb.d/populate-aircraft-table.sql
 ```
 
-##### airport.py
+### populate-airports-table.sql
 
-- { class: Airport }
-- Class purpose: Pull airport information from the database into python class objects allowing easier access.
+**Location:** comfort-airlines/docker/sql-files/populate-airports-table.sql  
+**Purpose:** Replaces the entities in the airports table with the hardcoded list of airports in this file.  
+**Execution:** Once inside the cloudnine database, ensure that the schema has been initialized, then run:  
 
-```python
-# Author/Editors: Jeremy
-# Purpose: Import and create an instance of an airport 
-# Returns: The airport instance instantiated
-# Parameters: The abbreviation for the airport
-# Precondition: Airport object not created and instantiated
-# Postcondition: Airport object created and instantiated
-# Test cases: Make sure that expected values are stored in a given airport instantiation
-import airport
-JFK = airport.Airport("JFK")
+```sql
+source /docker-entrypoint-initdb.d/populate-airports-table.sql
 ```
 
-- {get method list}
+### populate-flights-table.sql
 
-```python
-# Author/Editors: Jeremy
-# Purpose: Able to retreive airport information with get methods
-# Returns: The information stored in the database
-# Parameters: None
-# Precondition: None
-# Postcondition: Airport information of that instance is returned
-# Test: Expected information is returned for different instances
-# Airport Methods:
-JFK.get_airport_id()
-JFK.get_airport_name()
-JFK.get_airport_abbreviation()
-JFK.get_airport_latitude()
-JFK.get_airport_longitude()
-JFK.get_airport_timezone_offset()
-JFK.get_metro_population()
-JFK.get_total_gates()
-JFK.get_available_gates()
-JFK.get_is_hub()
+**Location:** comfort-airlines/docker/sql-files/populate-flights-table.sql  
+**Purpose:** Replaces the entities in the flights table with the hardcoded list of flights in this file.  
+**Execution:** Once inside the cloudnine database, ensure that the schema has been initialized, then run:  
+
+```sql
+source /docker-entrypoint-initdb.d/populate-flights-table.sql
 ```
 
-- { Modifying Functions }
+### schema.sql
 
-```python
-# Author/Editors: Jeremy
-# Purpose: Adjust gate values to ensure consistency
-# Parameters: None
-# Returns: None
-# Precondition: A gate becomes available or taken up
-# Postcondition: Gate availability is consistent and up to date
-# Test: Take and free gates up until an expected value
-# Modifying Functions:
-remote_gate()
-add_gate()
+**Location:** comfort-airlines/docker/sql-files/schema.sql  
+**Purpose:** Empties and replaces the existing tables with the database schema as defined in this file.  
+**Execution:** Once inside the cloudnine database, initialize the schema by running:  
+
+```sql
+source /docker-entrypoint-initdb.d/schema.sql
 ```
 
-- Execute:
-    1. Move to the comfort-airlines/ directory
-    2. Execute the file using the following command in the terminal:
--       python3 airport.py
+### maintenance_exception.py
+
+**Location:** comfort-airlines/exceptions/maintenance_exception.py  
+**Purpose:** Handles error logging for invalid maintenance calls  
+
+### aircraft_menu.py
+
+**Location:** comfort-airlines/menus/aircraft_menu.py  
+**Purpose:** Responsible for implementing the menu options under the aircraft menu option  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `view_aircraft()` | Prints the aircraft entities from the aircraft table | None | None |
+| `print_aircrafts_header()` | Formats and prints the column headers for all aircraft attributes | None | None |
+| `print_aircraft(aircraft)` | Formats and prints the information of the aircraft object passed in | `aircraft`: dataframe row | None |
+| `edit_aircraft()` | Displays the list of editing options | None | None |
+| `add_aircraft()` | Adds an aircraft to the database from user input | None | None |
+| `remove_aircraft()` | Prints the aircraft table and then allows user to remove an aircraft by tail_number | None | None |
+| `get_valid_tail_number()` | Returns valid tail_number from user input or 'quit' if the user cancels | None | `str` or `'quit'`|
+| `get_valid_name_or_model(input_type)` | Returns valid string from user input or 'quit' if the user cancels | `input_type`: str | `str` or `'quit'` |
+| `get_int_value(input_type)` | Returns valid integer value from user input or 'quit' if the user cancels | `input_type`: str | `int` or `'quit'` |
+
+### airport_menu.py
+
+**Location:** comfort-airlines/menus/airport_menu.py  
+**Purpose:** Responsible for implementing the menu options under the airport menu option  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `view_airports()` | Queries the database for the airports table and prints the entities | None | None |
+| `print_airports_header()` | Formats and prints the column headers for all airport attributes | None | None |
+| `print_airport(airport)` | Formats and prints the information of the airport object passed in| `airport`: dataframe row| None  |
+| `edit_airport()` | Displays the list of editing options | None | None |
+| `add_airport()` | Adds an airport to the database from user input | None | None |
+| `remove_airport()` | Prints the airport table and then allows user to remove an airport by abbreviation | None | None |
+| `get_valid_name()` | Returns valid airport name from user input or 'quit' if the user cancels | None  | `str` or `'quit'` |
+| `get_valid_abbreviation(removingAirport)`| Returns valid airport abbreviation from user input or 'quit' if the user cancels. If removingAirport is True, checks if abbreviation exists in the database | `removingAirport`: bool | `str` or `'quit'` |
+| `get_valid_latitude()` | Returns valid latitude from user input or 'quit' if the user cancels | None | `float` or `'quit'` |
+| `get_valid_longitude()` | Returns valid longitude from user input or 'quit' if the user cancels | None | `float` or `'quit'` |
+| `get_valid_timezone_offset()` | Returns valid timezone offset from user input or 'quit' if the user cancels | None | `int` or `'quit'` |
+| `get_valid_metro_population()` | Returns valid metro population from user input or 'quit' if the user cancels | None | `int` or `'quit'` |
+| `get_valid_is_hub()` | Returns valid is_hub value from user input or 'quit' if the user cancels | None | `int` or `'quit'` |
+| `get_valid_total_gates(metroPopulation, isHub)` | Returns valid total gates value from user input or 'quit' if the user cancels. Calculates maximum possible gates based on metroPopulation and isHub values | `metroPopulation`: int, `isHub`: int | `int` or `'quit'` |
+
+### configuration_menu.py
+
+**Location:** comfort-airlines/menus/configuration_menu.py  
+**Purpose:** Responsible for implementing the menu options under the configure simulation menu option  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `read_config()` | Reads the simulation configuration from the JSON file | None | `dict` |
+| `write_config(config)` | Writes the simulation configuration to the JSON file| `config`: dict | None |
+| `configure_start_date()` | Configures the start date of the simulation | None | None |
+| `configure_duration()` | Configures the duration of the simulation| None | None |
+| `configure_report_frequency()` | Configures the report frequency of the simulation | None  | None |
+| `get_report_frequency_options(duration)`| Determines the available report frequency options based on the duration of the simulation | `duration`: int | `list` |
+| `format_options_for_print(options)` | Formats the report frequency options for display | `options`: list | `str` |
+| `ensure_valid_report_frequency(config, duration)`| Ensures that the selected report frequency is valid based on the duration of the simulation | `config`: dict, `duration`: int | `str` |
+| `configure_costs()` | Displays the costs submenu | None | None |
+
+### cost_menu.py
+
+**Location:** comfort-airlines/menus/cost_menu.py  
+**Purpose:** Responsible for implementing the menu options under the configure costs menu option  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `read_config()` | Reads the simulation configuration from the JSON file | None | `dict` |
+| `write_config(config)` | Writes the simulation configuration to the JSON file| `config`: dict | None |
+| `configure_fuel_cost()`| Configures the fuel cost for the simulation | None | None |
+| `configure_takeoff_cost()` | Configures the takeoff cost for the simulation | None | None |
+| `configure_landing_cost()` | Configures the landing cost for the simulation | None | None |
+| `configure_leasing_costs()` | Configures the leasing costs for different aircraft models | None| None |
+| `retrieve_aircraft_models_and_costs()` | Retrieves the aircraft models and their leasing costs from the database | None | `dataframe` |
+| `display_aircraft_models_and_costs(dataframe)` | Displays the current leasing costs for each aircraft model | `dataframe`: dataframe | None |
+| `handle_model_input(leasingCosts)` | Handles user input for selecting an aircraft model| `leasingCosts`: dict | `str` |
+| `handle_leasing_cost_input(model, leasingCosts, config)`| Handles user input for updating the leasing cost of an aircraft model | `model`: str, `leasingCosts`: dict, `config`: dict | None |
+| `update_leasing_costs_in_database(leasingCosts)` | Updates the leasing costs of aircraft models in the database| `leasingCosts`: dict | None |
+| `is_valid_dollar_value(inputString)`| Checks if the input string represents a valid dollar value | `inputString`: str | `bool` |
+
+### simulation_menu.py
+
+**Location:** comfort-airlines/menus/simulation_menu.py  
+**Purpose:** Responsible for implementing the menu options under the simulation menu option  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `run_simulation()` | Runs the simulation | None | None |
+| `configure_simulation()` | Displays the menu for configuring simulation options | None | None |
+| `analyze_simulation()` | Displays the analyze simulation submenu | None | None |
+| `analyze_follow_aircraft()` | Prints 'executing analyze_follow_aircraft()' | None | None |
+| `analyze_download_reports()` | Prints 'executing analyze_download_reports()' | None | None |
+
+### timetable_menu.py
+
+**Location:** comfort-airlines/menus/timetable_menu.py  
+**Purpose:** Responsible for implementing the menu options under the timetable main menu option  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+| `view_timetable()` | Displays the timetable | None | None |
+| `search_routes()` | Prints 'executing search_routes()' | None | None |
+| `edit_timetable()` | Displays the edit timetable submenu | None | None |
+| `download_timetable()` | Prints 'executing download_timetable()' | None | None |
+| `sort_by_cost()` | Prints 'executing sort_by_cost()' | None | None |
+| `sort_by_number_of_stops()` | Prints 'executing sort_by_number_of_stops()' | None | None |
+| `sort_by_departure_time()` | Prints 'executing sort_by_departure_time()' | None | None |
+| `add_flight()` | Prints 'executing add_flight()' | None | None |
+| `remove_flight()` | Prints 'executing remove_flight()' | None | None |
+| `upload_timetable()` | Prints 'executing upload_timetable()' | None | None |
+
+### aircraft.py
+
+**Location:** comfort-airlines/objects/aircraft.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### airport.py
+
+**Location:** comfort-airlines/objects/airport.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### flight.py
+
+**Location:** comfort-airlines/objects/flight.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### aircraft_objects.py
+
+**Location:** comfort-airlines/simulation/aircraft_objects.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### airport_objects.py
+
+**Location:** comfort-airlines/simulation/airport_objects.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### report.py
+
+**Location:** comfort-airlines/simulation/report.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### schedule.py
+
+**Location:** comfort-airlines/simulation/schedule.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### scheduled_event.py
+
+**Location:** comfort-airlines/simulation/scheduled_event.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### simulation_config.json
+
+**Location:** comfort-airlines/simulation/simulation_config.json  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### simulation.py
+
+**Location:** comfort-airlines/simulation/simulation.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### timetable.py
+
+**Location:** comfort-airlines/timetable/timetable.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### clock.py
+
+**Location:** comfort-airlines/utilities/clock.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### database.py
+
+**Location:** comfort-airlines/utilities/database.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### display_menu.py
+
+**Location:** comfort-airlines/utilities/display_menu.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### flight_angle.py
+
+**Location:** comfort-airlines/utilities/flight_angle.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### flight_demand.py
+
+**Location:** comfort-airlines/utilities/flight_demand.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### flight_duration.py
+
+**Location:** comfort-airlines/utilities/flight_duration.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### flight_takeoff.py
+
+**Location:** comfort-airlines/utilities/flight_takeoff.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### great_circle.py
+
+**Location:** comfort-airlines/utilities/great_circle.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### turn_around_time.py
+
+**Location:** comfort-airlines/utilities/turn_around_time.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
+
+### comfort_airlines.py
+
+**Location:** comfort-airlines/comfort_airlines.py  
+**Purpose:**  
+
+| Method Name | Purpose | Parameters | Return Values |
+|-------------|---------|------------|---------------|
 
 ##### flight_duration.py
 
@@ -237,7 +502,7 @@ reset_clock()
 # Parameter: none
 # Precondition: Time is some value
 # Postcondition: Minute is incremented by 1, if 60 minutes the hour will be incremented 
-#                and minutes set to 0, if 24 hours set both to zero and increment day
+#   and minutes set to 0, if 24 hours set both to zero and increment day
 # Test cases: At any time the clock will be incremented by one minute, the hour is 
 #             incremented at 60 minutes and the minutes are set to 0, at 24 hours the 
 #             day is incremented and the hours and minutes are set to 0
@@ -337,6 +602,12 @@ great_circle(JFK, LAX)
 -       docker exec -it mariadb-container mariadb -u admin -p cloudnine
     2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
 -       source /docker-entrypoint.initdb.d/populate_aircraft_table.sql
+
+## Directory Structure
+
+### docker/sql-files/
+
+This directory is a volume connected to the docker so users can execute these files in the cloudnine database. These files are copied in into the *docker-entrypoint-initdb.d/* directory within the docker.
 
 ### Database Template
 

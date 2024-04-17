@@ -1,5 +1,5 @@
 """
-Class responsible for implementing the menu options under the configure simulation menu option
+Responsible for implementing the menu options under the configure simulation menu option
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
@@ -13,12 +13,18 @@ import json
 import os
 
 class ConfigurationMenu:
-     
     """Configuration Options"""
+
     CONFIG_FILE_PATH = 'simulation/simulation_config.json'
 
     @staticmethod
     def read_config():
+        """
+        Reads the simulation configuration from the JSON file.
+
+        Returns:
+            dict: The simulation configuration.
+        """
         if os.path.exists(ConfigurationMenu.CONFIG_FILE_PATH):
             with open(ConfigurationMenu.CONFIG_FILE_PATH, 'r') as f:
                 return json.load(f)
@@ -27,11 +33,22 @@ class ConfigurationMenu:
 
     @staticmethod
     def write_config(config):
+        """
+        Writes the simulation configuration to the JSON file.
+
+        Parameters:
+            config (dict): The simulation configuration to write.
+        """
         with open(ConfigurationMenu.CONFIG_FILE_PATH, 'w') as f:
             json.dump(config, f)
 
     @staticmethod
     def configure_start_date():
+        """
+        Configures the start date of the simulation.
+
+        Prompts the user to enter a new start date and updates the configuration accordingly.
+        """
         config = ConfigurationMenu.read_config()
 
         # Configuration information for start date
@@ -64,6 +81,11 @@ class ConfigurationMenu:
 
     @staticmethod    
     def configure_duration():
+        """
+        Configures the duration of the simulation.
+
+        Prompts the user to enter a new duration and updates the configuration accordingly.
+        """
         config = ConfigurationMenu.read_config()
 
         # Configuration information for duration
@@ -100,6 +122,11 @@ class ConfigurationMenu:
 
     @staticmethod    
     def configure_report_frequency():
+        """
+        Configures the report frequency of the simulation.
+
+        Prompts the user to enter a new report frequency and updates the configuration accordingly.
+        """
         config = ConfigurationMenu.read_config()
 
         # Determine the report frequency options based on the duration of the simulation
@@ -133,6 +160,15 @@ class ConfigurationMenu:
                 print("Report frequency must be a string.\n")
 
     def get_report_frequency_options(duration):
+        """
+        Determines the available report frequency options based on the duration of the simulation.
+
+        Parameters:
+            duration (int): The duration of the simulation in days.
+
+        Returns:
+            list: The available report frequency options.
+        """
         options = ["daily"]
 
         if duration >= 14:  # 2 weeks
@@ -146,6 +182,15 @@ class ConfigurationMenu:
         return options
     
     def format_options_for_print(options):
+        """
+        Formats the report frequency options for display.
+
+        Parameters:
+            options (list): The report frequency options.
+
+        Returns:
+            str: The formatted options string.
+        """
         # Add single quotes around each option
         options = [f"'{option}'" for option in options]
 
@@ -165,6 +210,16 @@ class ConfigurationMenu:
         return options
     
     def ensure_valid_report_frequency(config, duration):
+        """
+        Ensures that the selected report frequency is valid based on the duration of the simulation.
+
+        Parameters:
+            config (dict): The simulation configuration.
+            duration (int): The duration of the simulation in days.
+
+        Returns:
+            str: The updated report frequency.
+        """
         min_durations = {
             'yearly': 730,
             'monthly': 61,
@@ -178,6 +233,11 @@ class ConfigurationMenu:
 
     @staticmethod
     def configure_costs():
+        """
+        Configures the costs associated with the simulation.
+
+        Displays a submenu of cost options and allows the user to configure each cost type.
+        """
         cost_options = {
                 "Fuel": CostMenu.configure_fuel_cost,
                 "Takeoff": CostMenu.configure_takeoff_cost,

@@ -1,5 +1,5 @@
 """
-Handles error looging for invalid maintenance calls
+Handles error logging for invalid maintenance calls
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
