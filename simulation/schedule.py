@@ -6,7 +6,10 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton
 """
 
+"""
+Comment out recheduling events since its not working as intended and we dont have time to fix it
 POSTPONE_TIME = 3
+"""
 
 class Schedule:
     _instance = None
@@ -31,7 +34,10 @@ class Schedule:
         if minute not in self._schedule:
             self._schedule[minute] = []  # Create a list for events at this minute if it doesn't exist
         
+        """
+        Comment out recheduling events since its not working as intended and we dont have time to fix it
         self.reschedule_conflicts(minute, event) # Determine if the new events is scheduled to occur at the same time and airport as another sscheduled event
+        """
 
         self._schedule[minute].append(event)  # Add the event to the list for this minute
 
@@ -41,10 +47,12 @@ class Schedule:
         """
         return self._schedule.get(minute, [])  # Return the list of events for the given minute, or an empty list if no events
     
+    """
+    Comment out recheduling events since its not working as intended and we dont have time to fix it
     def reschedule_conflicts(self, minute, event):
-        """
+        """"""
         Find existing events that would conflict with a new event and resechule the new event
-        """
+        """"""
         eventConflict = False
         for scheduledEvent in self._schedule[minute]:
             # If the event type for both the scheduled event and the new event are either a departure or arrival event for both events reschedule
@@ -54,3 +62,4 @@ class Schedule:
         if eventConflict:
             event._time += POSTPONE_TIME
             self.add_event(event)
+    """

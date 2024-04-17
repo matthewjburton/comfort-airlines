@@ -21,6 +21,8 @@ DELETE FROM aircraft;
 -- Insert airport entries into the table
 INSERT INTO aircraft (tail_number, name, model, maximum_speed, maximum_capacity, maximum_fuel, cargo_volume, leasing_cost)
 VALUES
+    -- Boeing 747-400 Paris Aircraft
+    ('N099C9', 'Boeing', '747-400', 655, 416, 63485, 1200, 300000),
     -- Boeing 737-600
     ('N100C9', 'Boeing', '737-600', 588, 130, 6875, 756, 245000),
     ('N101C9', 'Boeing', '737-600', 588, 130, 6875, 756, 245000),
