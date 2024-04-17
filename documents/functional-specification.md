@@ -227,26 +227,72 @@ source /docker-entrypoint-initdb.d/schema.sql
 ### aircraft.py
 
 **Location:** comfort-airlines/objects/aircraft.py  
-**Purpose:**  
+**Purpose:** Represents aircraft objects in the simulation. Important for tracking the dynamic information of each aircraft  
+
+| Attribute Name | Type | Unit |
+|----------------|------|------|
+| `_id` | int |  |
+| `_tailNumber` | string |  |
+| `_name` | string |  |
+| `_model` | string |  |
+| `_maximumSpeed` | int | mph |
+| `_maximumCapacity` | int | passengers |
+| `_maximumFuel` | int | gallons |
+| `_currentFuel` | int | gallons |
+| `_cargoVolume` | int | cubic feet |
+| `_leasingCost` | int | USD |
+| `_timeSinceLastMaintenance` | int | minutes |
+| `_requiresMaintenance` | bool |  |
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `timeSinceLastMaintenance(self, durationOfLastFlight)` | Set the time since last maintenance and updates the requires maintenance value | `self`: aircraft, `durationOfLastFlight`: int | None |
 
 ### airport.py
 
 **Location:** comfort-airlines/objects/airport.py  
-**Purpose:**  
+**Purpose:** Represents airport objects in the simulation. Important for tracking the dynamic information of each airport
+
+| Attribute Name | Type | Unit |
+|----------------|------|------|
+| _id | int | |
+| _name | string | |
+| _abbreviation | string | |
+| _latitude | float | degrees |
+| _longitude | float | degrees |
+| _timezoneOffset | int | hours |
+| _metroPopulation | int | people |
+| _totalGates | int | |
+| _availableGates | int | |
+| _isHub | int | binary |
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `remove_gate(self)` | Attempts to increase the avaialable gates by one | `self`: airport | None |
+| `add_gate(self)` | Attempts to decrease the available gates by one | `self`: airport | None |
 
 ### flight.py
 
 **Location:** comfort-airlines/objects/flight.py  
-**Purpose:**  
+**Purpose:** Used to mirror the flights in the database and update their values during the simulation  
+
+| Attribute Name | Type | Unit |
+|----------------|------|------|
+| _id | int | |
+| _number | string | |
+| _aircraftID | int | |
+| _departureAirportID | int | |
+| _destinationAirportID | int | |
+| _angleOfFlight | float | degrees |
+| _duration | int | minutes |
+| _departureTime | int | minutes |
+| _arrivalTime | int | minutes |
+| _onTimeBin | int | binary |
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| duration(self, duration) | Sets the flight duration and the arrival time | `self`: flight, `duration`: int | None |
+| arrivalTime(self, newArrivalTime) | Sets the arrival time and updates the on time value | `self`: flight, `duration`: int | None |
 
 ### aircraft_objects.py
 

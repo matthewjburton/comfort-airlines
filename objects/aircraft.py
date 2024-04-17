@@ -1,5 +1,5 @@
 """
-Class used to represent aircraft objects in the simulation. Important for tracking the dynamic information of each aircraft
+Represents aircraft objects in the simulation. Important for tracking the dynamic information of each aircraft
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher

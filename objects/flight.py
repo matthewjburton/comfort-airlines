@@ -1,5 +1,5 @@
 """
-Flight class used to mirror the flights in the database and update their values during the simulation
+Used to mirror the flights in the database and update their values during the simulation
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher

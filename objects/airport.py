@@ -1,5 +1,5 @@
 """
-Airport class. Used in the simulation to get and set dynamic values
+Represents airport objects in the simulation. Important for tracking the dynamic information of each airport
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
