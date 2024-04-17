@@ -6,9 +6,9 @@ __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
-from .great_circle import great_circle
-from .flight_angle import calculate_percentage
-from .turn_around_time import turn_around_time
+from utilities.great_circle import great_circle
+from utilities.flight_angle import calculate_percentage
+from utilities.turn_around_time import turn_around_time
 
 PERCENT_OF_MAX_SPEED = 0.9
 DEBUGGING = False
@@ -39,7 +39,7 @@ def calculate_flight_duration(aircraft, departureAirport, destinationAirport):
     return flightDurationInMinutes
 
 def calculate_total_flight_duration(aircraft, departureAirport, destinationAirport, refueling = False):
-    takeOffTime = take_off_time()
+    takeOffTime = 0 #take_off_time()
     flightDuration = calculate_flight_duration(aircraft, departureAirport, destinationAirport)
     turnAroundTime = turn_around_time(refueling)
 

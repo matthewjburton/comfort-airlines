@@ -6,7 +6,10 @@ __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Just
 __author__ = Matt Burton
 """
 
-REQUIRES_MAINTENANCE = 0#200 # aircraft require maintenance after 200 hours of flight
+"""
+Comment out maintenance events since its not working as intended and we dont have time to fix it
+REQUIRES_MAINTENANCE = 200 # aircraft require maintenance after 200 hours of flight
+"""
 
 class Aircraft:
     def __init__(self, id, tailNumber, name, model, maximumSpeed, maximumCapacity, maximumFuel, cargoVolume, leasingCost):
@@ -22,14 +25,30 @@ class Aircraft:
         self._leasingCost = leasingCost
         self._timeSinceLastMaintenance = 0
         self._requiresMaintenance = False
+        self._currentAirport = "aaa"
+        self._hubLeg = 0
+        self._hasHubbed = False
+        self._history = []
 
     @property
     def id(self):
         return self._id
 
     @property
+    def currentAirport(self):
+        return self._currentAirport
+    
+    @property
+    def history(self):
+        return self._history
+
+    @property
     def tailNumber(self):
         return self._tailNumber
+    
+    @property
+    def hasHubbed(self):
+        return self._hasHubbed
 
     @property
     def name(self):
@@ -67,6 +86,25 @@ class Aircraft:
     def timeSinceLastMaintenance(self):
         return self._timeSinceLastMaintenance
     
+    @property
+    def hubLeg(self):
+        return self._hubLeg
+    
+    def isInHistory(self, abbreviation):
+        if abbreviation in self._history:
+            return True
+        else:
+            return False
+    
+    def addHistory(self, abbreviation):
+        if abbreviation not in self._history:
+            self._history.append(abbreviation)
+        else:
+            #print("Airport is already in the flight path's history!")
+            pass
+    
+    """
+    Comment out maintenance events since its not working as intended and we dont have time to fix it
     @timeSinceLastMaintenance.setter
     def timeSinceLastMaintenance(self, durationOfLastFlight):
         self._timeSinceLastMaintenance += durationOfLastFlight
@@ -75,3 +113,16 @@ class Aircraft:
             self._requiresMaintenance = True
         else:
             self._requiresMaintenance = False
+    """
+
+    @currentAirport.setter
+    def currentAirport(self, abbreviation):
+        self._currentAirport=abbreviation
+    
+    @hasHubbed.setter
+    def hasHubbed(self, value):
+        self._hasHubbed=value
+
+    @hubLeg.setter
+    def hubLeg(self, value):
+        self._hubLeg=value
