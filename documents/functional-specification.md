@@ -50,10 +50,17 @@
 
   - [comfort_airlines.py](#comfort_airlinespy)
 
-- [Directory Structure](#directory-structure)
-- [Docker Template](#docker-template)
-- [User Manual Template](#user-manual-template)
-- [Simulation Template](#simulation-template)
+- [Database](#database)
+  - [Tables](#tables)
+    - [Aircraft Table](#aircraft-table)
+    - [Airports Table](#airports-table)
+    - [Flights Table](#flights-table)
+
+- [Docker](#docker)
+  - [docker-compose.yaml](#docker-composeyaml)
+  - [Volumes](#volumes)
+    - [MariaDB Data](#mariadb-data)
+    - [SQL Files](#sql-files)
 
 ## Introduction
 
@@ -301,7 +308,7 @@ source /docker-entrypoint-initdb.d/schema.sql
 
 **Location:** comfort-airlines/simulation/aircraft_objects.py  
 **Purpose:** Create and store a dictionary of aircraft objects used in the simulation to manage their dynamic information  
-**Global Variables:** aircrafts: dictionary containing all of the aircraft objects in the simulation  
+**Global Variable:** `aircrafts`: dictionary containing all of the aircraft objects in the simulation  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
@@ -311,7 +318,7 @@ source /docker-entrypoint-initdb.d/schema.sql
 
 **Location:** comfort-airlines/simulation/airport_objects.py  
 **Purpose:** Create and store a dictionary of airport objects used in the simulation to manage their dynamic information  
-**Global Variables:** airports: dictionary containing all of the airport objects in the simulation  
+**Global Variable:** `airports`: dictionary containing all of the airport objects in the simulation  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
@@ -447,303 +454,92 @@ source /docker-entrypoint-initdb.d/schema.sql
 ### display_menu.py
 
 **Location:** comfort-airlines/utilities/display_menu.py  
-**Purpose:**  
+**Purpose:** Displays lists of options and handles user input for selecting an option  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `display_menu(menu, is_submenu=False)` | Displays an enumerated list of menu options and handles user input for option selection | `menu`: dict, `is_submenu`: bool | None |
 
 ### flight_angle.py
 
 **Location:** comfort-airlines/utilities/flight_angle.py  
-**Purpose:**  
+**Purpose:** Returns % of base flight time that a flight will take based on wind and bearing angle  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `calculate_percentage(startAirport, endAirport, wind = .045)` | Returns a float to multiply with flight time to find the actual time the flight will take | `startAirport`: Airport, `endAirport`: Airport, `wind`: float | `float` |
 
 ### flight_demand.py
 
 **Location:** comfort-airlines/utilities/flight_demand.py  
-**Purpose:**  
+**Purpose:** Returns number of people flying from Airport A to Airport B based on metro population  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `individual_demand(startingAirport, endingAirport)` | Returns number of people flying from Airport A to Airport B based on metro population | `startingAirport`: Airport, `endingAirport`: Airport | `int` |
 
 ### flight_duration.py
 
 **Location:** comfort-airlines/utilities/flight_duration.py  
-**Purpose:**  
+**Purpose:** Calculates the duration of flights based on aircraft models, airport locations, and flight angles  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `calculate_flight_duration(aircraft, departureAirport, destinationAirport)` | Returns the time in minutes for an aircraft to get from its departure airport to its destination | `aircraft`: Aircraft, `departureAirport`: Airport, `destinationAirport`: Airport | `int` |
+| `calculate_total_flight_duration(aircraft, departureAirport, destinationAirport, refueling = False)` | Returns the time in minutes for an aircraft to get from its departure airport to its destination and turn around for its next flight | `aircraft`: Aircraft, `departureAirport`: Airport, `destinationAirport`: Airport, `refueling`: bool | `int` |
 
 ### flight_takeoff.py
 
 **Location:** comfort-airlines/utilities/flight_takeoff.py  
-**Purpose:**  
+**Purpose:** Calculates the time for an aircraft to reach cruising altitude or descend form cruising altitude
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `calculate_acceleration_time(cruisingAltitude, maxSpeed)` | Calculates the time it takes to fly and get into cruising altitude then to reach max speed | `cruisingAltitude`: int, `maxSpeed`: int | `int` |
+| `calculate_descent_time(distance)` | Calculates the time to land using the aircraft's distance away from it's destination | `distance`: float | `int` |
 
 ### great_circle.py
 
 **Location:** comfort-airlines/utilities/great_circle.py  
-**Purpose:**  
+**Purpose:** Returns the distance in miles between two airports  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `great_circle(airportOne, airportTwo)` | Returns the distance in miles between two airports | `airportOne`: Airport, `airportTwo`: Airport | `float` |
 
 ### turn_around_time.py
 
 **Location:** comfort-airlines/utilities/turn_around_time.py  
-**Purpose:**  
+**Purpose:** Returns the minimum amount of time in minutes that an aircraft must wait before taking off for its next flight  
 
 | Method Name | Purpose | Parameters | Return Values |
 |-------------|---------|------------|---------------|
+| `turn_around_time(aircraftNeedsRefuel)` | Returns the minimum amount of time in minutes that an aircraft must wait before taking off for its next flight | `aircraftNeedsRefuel`: bool | `int` |
 
 ### comfort_airlines.py
 
 **Location:** comfort-airlines/comfort_airlines.py  
-**Purpose:**  
+**Purpose:** The main executable program for the user interface. Responsible for displaying the main menu and calling the corresponding methods.
+**Execution:** In the comfort-airlines directory, run the following command in the terminal to run the main executable:
 
-| Method Name | Purpose | Parameters | Return Values |
-|-------------|---------|------------|---------------|
-
-##### flight_duration.py
-
-- { function: calculate_flight_time }
-
-```python
-# Author/Editors: Kevin
-# Purpose: Ensures that destination airport does not equal starting airport, ensures that destination airport is not within 150 miles of the departing airport. Flight time is calculated is found meeting these criteria.
-# Returns: Flight time
-# Parameters: Database configuration in key value pairs of user, password, host, and dbname
-# Precondition: 
-# Postcondition: 
-# Test cases:
-calculate_flight_time(db_config)
+```bash
+python3 comfort_airlines.py
 ```
 
-- Execute:
-    1. Move to the comfort-airlines/ directory
-    2. Execute the file using the following command in the terminal:
--       python3 flight_duration.py
+## Database
 
-##### flight_demand.py
-
-- { function: individual_demand }
-
-```python
-# Author/Editors: Jeremy
-# Purpose: Calculate the number of people flying from A to B
-# Returns: Integer number of people
-# Parameters: starting airport, destination airport
-# Precondition: Passengers for a flight unknown
-# Postcondition: Passengers for a flight known
-# Test cases: calculate by hand and add a test case for a given flight
-individual_demand(JFK, LAX)
-```
-
-- Execute:
-    1. Move to the comfort-airlines/ directory
-    2. Execute the file using the following command in the terminal:
--       python3 flight_demand.py
-
-##### turn_around_time.py
-
-- { function: turn_around_time }
-
-```python
-# Author/Editors: Matt
-# Purpose: Return the amount of time in minutes that an airport must wait before take off
-# Returns: Total minimum turn around time for an aircraft
-# Parameters: Refueling binary value
-# Precondition: A plane is at the gate
-# Postcondition: The turn around time is calculated
-# Test cases: 0 and 1
-# 0: No extra time needed for refueling
-# 1: Extra time needed for refueling
-turn_around_time(0)
-```
-
-- Execute:
-    1. Move to the comfort-airlines/ directory
-    2. Execute the file using the following command in the terminal:
--       python3 turn_around_time.py
-
-##### flight_angle.py
-
-- { function: calculate_percentage }
-
-```python
-# Author/Editors: Jeremy
-# Purpose: Returns the percentage of base flight time that a flight will take based on the wind and bearing angle
-# Returns: A float to multiply with flight time to find the actual time the flight will take
-# Parameter: startAirport, endAirport, wind
-# Precondition: % of flight time is not accoutned for
-# Postcondition: % of flight time is returned
-# Test cases: 0 and 1
-# 0: One of any airport for start and end, wind default is 0.045
-# 1: Crosscheck flight angle percentages against well known values found online for current flights
-calculate_percentage(JFK, LAX, 0.045)
-```
-
-- Execute:
-    1. Move to the comfort-airlines/ directory
-    2. Execute the file using the following command in the terminal:
--       python3 flight_angle.py
-
-##### clock.py
-
-- { class: Clock }
-- Class purpose: Track the current simulation time and manage incrementing time minute by minute
-- { method: reset_clock }
-
-```python
-# Author/Editors: Matt
-# Purpose: Reset to day 1 at 0 hours and 0 minutes
-# Returns: none
-# Parameter: none
-# Precondition: Time is some value
-# Postcondition: Time is set to 1, 0, 0
-# Test cases: At any time the clock will be reset to 1, 0, 0
-reset_clock()
-```
-
-- { method: increment_clock }
-
-```python
-# Author/Editors: Matt
-# Purpose: Increment the clock by 1 minute and check for hour increment and day increment
-# Return: none
-# Parameter: none
-# Precondition: Time is some value
-# Postcondition: Minute is incremented by 1, if 60 minutes the hour will be incremented 
-#   and minutes set to 0, if 24 hours set both to zero and increment day
-# Test cases: At any time the clock will be incremented by one minute, the hour is 
-#             incremented at 60 minutes and the minutes are set to 0, at 24 hours the 
-#             day is incremented and the hours and minutes are set to 0
-# 0: Increment the length of a day in minutes and examine the time
-increment_clock()
-```
-
-- { method: print_time}
-
-```python
-# Author/Editor: Matt
-# Purpose: Output the current time of the clock to the terminal
-# Return: none
-# Parameter: none
-# Precondition: Time not printed but available
-# Postcondition: Time printed to terminal
-# Test cases: The time printed must match the time when printed
-print_time()
-```
-
-- Execute:
-    1. Move to the comfort-airlines/ directory
-    2. Execute the file using the following command in the terminal:
--       python3 clock.py
-
- great_circle.py
-
-- { class: Airport }
-- Author: Matt
-- Purpose: Initialize airports for testing
-- { function: great_circle }
-
-```python
-# Author/Editors: Matt
-# Purpose: Return the distance between the two airports
-# Return: Distance float value in miles
-# Paramter: departure airport, and arrival airport
-# Precondition: Distance between two airports is not calculated
-# Postcondition: Distance is calculated and returned
-# Test cases: Airport values passed to the function which returns the distance. Tested against real values through Haversine formula.
-great_circle(JFK, LAX)
-```
-
-- Execute:
-    1. Move to the comfort-airlines/ directory
-    2. Execute the file using the following command in the terminal:
--       python3 great_circle.py
-
-### SQL Template
-
-- Author/Editor
-- Purpose
-- Precondition
-- Postcondition
-- { trigger }
-  - Purpose
-- Test
-- Execute steps
-
-##### schema.sql
-
-- Author/Editors: Matt and Ryan
-- Purpose: Removes all tables from the database and recreates them using the schema
-- Precondition: Old database volume or structure
-- Postcondition: Baseline infrastructure created
-- { trigger: calculate_total_gates }
-- This SQL trigger populates gates at a given airport. 5 per airport and 11 per hub up until the population limit.
-- Test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
-- Execute:
-    1. Log into the database:  docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;
--      docker exec -it mariadb-container mariadb -u admin -p cloudnine
-    2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/schema.sql
-
-##### populate_airports_table.sql
-
-- Purpose: Removes all entries from the airports table then inserts all of the airports in the list
-- Author:  Matt Burton
-- Precondition: Airports table is created but unpopulated or populated with old data
-- Postcondition: Airports table is populated with new data
-- Test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
-- Execute:
-    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;
--       docker exec -it mariadb-container mariadb -u admin -p cloudnine
-    2. To execute the populate-airport-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/populate_airport_table.sql
-
-##### populate_aircraft_table.sql
-
-- Purpose: Removes all entries from the aircraft table then inserts all of the aircraft in the list below
-- Author:  Justin Chen and Matt Burton
-- Precondition: airports table is created but unpopulated or populated with old data
-- Postcondition: Aircrafts table is populated with new data
-- Test: periodically compose down and up the container. Connect to mariadb then to the database and show tables.
-- Execute:
-    1. Log into the database: docker exec -it &lt;container name&gt; mariadb -u &lt;username&gt; -p &lt;database name&gt;
--       docker exec -it mariadb-container mariadb -u admin -p cloudnine
-    2. To execute the populate-aircraft-table.sql file: source &lt;file/path/file_name.sql&gt;
--       source /docker-entrypoint.initdb.d/populate_aircraft_table.sql
-
-## Directory Structure
-
-### docker/sql-files/
-
-This directory is a volume connected to the docker so users can execute these files in the cloudnine database. These files are copied in into the *docker-entrypoint-initdb.d/* directory within the docker.
-
-### Database Template
-
-- Table name - row estimate - protected/unprotected - hard/softcoded
-- Table description of Field, Type, Null, Key, Null, Extra information
-
-##### Tables
+### Tables
 
 | Tables_in_cloudnine |
 |---------------------|
 | aircraft            |
 | airports            |
 | flights             |
-| flights_routes      |
-| routes              |
 
-##### aircraft - 55 rows - Protected - Hardcoded
+### Aircraft Table
 
 | Field            | Type         | Null | Key | Default | Extra          |
-|------------------|--------------|------|-----|---------|----------------|
++------------------+--------------+------+-----+---------+----------------+
 | aircraft_id      | int(11)      | NO   | PRI | NULL    | auto_increment |
 | tail_number      | varchar(20)  | YES  |     | NULL    |                |
 | name             | varchar(255) | YES  |     | NULL    |                |
@@ -754,10 +550,10 @@ This directory is a volume connected to the docker so users can execute these fi
 | cargo_volume     | int(11)      | YES  |     | NULL    |                |
 | leasing_cost     | int(11)      | YES  |     | NULL    |                |
 
-##### airports - 31 rows - Protected - Hardcoded
+### Airports Table
 
 | Field            | Type         | Null | Key | Default | Extra          |
-|------------------|--------------|------|-----|---------|----------------|
++------------------+--------------+------+-----+---------+----------------+
 | airport_id       | int(11)      | NO   | PRI | NULL    | auto_increment |
 | name             | varchar(255) | YES  |     | NULL    |                |
 | abbreviation     | varchar(3)   | YES  |     | NULL    |                |
@@ -768,74 +564,55 @@ This directory is a volume connected to the docker so users can execute these fi
 | total_gates      | int(11)      | YES  |     | NULL    |                |
 | is_hub           | binary(1)    | YES  |     | NULL    |                |
 
-##### flights - 100+ rows - Protected - Softcoded and updateable
+### Flights Table
 
-| Field                   | Type        | Null | Key | Default | Extra          |
-|-------------------------|-------------|------|-----|---------|----------------|
-| flight_id               | int(11)     | NO   | PRI | NULL    | auto_increment |
-| flight_number           | varchar(20) | YES  |     | NULL    |                |
-| aircraft_id             | int(11)     | YES  | MUL | NULL    |                |
-| departure_airport_id    | int(11)     | YES  | MUL | NULL    |                |
-| destination_airport_id  | int(11)     | YES  | MUL | NULL    |                |
-| angle_of_flight         | float       | YES  |     | NULL    |                |
-| flight_duration_minutes | int(11)     | YES  |     | NULL    |                |
-| local_departure_time    | int(11)     | YES  |     | NULL    |                |
-| local_arrival_time      | int(11)     | YES  |     | NULL    |                |
-| on_time_bin             | binary(1)   | YES  |     | NULL    |                |
-| gate_departure          | int(11)     | YES  |     | NULL    |                |
-| gate_arrival            | int(11)     | YES  |     | NULL    |                |
+| Field                  | Type        | Null | Key | Default | Extra          |
++------------------------+-------------+------+-----+---------+----------------+
+| flight_id              | int(11)     | NO   | PRI | NULL    | auto_increment |
+| flight_number          | varchar(20) | YES  |     | NULL    |                |
+| aircraft_id            | int(11)     | YES  | MUL | NULL    |                |
+| departure_airport_id   | int(11)     | YES  | MUL | NULL    |                |
+| destination_airport_id | int(11)     | YES  | MUL | NULL    |                |
+| angle_of_flight        | float       | YES  |     | NULL    |                |
+| duration               | int(11)     | YES  |     | NULL    |                |
+| departure_time         | int(11)     | YES  |     | NULL    |                |
+| arrival_time           | int(11)     | YES  |     | NULL    |                |
 
-##### flights_routes - 100+ rows - Protected - Softcoded and updateable
+## Docker
 
-| Field        | Type    | Null | Key | Default | Extra          |
-|--------------|---------|------|-----|---------|----------------|
-| route_leg_id | int(11) | NO   | PRI | NULL    | auto_increment |
-| route_id     | int(11) | YES  | MUL | NULL    |                |
-| flight_id    | int(11) | YES  | MUL | NULL    |                |
+**Location:** comfort-airlines/docker/  
+**Purpose:** Containerizes the database for cross platform compatibility  
+**Connection:** To connect to the running docker container execute the following command in the terminal:
 
-##### routes - 100+ rows - Protected - Softcoded and updateable
+```bash
+docker exec -it mariadb-container mariadb -u admin -p cloudnine
+```
 
-| Field                  | Type    | Null | Key | Default | Extra          |
-|------------------------|---------|------|-----|---------|----------------|
-| route_id               | int(11) | NO   | PRI | NULL    | auto_increment |
-| starting_airport_id    | int(11) | YES  | MUL | NULL    |                |
-| destination_airport_id | int(11) | YES  | MUL | NULL    |                |
+### docker-compose.yaml
 
-### Docker Template
+**Location:** comfort-airlines/docker/docker-compose.yaml  
+**Purpose:** Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.  
+**Execution:** With the docker daemon running, this container not running, and the working directory being the comfort-airlines/docker/ directory, execute the following command in the terminal to start the docker container:
 
-- Filename
-- Purpose
-- Execution
+```bash
+docker-compose up -d  
+```
 
-##### docker_compose.yaml
+### Volumes
 
-- Purpose: Configurations for docker are listed in here which are parsed when to composing up an instance with key value pairs. This specifies the volumes to mount for SQL files and MariaDB data, environment values like database name and password prompt, and GUI for database.
-- Compose command: docker compose up mariadb -d
+Volume directories are folders that are linked to the docker container for access within the container.
 
-### User Manual Template
+#### MariaDB Data
 
-- Filename
-- { Functions/classes list | Purpose, Returns, Parameters, Tests }
-- Function call
-- Purpose
-- Author
-- Current testing
-- Preconditions
-- Postconditions
-- Parameters
-- Returns
-- Execution steps
+**Location:** comfort-airlines/docker/mariadb-data/  
+**Purpose:** This directory is a volume connected to the docker used to store the database contents.  
 
-### Simulation Template
+#### SQL Files
 
-- Filename
-- { Functions/classes list | Purpose, Returns, Parameters, Tests }
-- Function call
-- Purpose
-- Author
-- Current testing
-- Preconditions
-- Postconditions
-- Parameters
-- Returns
-- Execution steps
+**Location:** comfort-airlines/docker/sql-files/  
+**Purpose:** This directory is a volume connected to the docker so users can execute these files in the cloudnine database. These files are copied in into the *docker-entrypoint-initdb.d/* directory within the docker.  
+**Execution:** Execut the files in this folder by first connecting to the cloudnine database then executing the following command:  
+
+```sql
+source docker-entrypoint-initdb.d/<file_name.sql>
+```

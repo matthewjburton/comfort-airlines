@@ -1,6 +1,6 @@
 """
 The main executable program for the user interface. 
-Responsible for displaying the features and options menus and calling the corresponding methods.
+Responsible for displaying the main menu and calling the corresponding methods.
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
