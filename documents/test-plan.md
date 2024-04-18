@@ -117,7 +117,6 @@ python3 test_great_circle.py
 |----------|-------|-----------|
 | test_same_airport() | Call great_circle(airportSF, airportSF) | 0 |
 | test_far_away_airports() | Call great_circle(airportSF, airportNY) | 2572.08 |
-| test_close_airports() | Call great_circle(airportA, airportB) | 0 |
 
 ##### Turn Around Time
 Assert that the turn around time values are correct.
