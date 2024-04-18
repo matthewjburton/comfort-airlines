@@ -19,6 +19,7 @@ import os
 from dotenv import load_dotenv
 
 class Database:
+    
     """Constructor"""
     def __init__(self):
         # Specify the path to the .env file

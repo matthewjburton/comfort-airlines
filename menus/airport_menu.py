@@ -1,5 +1,5 @@
 """
-Class responsible for implementing the menu options under the airport menu option
+Responsible for implementing the menu options under the airport menu option
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
@@ -9,10 +9,11 @@ import re
 from utilities.display_menu import display_menu
 from utilities.database import Database
 class AirportMenu:
-
     """Airport Options"""
+    
     @staticmethod
     def view_airports():
+        """Queries the database for the airports table and prints the entities"""
         # Query the database for the airports table
         db = Database()
         query = 'SELECT * FROM airports'
@@ -26,15 +27,18 @@ class AirportMenu:
                 AirportMenu.print_airport(airport)
 
     def print_airports_header():
+        """Formats and prints the column headers for all airport attributes"""
         headerDisplay = f"{'Airport Name':<60} {'Abbreviation':<15} {'Latitude':<10} {'Longitude':<10} {'Population':<15} {'Gates':<8} {'Hub':<5}\n"
         print(headerDisplay)
 
     def print_airport(airport):
+        """Formats and prints the information of the airport object passed in"""
         airportDisplay = f"{airport['name']:<60} {airport['abbreviation']:<15} {airport['latitude']:<10} {airport['longitude']:<10} {airport['metro_population']:<15,} {airport['total_gates']:<8} {airport['is_hub']:<5}"
         print(airportDisplay)
 
     @staticmethod
     def edit_airport():
+        """Displays the list of editing options"""
         edit_options = {
             "Add": AirportMenu.add_airport,
             "Remove": AirportMenu.remove_airport,
@@ -44,11 +48,10 @@ class AirportMenu:
     
     """
     Edit Options
-    add_airport: adds an airport from user input. (No input sanitization yet)
-    remove_airport: prints the airport table and then allows user to remove an airport by airport_id.
     """
     @staticmethod
     def add_airport():
+        """Adds an airport to the database from user input"""
         # Initialize the Database object
         db = Database()
 
@@ -92,6 +95,7 @@ class AirportMenu:
 
     @staticmethod
     def remove_airport():
+        """Prints the airport table and then allows user to remove an airport by abbreviation"""
         # Print the airport table
         AirportMenu.view_airports()
         print('')
@@ -131,6 +135,7 @@ class AirportMenu:
             db.disconnect()
 
     def get_valid_name():
+        """Returns valid airport name from user input or 'quit' if the user cancels"""
         db = Database()
         query = 'SELECT * FROM airports'
         airports = db.execute_query_to_dataframe(query)
@@ -158,6 +163,10 @@ class AirportMenu:
                 print("Airport name must be a string.")
 
     def get_valid_abbreviation(removingAirport):
+        """
+        Returns valid airport abbreviation from user input or 'quit' if the user cancels.
+        If removingAirport is True, checks if abbreviation exists in the database.
+        """
         db = Database()
         query = 'SELECT * FROM airports'
         airports = db.execute_query_to_dataframe(query)
@@ -194,6 +203,7 @@ class AirportMenu:
                 print("Airport abbreviation must be a string.")
 
     def get_valid_latitude():
+        """Returns valid latitude from user input or 'quit' if the user cancels"""
         while True:
             try:
                 latitude = input("Enter latitude or 'q' to quit: ")
@@ -211,6 +221,7 @@ class AirportMenu:
                 print("Invalid input. Latitude must be a number.")
     
     def get_valid_longitude():
+        """Returns valid longitude from user input or 'quit' if the user cancels"""
         while True:
             try:
                 longitude = input("Enter longitude or 'q' to quit: ")
@@ -228,6 +239,7 @@ class AirportMenu:
                 print("Invalid input. Longitude must be a number.")
 
     def get_valid_timezone_offset():
+        """Returns valid timezone offset from user input or 'quit' if the user cancels"""
         while True:
             try:
                 offset = input("Enter timezone offset from UTC or 'q' to quit: ")
@@ -245,6 +257,7 @@ class AirportMenu:
                 print("Invalid input. Timezone offset must be a number.")
 
     def get_valid_metro_population():
+        """Returns valid metro population from user input or 'quit' if the user cancels"""
         while True:
             try:
                 population = input("Enter metro population or 'q' to quit: ")
@@ -263,6 +276,7 @@ class AirportMenu:
                 print("Invalid input. Metro population must be an integer.")
 
     def get_valid_is_hub():
+        """Returns valid is_hub value from user input or 'quit' if the user cancels"""
         while True:
             try:
                 isHub = input("Is this airport a hub? 'yes' or 'no' or 'q' to quit: ")
@@ -282,6 +296,10 @@ class AirportMenu:
                 print("Invalid input. Is hub must be a string.")
 
     def get_valid_total_gates(metroPopulation, isHub):
+        """
+        Returns valid total gates value from user input or 'quit' if the user cancels.
+        Calculates maximum possible gates based on metroPopulation and isHub values.
+        """
         maximumGates = min(int(metroPopulation / 1000000), 11 if isHub else 5)
         print(f"The valid range of gates for the new airport is 1 to {maximumGates}")
 

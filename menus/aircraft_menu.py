@@ -1,19 +1,19 @@
 """
-Class responsible for implementing the menu options under the aircraft menu option
+Responsible for implementing the menu options under the aircraft menu option
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = McHale Trotter and Matt Burton
 """
-import re
 from utilities.display_menu import display_menu
 from utilities.database import Database
 
 class AircraftMenu:
+    """Aircraft menu options"""
 
-    """Aircraft Options"""
     @staticmethod
     def view_aircraft():
+        """Prints the aircraft entities from the aircraft table in the database"""
         # Query the database for the aircraft table
         db = Database()
         query = 'SELECT * FROM aircraft'
@@ -26,16 +26,20 @@ class AircraftMenu:
                 AircraftMenu.print_aircraft(aircraft)
 
     def print_aircrafts_header():
+        """Formats and prints the column headers for all of the aircraft attributes"""
         headerDisplay = f"{'Tail Number':<12} {'Aircraft Name':<15} {'Model':<10} {'Maximum Speed':<15} {'Capacity':<10} {'Fuel Capacity':<15} {'Cargo Volume':<15} {'Leasing Cost':<16}\n"
         headerDisplay += f"{'':<12} {'':<15} {'':<10} {'(mph)':<15} {'(people)':<10} {'(gallons)':<15} {'(cubic feet)':<15} {'(USD per month)':<16}\n"
         print(headerDisplay)
 
     def print_aircraft(aircraft):
+        """Formats and prints the information of the aircraft object passed in"""
+
         aircraftDisplay = f"{aircraft['tail_number']:<12} {aircraft['name']:<15} {aircraft['model']:<10} {aircraft['maximum_speed']:<15,} {aircraft['maximum_capacity']:<10,} {aircraft['maximum_fuel']:<15,} {aircraft['cargo_volume']:<15,} ${aircraft['leasing_cost']:<16,}"
         print(aircraftDisplay)
 
     @staticmethod
     def edit_aircraft():
+        """Displays the list of editing options"""
         edit_options = {
             "Add": AircraftMenu.add_aircraft,
             "Remove": AircraftMenu.remove_aircraft,
@@ -45,11 +49,10 @@ class AircraftMenu:
     
     """
     Edit Options
-    add_aircraft: adds an aircraft from user input. (No input sanitization yet)
-    remove_aircraft: prints the aircraft table and then allows user to remove an aircraft by aircraft_id.
     """
     @staticmethod
     def add_aircraft():
+        """Adds an aircraft to the database from user input"""
         # Initialize the Database object
         db = Database()
 
@@ -93,6 +96,7 @@ class AircraftMenu:
 
     @staticmethod
     def remove_aircraft():
+        """Prints the aircraft table and then allows user to remove an aircraft by tail_number"""
         # Print the aircraft table
         AircraftMenu.view_aircraft()
 
@@ -145,6 +149,7 @@ class AircraftMenu:
             db.disconnect()
 
     def get_valid_tail_number():
+        """Returns valid tail_number from user input or 'quit' if the user cancels"""
         db = Database()
         query = 'SELECT * FROM aircraft'
         aircraft = db.execute_query_to_dataframe(query)
@@ -172,6 +177,7 @@ class AircraftMenu:
 
 
     def get_valid_name_or_model(input_type):
+        """Returns valid string from user input or 'quit' if the user cancels"""
         while True:
                 try:
                     user_input = input(f"Enter aircraft {input_type} or 'q' to quit: ")
@@ -187,6 +193,7 @@ class AircraftMenu:
                     print(f"Aircraft {input_type} must be a string.")
 
     def get_int_value(input_type):
+        """Returns valid integer from user input or 'quit' if the user cancels"""
         while True:
             try:
                 user_input = input(f"Enter {input_type} or 'q' to quit: ")
