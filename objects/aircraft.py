@@ -1,12 +1,15 @@
 """
-Class used to represent aircraft objects in the simulation. Important for tracking the dynamic information of each aircraft
+Represents aircraft objects in the simulation. Important for tracking the dynamic information of each aircraft
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
 __author__ = Matt Burton
 """
 
-REQUIRES_MAINTENANCE = 0#200 # aircraft require maintenance after 200 hours of flight
+"""
+Comment out maintenance events since its not working as intended and we dont have time to fix it
+REQUIRES_MAINTENANCE = 200 # aircraft require maintenance after 200 hours of flight
+"""
 
 class Aircraft:
     def __init__(self, id, tailNumber, name, model, maximumSpeed, maximumCapacity, maximumFuel, cargoVolume, leasingCost):
@@ -100,6 +103,8 @@ class Aircraft:
             #print("Airport is already in the flight path's history!")
             pass
     
+    """
+    Comment out maintenance events since its not working as intended and we dont have time to fix it
     @timeSinceLastMaintenance.setter
     def timeSinceLastMaintenance(self, durationOfLastFlight):
         self._timeSinceLastMaintenance += durationOfLastFlight
@@ -108,6 +113,7 @@ class Aircraft:
             self._requiresMaintenance = True
         else:
             self._requiresMaintenance = False
+    """
 
     @currentAirport.setter
     def currentAirport(self, abbreviation):

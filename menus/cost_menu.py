@@ -1,5 +1,5 @@
 """
-Class responsible for implementing the menu options under the configure costs menu option
+Responsible for implementing the menu options under the configure costs menu option
 
 __team_name__ = Cloud Nine
 __team_members__ = Jeremy Maas, Matt Burton, McHale Trotter, Kevin Sampson, Justin Chen, Ryan Hirscher
@@ -13,12 +13,18 @@ import json
 import os
 
 class CostMenu:
-    
     """Cost Options"""
+
     CONFIG_FILE_PATH = 'simulation/simulation_config.json'
 
     @staticmethod
     def read_config():
+        """
+        Reads the simulation configuration from the JSON file.
+
+        Returns:
+            dict: The simulation configuration.
+        """
         if os.path.exists(CostMenu.CONFIG_FILE_PATH):
             with open(CostMenu.CONFIG_FILE_PATH, 'r') as f:
                 return json.load(f)
@@ -27,11 +33,22 @@ class CostMenu:
 
     @staticmethod
     def write_config(config):
+        """
+        Writes the simulation configuration to the JSON file.
+
+        Parameters:
+            config (dict): The simulation configuration to write.
+        """
         with open(CostMenu.CONFIG_FILE_PATH, 'w') as f:
             json.dump(config, f)
 
     @staticmethod
     def configure_fuel_cost():
+        """
+        Configures the fuel cost for the simulation.
+
+        Prompts the user to enter a new fuel cost and updates the configuration accordingly.
+        """
         config = CostMenu.read_config()
 
         # Configuration information for fuel cost
@@ -67,6 +84,11 @@ class CostMenu:
 
     @staticmethod
     def configure_takeoff_cost():
+        """
+        Configures the takeoff cost for the simulation.
+
+        Prompts the user to enter a new takeoff cost and updates the configuration accordingly.
+        """
         config = CostMenu.read_config()
 
         # Configuration information for takeoff cost
@@ -101,6 +123,11 @@ class CostMenu:
 
     @staticmethod
     def configure_landing_cost():
+        """
+        Configures the landing cost for the simulation.
+
+        Prompts the user to enter a new landing cost and updates the configuration accordingly.
+        """
         config = CostMenu.read_config()
 
         # Configuration information for takeoff cost
@@ -135,6 +162,11 @@ class CostMenu:
 
     @staticmethod
     def configure_leasing_costs():
+        """
+        Configures the leasing costs for different aircraft models.
+
+        Displays the current leasing costs for each model and allows the user to update them.
+        """
         while True:
             dataframe = CostMenu.retrieve_aircraft_models_and_costs()
             CostMenu.display_aircraft_models_and_costs(dataframe)
@@ -161,6 +193,12 @@ class CostMenu:
 
     @staticmethod
     def retrieve_aircraft_models_and_costs():
+        """
+        Retrieves the aircraft models and their leasing costs from the database.
+
+        Returns:
+            pandas.DataFrame: DataFrame containing the aircraft models and leasing costs.
+        """
         db = Database()
         query = 'SELECT DISTINCT model, leasing_cost FROM aircraft'
         dataframe = db.execute_query_to_dataframe(query)
@@ -168,6 +206,12 @@ class CostMenu:
     
     @staticmethod
     def display_aircraft_models_and_costs(dataframe):
+        """
+        Displays the current leasing costs for each aircraft model.
+
+        Parameters:
+            dataframe (pandas.DataFrame): DataFrame containing the aircraft models and leasing costs.
+        """
         print(f"\nCurrent leasing costs for each model per month:\n")
         headerDisplay = f"{'Model':<10} {'Leasing Cost':<20}\n"
         headerDisplay += f"{'':<10} {'(USD per month)':<20}\n"
@@ -180,6 +224,15 @@ class CostMenu:
 
     @staticmethod
     def handle_model_input(leasingCosts):
+        """
+        Handles user input for selecting an aircraft model.
+
+        Parameters:
+            leasingCosts (dict): Dictionary containing aircraft models and their leasing costs.
+
+        Returns:
+            str: The selected aircraft model.
+        """
         while True:
             try:
                 model = input("Enter an aircraft model or 'q' to quit: ")
@@ -195,6 +248,15 @@ class CostMenu:
 
     @staticmethod
     def handle_leasing_cost_input(model, leasingCosts, config):
+        """
+        Handles user input for updating the leasing cost of an aircraft model.
+
+        Parameters:
+            model (str): The aircraft model for which the leasing cost is being updated.
+            leasingCosts (dict): Dictionary containing aircraft models and their leasing costs.
+            config (dict): The simulation configuration.
+
+        """
         while True:
             try:
                 cost = input(f"Enter the new leasing cost for {model} or 'q' to quit: $")
@@ -217,6 +279,12 @@ class CostMenu:
 
     @staticmethod
     def update_leasing_costs_in_database(leasingCosts):
+        """
+        Updates the leasing costs of aircraft models in the database.
+
+        Parameters:
+            leasingCosts (dict): Dictionary containing aircraft models and their leasing costs.
+        """
         db = Database()
 
         query = "UPDATE aircraft SET leasing_cost = CASE "
@@ -226,7 +294,16 @@ class CostMenu:
 
         db.execute_insert_update_delete_query(query)
         
-    def is_valid_dollar_value(input_str):
+    def is_valid_dollar_value(inputString):
+        """
+        Checks if the input string represents a valid dollar value.
+
+        Parameters:
+            inputString (str): The input string to validate.
+
+        Returns:
+            bool: True if the input string is a valid dollar value, False otherwise.
+        """
         # Regular expression to match dollar value
         pattern = r'^(?:\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?|\d+(?:\.\d{1,2})?)$'
-        return re.match(pattern, input_str) is not None
+        return re.match(pattern, inputString) is not None
