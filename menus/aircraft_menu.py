@@ -108,8 +108,8 @@ class AircraftMenu:
         if tailNum == 'q':
             return
 
-        sql_check_aircraft = f"SELECT aircraft_id FROM aircraft WHERE tail_number = {tailNum}"
-        aircraftID_df = db.execute_query_to_dataframe(sql_check_aircraft)
+        sql_check_aircraft = "SELECT aircraft_id FROM aircraft WHERE tail_number = %s"
+        aircraftID_df = db.execute_query_to_dataframe(sql_check_aircraft, (tailNum,))
 
         # Check if the aircraft exists in the database
         if aircraftID_df.empty:
@@ -117,12 +117,12 @@ class AircraftMenu:
             return
         
         # Extract the aircraft ID from the DataFrame
-        aircraftID = aircraftID_df.iloc[0]['aircraft_id']
+        aircraftID = int(aircraftID_df.iloc[0]['aircraft_id'])
         
         # Check if the aircraft is associated with a flight before removing it
         try:
-            sql_check_flights = f"SELECT * FROM flights WHERE aircraft_id = {aircraftID}"
-            result = db.execute_query_to_dataframe(sql_check_flights)
+            sql_check_flights = f"SELECT * FROM flights WHERE aircraft_id = %s"
+            result = db.execute_query_to_dataframe(sql_check_flights, (aircraftID,))
         
             # If not associated we remove it.
             if result.empty:
@@ -136,11 +136,11 @@ class AircraftMenu:
                 print(f"Error checking flights: {e}")
                 return
 
-        sql = f"DELETE FROM aircraft WHERE aircraft_id = {aircraftID}"
+        sql = f"DELETE FROM aircraft WHERE aircraft_id = %s"
 
         try: 
             # Execute remove aircraft query
-            db.execute_insert_update_delete_query(sql)
+            db.execute_insert_update_delete_query(sql, (aircraftID,))
             print("Aircraft removed successfully!")
         except Exception as e:
             print(f"Error removing aircraft: {e}")
@@ -201,11 +201,26 @@ class AircraftMenu:
                 if user_input.lower() == 'q':
                     return 'quit'
                 
-                user_input = int(user_input)
+                if input_type == 'leasing cost (USD)':
+                    if AircraftMenu.is_valid_dollar_value(user_input):
+                        user_input = float(user_input.replace(',', ''))
+                        if user_input >= 0:
+                            return user_input
+                        else:
+                            print(f"Aircraft {input_type} must be a non-negative integer.")
+                    else:
+                        print('Leasing cost must be a valid dollar value.\n')
+                else:       
+                    user_input = int(user_input)
 
-                if user_input >= 0:
-                    return user_input
-                else:
-                    print(f"Aircraft {input_type} must be a non-negative integer.")
+                    if user_input >= 0:
+                        return user_input
+                    else:
+                        print(f"Aircraft {input_type} must be a non-negative integer.")
             except ValueError:
                 print(f"Aircraft {input_type} must be an integer.")
+
+    def is_valid_dollar_value(input_str):
+        # Regular expression to match dollar value
+        pattern = r'^(?:\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?|\d+(?:\.\d{1,2})?)$'
+        return re.match(pattern, input_str) is not None

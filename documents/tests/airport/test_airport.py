@@ -16,7 +16,7 @@ class TestAirport(unittest.TestCase):
 
     def setUp(self):
         # Create a mock airport object for testing
-        self.mock_airport = Airport(1,'John F. Kennedy International Airport', 'JFK', 40.641766, -73.780968, -5, 19034000, 5, 3, 0)
+        self.mock_airport = Airport(1,'John F. Kennedy International Airport', 'JFK', 40.641766, -73.780968, -5, 19034000, 5, 3, 1)
 
     """Test each of the the methods in airport.py"""
 
@@ -48,7 +48,7 @@ class TestAirport(unittest.TestCase):
         self.assertEqual(self.mock_airport.get_available_gates(), 3)
 
     def test_get_is_hub(self):
-        self.assertFalse(self.mock_airport.get_is_hub())
+        self.assertTrue(self.mock_airport.get_is_hub())
 
     def test_remove_gate(self):
         self.mock_airport.remove_gate()
