@@ -539,7 +539,7 @@ python3 comfort_airlines.py
 ### Aircraft Table
 
 | Field            | Type         | Null | Key | Default | Extra          |
-+------------------+--------------+------+-----+---------+----------------+
+|------------------|--------------|------|-----|---------|----------------|
 | aircraft_id      | int(11)      | NO   | PRI | NULL    | auto_increment |
 | tail_number      | varchar(20)  | YES  |     | NULL    |                |
 | name             | varchar(255) | YES  |     | NULL    |                |
@@ -553,7 +553,7 @@ python3 comfort_airlines.py
 ### Airports Table
 
 | Field            | Type         | Null | Key | Default | Extra          |
-+------------------+--------------+------+-----+---------+----------------+
+|------------------|--------------|------|-----|---------|----------------|
 | airport_id       | int(11)      | NO   | PRI | NULL    | auto_increment |
 | name             | varchar(255) | YES  |     | NULL    |                |
 | abbreviation     | varchar(3)   | YES  |     | NULL    |                |
@@ -567,7 +567,7 @@ python3 comfort_airlines.py
 ### Flights Table
 
 | Field                  | Type        | Null | Key | Default | Extra          |
-+------------------------+-------------+------+-----+---------+----------------+
+|------------------------|-------------|------|-----|---------|----------------|
 | flight_id              | int(11)     | NO   | PRI | NULL    | auto_increment |
 | flight_number          | varchar(20) | YES  |     | NULL    |                |
 | aircraft_id            | int(11)     | YES  | MUL | NULL    |                |
